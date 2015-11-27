@@ -1,0 +1,28 @@
+$success-color: #055F10;
+$fail-color: #900D25;
+
+@mixin message($color: none) {
+  display: none;
+  color: $color;
+}
+
+.simple-form-mail-subscribe {
+  input[type=email] {
+    margin: 0 auto;
+  }
+
+  .message {
+    &.fail_message {
+      @include message($fail-color);
+    }
+
+    &.success_message {
+      @include message($success-color);
+    }
+  }
+
+  .incorrect-apikey {
+    color: $fail-color;
+  }
+
+}

@@ -1,0 +1,29 @@
+$success-color: #055F10;
+$fail-color: #900D25;
+
+
+form.simpleFormStyleClass {
+  width: 90%;
+}
+
+form.simpleFormStyleClass input {
+  max-width: 50%;
+  min-width: 200px;
+  margin: 0 auto;
+}
+
+form.simpleFormStyleClass .message {
+  display: none;
+}
+
+form.simpleFormStyleClass .success_message {
+  color: #055F10;
+}
+
+form.simpleFormStyleClass .fail_message {
+  color: #900D25;
+}
+
+.incorrect_apikey {
+  color: #900D25;
+}
