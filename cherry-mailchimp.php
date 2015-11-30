@@ -158,7 +158,12 @@ if (!class_exists('Cherry_MailChimp')) {
 							'fail_message' => array(
 									'default' => '',
 									'name'    => __( 'Fail message', 'cherry-team' ),
-									'desc'    => __( 'Enter faile message', 'cherry-team' ),
+									'desc'    => __( 'Enter fail message', 'cherry-team' ),
+							),
+							'warning_message' => array(
+									'default' => '',
+									'name'    => __( 'Warning message', 'cherry-team' ),
+									'desc'    => __( 'Enter warning message', 'cherry-team' ),
 							),
 							'template' => array(
 									'type'   => 'select',
@@ -235,7 +240,7 @@ if (!class_exists('Cherry_MailChimp')) {
 							'close' => '',
 					),
 					'button_text' => array(
-							'id'    => 'cherry_button',
+							'id'    => 'cherry_button_text',
 							'value' => __( 'Button text', 'cherry-team' ),
 							'open'  => '%%BUTTON_TEXT%%',
 							'close' => '',
@@ -247,19 +252,19 @@ if (!class_exists('Cherry_MailChimp')) {
 							'close' => '%%/CONTENT%%',
 					),
 					'success_message' => array(
-							'id'    => 'cherry_success',
+							'id'    => 'cherry_success_message',
 							'value' => __( 'Success message', 'cherry-team' ),
 							'open'  => '%%SUCCESS_MESSAGE%%',
 							'close' => '',
 					),
 					'fail_message' => array(
-							'id'    => 'cherry_fail',
+							'id'    => 'cherry_fail_message',
 							'value' => __( 'Fail message', 'cherry-team' ),
 							'open'  => '%%FAIL_MESSAGE%%',
 							'close' => '',
 					),
 					'warning_message' => array(
-							'id'    => 'cherry_warning',
+							'id'    => 'cherry_warning_message',
 							'value' => __( 'Warning message', 'cherry-team' ),
 							'open'  => '%%WARNING_MESSAGE%%',
 							'close' => '',
@@ -269,204 +274,7 @@ if (!class_exists('Cherry_MailChimp')) {
 		}
 
 
-		public function get_team_loop( $query, $args ) {
-			global $post, $more;
-			// Item template.
-			$template = $this->get_template_by_name( $args['template'], Cherry_Team_Shortcode::$name );
-			/**
-			 * Filters template for team item.
-			 *
-			 * @since 1.0.0
-			 * @param string.
-			 * @param array   Arguments.
-			 */
-			$template = apply_filters( 'cherry_team_item_template', $template, $args );
-			$count  = 1;
-			$output = '';
-			if ( ! is_object( $query ) || ! is_array( $query->posts ) ) {
-				return false;
-			}
-			$macros    = '/%%([a-zA-Z]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
-			$callbacks = $this->setup_template_data( $args );
-			foreach ( $query->posts as $post ) {
-				// Sets up global post data.
-				setup_postdata( $post );
-				$tpl       = $template;
-				$post_id   = $post->ID;
-				$link      = get_permalink( $post_id );
-				$this->replace_args['link'] = $link;
-				$tpl = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $tpl );
-				$item_classes   = array( $args['item_class'], 'item-' . $count, 'clearfix' );
-				$item_classes[] = ( $count % 2 ) ? 'odd' : 'even';
-				foreach ( array( 'col_xs', 'col_sm', 'col_md', 'col_lg' ) as $col ) {
-					if ( ! $args[ $col ] || 'none' == $args[ $col ] ) {
-						continue;
-					}
-					$cols = absint( $args[ $col ] );
-					if ( 12 < $cols ) {
-						$cols = 12;
-					}
-					if ( 0 === $cols ) {
-						$cols = 1;
-					}
-					$item_classes[] = str_replace( '_', '-', $col ) . '-' . absint( $args[ $col ] );
-					$item_classes[] = ( ( $count - 1 ) % floor( 12 / $cols ) ) ? '' : 'clear-' . str_replace( '_', '-', $col );
-				}
-				$count++;
-				$item_class = implode( ' ', array_filter( $item_classes ) );
-				$output .= '<div id="team-' . $post_id . '" class="' . $item_class . '">';
-				/**
-				 * Filters team items.
-				 *
-				 * @since 1.0.0
-				 * @param string.
-				 * @param array  A post meta.
-				 */
-				$tpl = apply_filters( 'cherry_get_team_loop', $tpl );
-				$output .= $tpl;
-				$output .= '</div><!--/.team-item-->';
-				$callbacks->clear_data();
-			}
-			// Restore the global $post variable.
-			wp_reset_postdata();
-			return $output;
-		}
 
-		/**
-		 * Prepare template data to replace
-		 *
-		 * @since  1.0.0
-		 * @param  array $atts output attributes.
-		 * @return array
-		 */
-		function setup_template_data( $atts ) {
-
-			//var_dump($atts);
-			//wp_die();
-			require_once( '/includes/class-cherry-mailchimp-template-callbacks.php' );
-			$callbacks = new Cherry_Team_Template_Callbacks( $atts );
-			$data = array(
-					'placeholder'    	=> array( $callbacks, 'get_placeholder' ),
-					'button_text'     	=> array( $callbacks, 'get_button_text' ),
-					'content'  			=> array( $callbacks, 'get_content' ),
-					'success_message'  	=> array( $callbacks, 'get_success_message' ),
-					'fail_message'  	=> array( $callbacks, 'get_fail_message' ),
-					'warning_message'  	=> array( $callbacks, 'get_warning_message' ),
-			);
-			$this->post_data = apply_filters( 'cherry_mailchimp_data_callbacks', $data, $atts );
-			return $callbacks;
-		}
-
-		/**
-		 * Callback to replace macros with data
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  array $matches found macros.
-		 * @return mixed
-		 */
-		public function replace_callback( $matches ) {
-			if ( ! is_array( $matches ) ) {
-				return '';
-			}
-			if ( empty( $matches ) ) {
-				return '';
-			}
-			$key = strtolower( $matches[1] );
-			// if key not found in data -return nothing
-			if ( ! isset( $this->post_data[ $key ] ) ) {
-				return '';
-			}
-			$callback = $this->post_data[ $key ];
-			if ( ! is_callable( $callback ) ) {
-				return;
-			}
-			// if found parameters and has correct callback - process it
-			if ( isset( $matches[3] ) ) {
-				return call_user_func( $callback, $matches[3] );
-			}
-			return call_user_func( $callback );
-		}
-
-
-		/**
-		 * Get template file by name
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  string $template  template name.
-		 * @param  string $shortcode shortcode name.
-		 * @return string
-		 */
-		public function get_template_by_name( $template, $shortcode ) {
-			$file       = '';
-			$subdir     = 'templates/shortcodes/' . $shortcode . '/' . $template;
-			$default    = CHERRY_TEAM_DIR . 'templates/shortcodes/' . $shortcode . '/default.tmpl';
-			$upload_dir = wp_upload_dir();
-			$basedir    = $upload_dir['basedir'];
-			$content = apply_filters(
-					'cherry_team_fallback_template',
-					'%%photo%%<div>%%name%%</div><div>%%position%%</div><div>%%content%%</div>'
-			);
-			if ( file_exists( trailingslashit( $basedir ) . $subdir ) ) {
-				$file = trailingslashit( $basedir ) . $subdir;
-			} elseif ( file_exists( CHERRY_TEAM_DIR . $subdir ) ) {
-				$file = CHERRY_TEAM_DIR . $subdir;
-			} else {
-				$file = $default;
-			}
-			if ( ! empty( $file ) ) {
-				$content = self::get_contents( $file );
-			}
-			return $content;
-		}
-
-		/**
-		 * Add team specific macros buttons into mailchimp shortcode
-		 *
-		 * @since  1.0.0
-		 * @param  array $macros_buttons default macros buttons.
-		 * @return array
-		 */
-		public function extend_mailchimp_macros( $macros_buttons ) {
-			$macros_buttons['placeholder'] = array(
-					'id'    => 'cherry_placeholder',
-					'value' => __( 'Placeholder', 'cherry-team' ),
-					'open'  => '%%PLACEHOLDER%%',
-					'close' => '',
-			);
-			$macros_buttons['button_text'] = array(
-					'id'    => 'cherry_button_text',
-					'value' => __( 'Button text', 'cherry-team' ),
-					'open'  => '%%BUTTON_TEXT%%',
-					'close' => '',
-			);
-			$macros_buttons['content'] = array(
-					'id'    => 'cherry_phone',
-					'value' => __( 'Telephone (Team only)', 'cherry-team' ),
-					'open'  => '%%PHONE%%',
-					'close' => '',
-			);
-			$macros_buttons['success_message'] = array(
-					'id'    => 'cherry_success_message',
-					'value' => __( 'Success message', 'cherry-team' ),
-					'open'  => '%%SUCCESS_MESSAGE%%',
-					'close' => '',
-			);
-			$macros_buttons['fail_message'] = array(
-					'id'    => 'cherry_fail_message',
-					'value' => __( 'Fail message', 'cherry-team' ),
-					'open'  => '%%FAIL_MESSAGE%%',
-					'close' => '',
-			);
-			$macros_buttons['warning_message'] = array(
-					'id'    => 'cherry_warning_message',
-					'value' => __( 'Warning message', 'cherry-team' ),
-					'open'  => '%%WARNING_MESSAGE%%',
-					'close' => '',
-			);
-			return $macros_buttons;
-		}
 		/**
 		 * Add team macros data to process it in mailchimp shortcode
 		 *

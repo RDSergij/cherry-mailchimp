@@ -59,7 +59,7 @@ class Cherry_MailChimp_Data {
 		$defaults = apply_filters( 'cherry_the_team_default_args', array(
 				'apikey'         	=> 0,
 				'list'        	 	=> 'testList',
-				'button'         	=> __('Subscribe'),
+				'button_text'       => __('Subscribe'),
 				'placeholder'    	=> __('enter your email'),
 				'success_message'   => __('Successfully'),
 				'fail_message'     	=> __('Failed'),
@@ -135,7 +135,6 @@ class Cherry_MailChimp_Data {
 			return '';
 		}
 		$key = strtolower( $matches[1] );
-		var_dump( $this->post_data[ $key ] );
 
 		//var_dump( $this->post_data[ $key ] );
 		// if key not found in data -return nothing
@@ -180,14 +179,13 @@ class Cherry_MailChimp_Data {
 
 		$output = '';
 
-		$macros    = '/%%([a-zA-Z]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
-		$callbacks = $this->setup_template_data( $args );
+		$macros    = '/%%([a-zA-Z_]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
+		$this->setup_template_data( $args );
 
 		$tpl = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
 		//echo $tpl;
 		$tpl = apply_filters( 'cherry_get_team_loop', $tpl );
 		$output .= $tpl;
-		//$callbacks->clear_data();
 
 		return $output;
 	}

@@ -22,16 +22,7 @@ class Cherry_Mailchimp_Template_Callbacks {
     function __construct( $atts ) {
         $this->atts = $atts;
     }
-    /**
-     * Clear post data after loop iteration
-     *
-     * @since  1.0.3
-     * @return void
-     */
-    public function clear_data() {
-        $this->post_meta = null;
-        $this->post_data = array();
-    }
+
     /**
      * Get data
      *
