@@ -18,20 +18,7 @@ class Cherry_MailChimp_Data {
 	 * @var   object
 	 */
 	private static $instance = null;
-	/**
-	 * The array of arguments for query.
-	 *
-	 * @since 1.0.0
-	 * @var   array
-	 */
-	private $query_args = array();
-	/**
-	 * Holder for the main query object, while team query processing
-	 *
-	 * @since 1.0.0
-	 * @var   object
-	 */
-	private $temp_query = null;
+
 	/**
 	 * The array of arguments for template file.
 	 *
@@ -50,7 +37,7 @@ class Cherry_MailChimp_Data {
 		 *
 		 * @since 1.0.0
 		 */
-		add_action( 'cherry_get_team', array( $this, 'the_team' ) );
+		add_action( 'cherry_get_mailchimp', array( $this, 'the_mailchimp' ) );
 	}
 	/**
 	 * Display or return HTML-formatted team.
@@ -59,7 +46,7 @@ class Cherry_MailChimp_Data {
 	 * @param  string|array $args Arguments.
 	 * @return string
 	 */
-	public function the_team( $args = '' ) {
+	public function the_mailchimp( $args = '' ) {
 		/**
 		 * Filter the array of default arguments.
 		 *
@@ -67,38 +54,34 @@ class Cherry_MailChimp_Data {
 		 * @param array Default arguments.
 		 * @param array The 'the_team' function argument.
 		 */
+
+
 		$defaults = apply_filters( 'cherry_the_team_default_args', array(
-			'limit'          => 3,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'group'          => '',
-			'id'             => 0,
-			'show_photo'     => true,
-			'show_name'      => true,
-			'size'           => 'thumbnail',
-			'echo'           => true,
-			'title'          => '',
-			'excerpt_length' => 20,
-			'wrap_class'     => 'team-wrap',
-			'col_xs'         => false,
-			'col_sm'         => false,
-			'col_md'         => false,
-			'col_lg'         => false,
-			'before_title'   => '<h2>',
-			'after_title'    => '</h2>',
-			'pager'          => false,
-			'template'       => 'default.tmpl',
-			'item_class'     => 'team-item',
-			'container'      => '<div class="team-listing row">%s</div>',
+				'apikey'         	=> 0,
+				'list'        	 	=> 'testList',
+				'button'         	=> __('Subscribe'),
+				'placeholder'    	=> __('enter your email'),
+				'success_message'   => __('Successfully'),
+				'fail_message'     	=> __('Failed'),
+				'warning_message'   => __('Warning!'),
+				'template'       	=> 'default.tmpl',
+				'col_xs'         	=> '12',
+				'col_sm'         	=> '6',
+				'col_md'         	=> '3',
+				'col_lg'         	=> 'none',
+				'class'          	=> '',
 		), $args );
 		$args = wp_parse_args( $args, $defaults );
+
+		//var_dump($args);
+
 		/**
 		 * Filter the array of arguments.
 		 *
 		 * @since 1.0.0
 		 * @param array Arguments.
 		 */
-		$args = apply_filters( 'cherry_the_team_args', $args );
+		//$args = apply_filters( 'cherry_the_team_args', $args );
 		$output = '';
 		/**
 		 * Fires before the team listing.
@@ -106,51 +89,13 @@ class Cherry_MailChimp_Data {
 		 * @since 1.0.0
 		 * @param array $array The array of arguments.
 		 */
-		do_action( 'cherry_team_before', $args );
-		// The Query.
-		$query = $this->get_team( $args );
-		global $wp_query;
-		$this->temp_query = $wp_query;
-		$wp_query = null;
-		$wp_query = $query;
-		// Fix boolean.
-		if ( isset( $args['pager'] ) && ( ( 'true' == $args['pager'] ) || true === $args['pager'] ) ) {
-			$args['pager'] = true;
-		} else {
-			$args['pager'] = false;
-		}
+		//do_action( 'cherry_team_before', $args );
+
 		// The Display.
-		if ( is_wp_error( $query ) ) {
-			return;
-		}
-		$css_classes = array();
-		if ( ! empty( $args['wrap_class'] ) ) {
-			$css_classes[] = esc_attr( $args['wrap_class'] );
-		}
-		if ( ! empty( $args['template'] ) ) {
-			$css_classes[] = $this->get_template_class( $args['template'] );
-		}
-		if ( ! empty( $args['class'] ) ) {
-			$css_classes[] = esc_attr( $args['class'] );
-		}
-		$css_class = implode( ' ', $css_classes );
-		// Open wrapper.
-		$output .= sprintf( '<div class="%s">', $css_class );
-		if ( ! empty( $args['title'] ) ) {
-			$output .= $args['before_title'] . $args['title'] . $args['after_title'];
-		}
-		if ( false !== $args['container'] ) {
-			$output .= sprintf( $args['container'], $this->get_team_loop( $query, $args ) );
-		} else {
-			$output .= $this->get_team_loop( $query, $args );
-		}
-		// Close wrapper.
-		$output .= '</div>';
-		if ( true == $args['pager'] ) {
-			$output .= get_the_posts_pagination();
-		}
-		$wp_query = null;
-		$wp_query = $this->temp_query;
+
+		$output .= $this->get_mailchimp_loop( $args );
+		//echo $output;
+
 		/**
 		 * Filters HTML-formatted team before display or return.
 		 *
@@ -159,14 +104,8 @@ class Cherry_MailChimp_Data {
 		 * @param array  $query  List of WP_Post objects.
 		 * @param array  $args   The array of arguments.
 		 */
-		$output = apply_filters( 'cherry_team_html', $output, $query, $args );
-		wp_reset_query();
-		wp_reset_postdata();
-		if ( true != $args['echo'] ) {
-			return $output;
-		}
-		// If "echo" is set to true.
-		echo $output;
+		//$output = apply_filters( 'cherry_team_html', $output, $args );
+		return $output;
 		/**
 		 * Fires after the team listing.
 		 *
@@ -175,133 +114,10 @@ class Cherry_MailChimp_Data {
 		 * @since 1.0.0
 		 * @param array $array The array of arguments.
 		 */
-		do_action( 'cherry_team_after', $args );
+		//do_action( 'cherry_team_after', $args );
 	}
-	/**
-	 * Get team.
-	 *
-	 * @since  1.0.0
-	 * @param  array|string $args Arguments to be passed to the query.
-	 * @return array|bool         Array if true, boolean if false.
-	 */
-	public function get_team( $args = '' ) {
-		$defaults = array(
-			'limit'   => 5,
-			'orderby' => 'date',
-			'order'   => 'DESC',
-			'id'      => 0,
-		);
-		$args = wp_parse_args( $args, $defaults );
-		/**
-		 * Filter the array of arguments.
-		 *
-		 * @since 1.0.0
-		 * @param array Arguments to be passed to the query.
-		 */
-		$args = apply_filters( 'cherry_get_team_args', $args );
-		// The Query Arguments.
-		$this->query_args['post_type']        = CHERRY_TEAM_NAME;
-		$this->query_args['posts_per_page']   = $args['limit'];
-		$this->query_args['orderby']          = $args['orderby'];
-		$this->query_args['order']            = $args['order'];
-		$this->query_args['suppress_filters'] = false;
-		if ( ! empty( $args['group'] ) ) {
-			$group = str_replace( ' ', ',', $args['group'] );
-			$group = explode( ',', $group );
-			if ( is_array( $group ) ) {
-				$this->query_args['tax_query'] = array(
-					array(
-						'taxonomy' => 'group',
-						'field'    => 'slug',
-						'terms'    => $group,
-					),
-				);
-			}
-		} else {
-			$this->query_args['tax_query'] = false;
-		}
-		if ( isset( $args['pager'] ) && ( 'true' == $args['pager'] ) ) :
-			if ( get_query_var( 'paged' ) ) {
-				$this->query_args['paged'] = get_query_var( 'paged' );
-			} elseif ( get_query_var( 'page' ) ) {
-				$this->query_args['paged'] = get_query_var( 'page' );
-			} else {
-				$this->query_args['paged'] = 1;
-			}
-		endif;
-		$ids = explode( ',', $args['id'] );
-		if ( 0 < intval( $args['id'] ) && 0 < count( $ids ) ) :
-			$ids = array_map( 'intval', $ids );
-			if ( 1 == count( $ids ) && is_numeric( $ids[0] ) && ( 0 < intval( $ids[0] ) ) ) {
-				$this->query_args['p'] = intval( $args['id'] );
-			} else {
-				$this->query_args['ignore_sticky_posts'] = 1;
-				$this->query_args['post__in']            = $ids;
-			}
-		endif;
-		$orderby_whitelist = array(
-			'none',
-			'ID',
-			'author',
-			'title',
-			'date',
-			'modified',
-			'parent',
-			'rand',
-			'comment_count',
-			'menu_order',
-			'meta_value',
-			'meta_value_num',
-		);
-		// Whitelist checks.
-		if ( ! in_array( $this->query_args['orderby'], $orderby_whitelist ) ) {
-			$this->query_args['orderby'] = 'date';
-		}
-		if ( ! in_array( strtoupper( $this->query_args['order'] ), array( 'ASC', 'DESC' ) ) ) {
-			$this->query_args['order'] = 'DESC';
-		}
-		/**
-		 * Filters the query.
-		 *
-		 * @since 1.0.0
-		 * @param array The array of query arguments.
-		 * @param array The array of arguments to be passed to the query.
-		 */
-		$this->query_args = apply_filters( 'cherry_get_team_query_args', $this->query_args, $args );
-		// The Query.
-		$query = new WP_Query( $this->query_args );
-		if ( ! $query->have_posts() ) {
-			return false;
-		}
-		return $query;
-	}
-	/**
-	 * Get the image URL for the given ID. If no featured image, check for Gravatar e-mail.
-	 *
-	 * @since  1.0.0
-	 * @param  int              $id   The post ID.
-	 * @param  string|array|int $size The image dimension.
-	 * @return string
-	 */
-	public function get_image_url( $id, $size ) {
-		if ( ! has_post_thumbnail( $id ) ) {
-			return false;
-		}
-		$image = '';
-		$size = absint( $size );
-		// If not a string or an array, and not an integer, default to 150x9999.
-		if ( 0 < $size ) {
-			$size = array( $size, $size );
-		} elseif ( ! is_string( $size ) && ! is_array( $size ) ) {
-			$size = array( 50, 50 );
-		}
-		$image_id = get_post_thumbnail_id( intval( $id ) );
-		$image    = wp_get_attachment_image_src( $image_id, $size );
-		if ( ! is_array( $image ) ) {
-			return false;
-		}
-		return $image[0];
-	}
+
+
 	/**
 	 * Callback to replace macros with data
 	 *
@@ -311,6 +127,7 @@ class Cherry_MailChimp_Data {
 	 * @return mixed
 	 */
 	public function replace_callback( $matches ) {
+
 		if ( ! is_array( $matches ) ) {
 			return '';
 		}
@@ -318,14 +135,21 @@ class Cherry_MailChimp_Data {
 			return '';
 		}
 		$key = strtolower( $matches[1] );
+		var_dump( $this->post_data[ $key ] );
+
+		//var_dump( $this->post_data[ $key ] );
 		// if key not found in data -return nothing
 		if ( ! isset( $this->post_data[ $key ] ) ) {
 			return '';
 		}
 		$callback = $this->post_data[ $key ];
+
 		if ( ! is_callable( $callback ) ) {
 			return;
 		}
+
+		//var_dump( $callback );
+		//wp_die();
 		// if found parameters and has correct callback - process it
 		if ( isset( $matches[3] ) ) {
 			return call_user_func( $callback, $matches[3] );
@@ -340,10 +164,11 @@ class Cherry_MailChimp_Data {
 	 * @param  array $args  The array of arguments.
 	 * @return string
 	 */
-	public function get_team_loop( $query, $args ) {
-		global $post, $more;
+	public function get_mailchimp_loop( $args ) {
+
 		// Item template.
-		$template = $this->get_template_by_name( $args['template'], Cherry_Team_Shortcode::$name );
+		$template = $this->get_template_by_name( $args['template'], Cherry_Mailchimp_Shortcode::$name );
+
 		/**
 		 * Filters template for team item.
 		 *
@@ -352,54 +177,18 @@ class Cherry_MailChimp_Data {
 		 * @param array   Arguments.
 		 */
 		$template = apply_filters( 'cherry_team_item_template', $template, $args );
-		$count  = 1;
+
 		$output = '';
-		if ( ! is_object( $query ) || ! is_array( $query->posts ) ) {
-			return false;
-		}
+
 		$macros    = '/%%([a-zA-Z]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
 		$callbacks = $this->setup_template_data( $args );
-		foreach ( $query->posts as $post ) {
-			// Sets up global post data.
-			setup_postdata( $post );
-			$tpl       = $template;
-			$post_id   = $post->ID;
-			$link      = get_permalink( $post_id );
-			$this->replace_args['link'] = $link;
-			$tpl = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $tpl );
-			$item_classes   = array( $args['item_class'], 'item-' . $count, 'clearfix' );
-			$item_classes[] = ( $count % 2 ) ? 'odd' : 'even';
-			foreach ( array( 'col_xs', 'col_sm', 'col_md', 'col_lg' ) as $col ) {
-				if ( ! $args[ $col ] || 'none' == $args[ $col ] ) {
-					continue;
-				}
-				$cols = absint( $args[ $col ] );
-				if ( 12 < $cols ) {
-					$cols = 12;
-				}
-				if ( 0 === $cols ) {
-					$cols = 1;
-				}
-				$item_classes[] = str_replace( '_', '-', $col ) . '-' . absint( $args[ $col ] );
-				$item_classes[] = ( ( $count - 1 ) % floor( 12 / $cols ) ) ? '' : 'clear-' . str_replace( '_', '-', $col );
-			}
-			$count++;
-			$item_class = implode( ' ', array_filter( $item_classes ) );
-			$output .= '<div id="team-' . $post_id . '" class="' . $item_class . '">';
-			/**
-			 * Filters team items.
-			 *
-			 * @since 1.0.0
-			 * @param string.
-			 * @param array  A post meta.
-			 */
-			$tpl = apply_filters( 'cherry_get_team_loop', $tpl );
-			$output .= $tpl;
-			$output .= '</div><!--/.team-item-->';
-			$callbacks->clear_data();
-		}
-		// Restore the global $post variable.
-		wp_reset_postdata();
+
+		$tpl = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
+		//echo $tpl;
+		$tpl = apply_filters( 'cherry_get_team_loop', $tpl );
+		$output .= $tpl;
+		//$callbacks->clear_data();
+
 		return $output;
 	}
 	/**
@@ -410,20 +199,17 @@ class Cherry_MailChimp_Data {
 	 * @return array
 	 */
 	function setup_template_data( $atts ) {
-		require_once( CHERRY_TEAM_DIR . 'public/includes/class-cherry-team-template-callbacks.php' );
-		$callbacks = new Cherry_Team_Template_Callbacks( $atts );
+		require_once( 'class-cherry-mailchimp-template-callbacks.php' );
+		$callbacks = new Cherry_Mailchimp_Template_Callbacks( $atts );
 		$data = array(
-			'photo'    => array( $callbacks, 'get_photo' ),
-			'name'     => array( $callbacks, 'get_name' ),
-			'position' => array( $callbacks, 'get_position' ),
-			'content'  => array( $callbacks, 'get_content' ),
-			'excerpt'  => array( $callbacks, 'get_excerpt' ),
-			'location' => array( $callbacks, 'get_location' ),
-			'phone'    => array( $callbacks, 'get_phone' ),
-			'email'    => array( $callbacks, 'get_email' ),
-			'website'  => array( $callbacks, 'get_website' ),
-			'socials'  => array( $callbacks, 'get_socials' ),
-			'link'     => array( $callbacks, 'get_link' ),
+			'apikey'    		=> array( $callbacks, 'get_apikey' ),
+			'list'     			=> array( $callbacks, 'get_list' ),
+			'placeholder' 		=> array( $callbacks, 'get_placeholder' ),
+			'content'  			=> array( $callbacks, 'get_content' ),
+			'button_text'  		=> array( $callbacks, 'get_button_text' ),
+			'success_message' 	=> array( $callbacks, 'get_success_message' ),
+			'fail_message'    	=> array( $callbacks, 'get_fail_message' ),
+			'warning_message'   => array( $callbacks, 'get_warning_message' ),
 		);
 		$this->post_data = apply_filters( 'cherry_team_data_callbacks', $data, $atts );
 		return $callbacks;
@@ -533,7 +319,7 @@ class Cherry_MailChimp_Data {
 	public function get_template_by_name( $template, $shortcode ) {
 		$file       = '';
 		$subdir     = 'templates/shortcodes/' . $shortcode . '/' . $template;
-		$default    = CHERRY_TEAM_DIR . 'templates/shortcodes/' . $shortcode . '/default.tmpl';
+		$default    = plugin_dir_path( __FILE__ ).'templates/shortcodes/mailchimp/default.tmpl';
 		$upload_dir = wp_upload_dir();
 		$basedir    = $upload_dir['basedir'];
 		$content = apply_filters(

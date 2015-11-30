@@ -18,7 +18,7 @@ if (!class_exists('Cherry_MailChimp')) {
 	 * Define plugin
 	 */
 
-	class Cherry_MailChimp {
+	class Cherry_Mailchimp_Shortcode {
 
 		private static $instance = null;
 		public static $name = 'mailchimp';
@@ -118,17 +118,7 @@ if (!class_exists('Cherry_MailChimp')) {
 		 * @return array             Modified array.
 		 */
 		public function shortcodes( $shortcodes ) {
-			$terms_list = array();
-			if ( did_action( 'wp_ajax_cherry_shortcodes_generator_settings' ) ) {
-				$terms = get_terms( 'group' );
-				if ( ! is_wp_error( $terms ) ) {
-					$terms_list = wp_list_pluck( $terms, 'name', 'slug' );
-				}
-			}
-			$sizes_list = array();
-			if ( class_exists( 'Cherry_Shortcodes_Tools' ) && method_exists( 'Cherry_Shortcodes_Tools', 'image_sizes' ) ) {
-				$sizes_list = Cherry_Shortcodes_Tools::image_sizes();
-			}
+
 			$shortcodes[ self::$name ] = array(
 					'name'  => __( 'MailChimp', 'cherry-team' ), // Shortcode name.
 					'desc'  => __( 'MailChimp shortcode', 'cherry-team' ),
@@ -150,7 +140,7 @@ if (!class_exists('Cherry_MailChimp')) {
 									'name'    => __( 'Class', 'cherry-team' ),
 									'desc'    => __( 'Extra CSS class', 'cherry-team' ),
 							),
-							'button' => array(
+							'button_text' => array(
 									'default' => '',
 									'name'    => __( 'Button', 'cherry-team' ),
 									'desc'    => __( 'Enter button title', 'cherry-team' ),
@@ -195,25 +185,23 @@ if (!class_exists('Cherry_MailChimp')) {
 		 * @param  string $shortcode The shortcode tag, useful for shared callback functions.
 		 * @return string
 		 */
-		public function do_shortcode( $atts, $content = null, $shortcode = 'team' ) {
+		public function do_shortcode( $atts, $content = null, $shortcode = 'mailchimp' ) {
+
 			// Set up the default arguments.
 			$defaults = array(
-					'limit'          => 3,
-					'orderby'        => 'date',
-					'order'          => 'DESC',
-					'group'          => '',
-					'id'             => 0,
-					'show_name'      => true,
-					'show_photo'     => true,
-					'size'           => 'thumbnail',
-					'excerpt_length' => 20,
-					'echo'           => false,
-					'template'       => 'default.tmpl',
-					'col_xs'         => '12',
-					'col_sm'         => '6',
-					'col_md'         => '3',
-					'col_lg'         => 'none',
-					'class'          => '',
+					'apikey'         	=> 0,
+					'list'        	 	=> 'testList',
+					'button'         	=> __('Subscribe'),
+					'placeholder'    	=> __('enter your email'),
+					'success_message'   => __('Successfully'),
+					'fail_message'     	=> __('Failed'),
+					'warning_message'   => __('Warning!'),
+					'template'       	=> 'default.tmpl',
+					'col_xs'         	=> '12',
+					'col_sm'         	=> '6',
+					'col_md'         	=> '3',
+					'col_lg'         	=> 'none',
+					'class'          	=> '',
 			);
 			/**
 			 * Parse the arguments.
@@ -221,26 +209,9 @@ if (!class_exists('Cherry_MailChimp')) {
 			 * @link http://codex.wordpress.org/Function_Reference/shortcode_atts
 			 */
 			$atts = shortcode_atts( $defaults, $atts, $shortcode );
-			// Make sure we return and don't echo.
-			$atts['echo'] = false;
-			// Fix integers.
-			if ( isset( $atts['limit'] ) ) {
-				$atts['limit'] = intval( $atts['limit'] );
-			}
-			if ( isset( $atts['size'] ) &&  ( 0 < intval( $atts['size'] ) ) ) {
-				$atts['size'] = intval( $atts['size'] );
-			} else {
-				$atts['size'] = esc_attr( $atts['size'] );
-			}
-			// Fix booleans.
-			foreach ( array( 'show_name', 'show_photo' ) as $k => $v ) :
-				if ( isset( $atts[ $v ] ) && ( 'true' == $atts[ $v ] || 'yes' == $atts[ $v ] ) ) {
-					$atts[ $v ] = true;
-				} else {
-					$atts[ $v ] = false;
-				}
-			endforeach;
-			return $this->data->the_team( $atts );
+
+
+			return $this->data->the_mailchimp( $atts );
 		}
 
 		/**
@@ -266,7 +237,7 @@ if (!class_exists('Cherry_MailChimp')) {
 					'button_text' => array(
 							'id'    => 'cherry_button',
 							'value' => __( 'Button text', 'cherry-team' ),
-							'open'  => '%%BUTTON%%',
+							'open'  => '%%BUTTON_TEXT%%',
 							'close' => '',
 					),
 					'content' => array(
@@ -369,22 +340,20 @@ if (!class_exists('Cherry_MailChimp')) {
 		 * @return array
 		 */
 		function setup_template_data( $atts ) {
-			require_once( CHERRY_TEAM_DIR . 'public/includes/class-cherry-team-template-callbacks.php' );
+
+			//var_dump($atts);
+			//wp_die();
+			require_once( '/includes/class-cherry-mailchimp-template-callbacks.php' );
 			$callbacks = new Cherry_Team_Template_Callbacks( $atts );
 			$data = array(
-					'photo'    => array( $callbacks, 'get_photo' ),
-					'name'     => array( $callbacks, 'get_name' ),
-					'position' => array( $callbacks, 'get_position' ),
-					'content'  => array( $callbacks, 'get_content' ),
-					'excerpt'  => array( $callbacks, 'get_excerpt' ),
-					'location' => array( $callbacks, 'get_location' ),
-					'phone'    => array( $callbacks, 'get_phone' ),
-					'email'    => array( $callbacks, 'get_email' ),
-					'website'  => array( $callbacks, 'get_website' ),
-					'socials'  => array( $callbacks, 'get_socials' ),
-					'link'     => array( $callbacks, 'get_link' ),
+					'placeholder'    	=> array( $callbacks, 'get_placeholder' ),
+					'button_text'     	=> array( $callbacks, 'get_button_text' ),
+					'content'  			=> array( $callbacks, 'get_content' ),
+					'success_message'  	=> array( $callbacks, 'get_success_message' ),
+					'fail_message'  	=> array( $callbacks, 'get_fail_message' ),
+					'warning_message'  	=> array( $callbacks, 'get_warning_message' ),
 			);
-			$this->post_data = apply_filters( 'cherry_team_data_callbacks', $data, $atts );
+			$this->post_data = apply_filters( 'cherry_mailchimp_data_callbacks', $data, $atts );
 			return $callbacks;
 		}
 
@@ -460,40 +429,40 @@ if (!class_exists('Cherry_MailChimp')) {
 		 * @return array
 		 */
 		public function extend_mailchimp_macros( $macros_buttons ) {
-			$macros_buttons['position'] = array(
-					'id'    => 'cherry_position',
-					'value' => __( 'Position (Team only)', 'cherry-team' ),
-					'open'  => '%%POSITION%%',
+			$macros_buttons['placeholder'] = array(
+					'id'    => 'cherry_placeholder',
+					'value' => __( 'Placeholder', 'cherry-team' ),
+					'open'  => '%%PLACEHOLDER%%',
 					'close' => '',
 			);
-			$macros_buttons['location'] = array(
-					'id'    => 'cherry_location',
-					'value' => __( 'Location (Team only)', 'cherry-team' ),
-					'open'  => '%%LOCATION%%',
+			$macros_buttons['button_text'] = array(
+					'id'    => 'cherry_button_text',
+					'value' => __( 'Button text', 'cherry-team' ),
+					'open'  => '%%BUTTON_TEXT%%',
 					'close' => '',
 			);
-			$macros_buttons['phone'] = array(
+			$macros_buttons['content'] = array(
 					'id'    => 'cherry_phone',
 					'value' => __( 'Telephone (Team only)', 'cherry-team' ),
 					'open'  => '%%PHONE%%',
 					'close' => '',
 			);
-			$macros_buttons['email'] = array(
-					'id'    => 'cherry_email',
-					'value' => __( 'Email (Team only)', 'cherry-team' ),
-					'open'  => '%%EMAIL%%',
+			$macros_buttons['success_message'] = array(
+					'id'    => 'cherry_success_message',
+					'value' => __( 'Success message', 'cherry-team' ),
+					'open'  => '%%SUCCESS_MESSAGE%%',
 					'close' => '',
 			);
-			$macros_buttons['website'] = array(
-					'id'    => 'cherry_website',
-					'value' => __( 'Personal website (Team only)', 'cherry-team' ),
-					'open'  => '%%WEBSITE%%',
+			$macros_buttons['fail_message'] = array(
+					'id'    => 'cherry_fail_message',
+					'value' => __( 'Fail message', 'cherry-team' ),
+					'open'  => '%%FAIL_MESSAGE%%',
 					'close' => '',
 			);
-			$macros_buttons['socials'] = array(
-					'id'    => 'cherry_socials',
-					'value' => __( 'Social (Team only)', 'cherry-team' ),
-					'open'  => '%%SOCIALS%%',
+			$macros_buttons['warning_message'] = array(
+					'id'    => 'cherry_warning_message',
+					'value' => __( 'Warning message', 'cherry-team' ),
+					'open'  => '%%WARNING_MESSAGE%%',
 					'close' => '',
 			);
 			return $macros_buttons;
@@ -509,14 +478,14 @@ if (!class_exists('Cherry_MailChimp')) {
 		 * @return array
 		 */
 		public function add_mailchimp_data( $postdata, $post_id, $atts ) {
-			require_once( CHERRY_TEAM_DIR . 'public/includes/class-cherry-team-template-callbacks.php' );
-			$callbacks = new Cherry_Team_Template_Callbacks( $atts );
-			$postdata['socials']   = $callbacks->get_socials();
-			$postdata['position']  = $callbacks->get_position();
-			$postdata['location']  = $callbacks->get_location();
-			$postdata['telephone'] = $callbacks->get_phone();
-			$postdata['website']   = $callbacks->get_website();
-			$postdata['email']     = $callbacks->get_email();
+			require_once(  '/includes/class-cherry-mailchimp-template-callbacks.php' );
+			$callbacks = new Cherry_Mailchimp_Template_Callbacks( $atts );
+			$postdata['placeholder']   		= $callbacks->get_placeholder();
+			$postdata['button_text']  		= $callbacks->get_button_text();
+			$postdata['content']  			= $callbacks->get_content();
+			$postdata['success_message'] 	= $callbacks->get_success_message();
+			$postdata['fail_message']   	= $callbacks->get_fail_message();
+			$postdata['warning_message']    = $callbacks->get_warning_message();
 			return $postdata;
 		}
 
@@ -720,7 +689,7 @@ if (!class_exists('Cherry_MailChimp')) {
 		}
 		
 	}
-	
-	Cherry_MailChimp::get_instance();
+
+	Cherry_Mailchimp_Shortcode::get_instance();
 	
 }
