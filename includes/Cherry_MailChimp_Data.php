@@ -55,7 +55,6 @@ class Cherry_MailChimp_Data {
 		 * @param array The 'the_team' function argument.
 		 */
 
-
 		$defaults = apply_filters( 'cherry_the_team_default_args', array(
 				'apikey'         	=> 0,
 				'list'        	 	=> 'testList',
@@ -72,8 +71,6 @@ class Cherry_MailChimp_Data {
 				'class'          	=> '',
 		), $args );
 		$args = wp_parse_args( $args, $defaults );
-
-		//var_dump($args);
 
 		/**
 		 * Filter the array of arguments.
@@ -93,8 +90,20 @@ class Cherry_MailChimp_Data {
 
 		// The Display.
 
+
+
+		$output.='<a class="subscribe-popup-link" href="#cherry-mailchimp-form">';
+        $output.= $args['button_text'];
+        $output.= '</a>';
+
+        $output.='<div class="cherry-mailchimp">';
+		$output.='<form id="cherry-mailchimp-form">';
+        $output.='<input type="hidden" name="action" value="mailchimpsubscribe">';
+
 		$output .= $this->get_mailchimp_loop( $args );
-		//echo $output;
+
+		$output.='</form>';
+        $output.='</div>';
 
 		/**
 		 * Filters HTML-formatted team before display or return.
@@ -136,7 +145,6 @@ class Cherry_MailChimp_Data {
 		}
 		$key = strtolower( $matches[1] );
 
-		//var_dump( $this->post_data[ $key ] );
 		// if key not found in data -return nothing
 		if ( ! isset( $this->post_data[ $key ] ) ) {
 			return '';
@@ -147,8 +155,6 @@ class Cherry_MailChimp_Data {
 			return;
 		}
 
-		//var_dump( $callback );
-		//wp_die();
 		// if found parameters and has correct callback - process it
 		if ( isset( $matches[3] ) ) {
 			return call_user_func( $callback, $matches[3] );
@@ -168,26 +174,12 @@ class Cherry_MailChimp_Data {
 		// Item template.
 		$template = $this->get_template_by_name( $args['template'], Cherry_Mailchimp_Shortcode::$name );
 
-		/**
-		 * Filters template for team item.
-		 *
-		 * @since 1.0.0
-		 * @param string.
-		 * @param array   Arguments.
-		 */
-		$template = apply_filters( 'cherry_team_item_template', $template, $args );
-
-		$output = '';
-
 		$macros    = '/%%([a-zA-Z_]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
 		$this->setup_template_data( $args );
 
 		$tpl = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
-		//echo $tpl;
-		$tpl = apply_filters( 'cherry_get_team_loop', $tpl );
-		$output .= $tpl;
 
-		return $output;
+		return $tpl;
 	}
 	/**
 	 * Prepare template data to replace
@@ -212,77 +204,8 @@ class Cherry_MailChimp_Data {
 		$this->post_data = apply_filters( 'cherry_team_data_callbacks', $data, $atts );
 		return $callbacks;
 	}
-	/**
-	 * Genereate microdata markup for team member single page
-	 * JSON-LD markup is used for microdata formatting
-	 *
-	 * @since  1.0.0
-	 */
-	public function microdata_markup() {
-		if ( ! is_singular( CHERRY_TEAM_NAME ) ) {
-			return;
-		}
-		$post_id = get_the_id();
-		$result = '<script type="application/ld+json">%s</script>';
-		$data = array(
-			'@context' => 'http://schema.org/',
-			'@type'    => 'Person',
-			'name'     => get_the_title( $post_id ),
-		);
-		$image = $this->get_image_url( $post_id, 150 );
-		if ( $image ) {
-			$data['image'] = $image;
-		}
-		$team_meta = get_post_meta( $post_id, CHERRY_TEAM_POSTMETA, true );
-		$relations = array(
-			'position'  => 'jobTitle',
-			'location'  => 'workLocation',
-			'telephone' => 'telephone',
-			'website'   => 'url',
-			'email'     => 'email',
-		);
-		foreach ( $relations as $meta => $datakey ) {
-			if ( ! array_key_exists( $meta, $relations ) ) {
-				continue;
-			}
-			if ( empty( $team_meta[ $meta ] ) ) {
-				continue;
-			}
-			$data[ $datakey ] = $team_meta[ $meta ];
-		}
-		if ( empty( $data['url'] )
-		     && is_array( $team_meta['socials'] )
-		     && ! empty( $team_meta['socials'][0]['external-link'] )
-		) {
-			$data['url'] = $team_meta['socials'][0]['external-link'];
-			unset( $team_meta['socials'][0] );
-		}
-		if ( is_array( $team_meta['socials'] ) && ! empty( $team_meta['socials'] ) ) {
-			$urls           = $this->get_social_urls( $team_meta['socials'] );
-			$data['sameAs'] = $urls;
-		}
-		printf( $result, json_encode( $data ) );
-	}
-	/**
-	 * Callback function for social array walker
-	 *
-	 * @since  1.0.5
-	 * @param  array $socials socials array.
-	 * @return array
-	 */
-	public function get_social_urls( $socials ) {
-		$urls = array();
-		if ( ! is_array( $socials ) ) {
-			return $urls;
-		}
-		foreach ( $socials as $key => $data ) {
-			if ( ! isset( $data['external-link'] ) ) {
-				continue;
-			}
-			$urls[] = esc_url( $data['external-link'] );
-		}
-		return $urls;
-	}
+
+
 	/**
 	 * Read template (static).
 	 *

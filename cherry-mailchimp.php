@@ -75,8 +75,8 @@ if (!class_exists('Cherry_MailChimp')) {
 			 * Need for submit frontend form
 			 */
 			
-			add_action( 'wp_ajax_simplesubscribe', array(&$this, 'subscriberAdd') );
-			add_action( 'wp_ajax_nopriv_simplesubscribe', array(&$this, 'subscriberAdd') );
+			add_action( 'wp_ajax_mailchimpsubscribe', array(&$this, 'subscriberAdd') );
+			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array(&$this, 'subscriberAdd') );
 		}
 
 
@@ -90,7 +90,6 @@ if (!class_exists('Cherry_MailChimp')) {
 		 */
 		public function add_target_dir( $target_dirs ) {
 			array_push( $target_dirs, plugin_dir_path( __FILE__ ).'/' );
-			//var_dump($target_dirs);
 			return $target_dirs;
 		}
 
@@ -192,6 +191,22 @@ if (!class_exists('Cherry_MailChimp')) {
 		 */
 		public function do_shortcode( $atts, $content = null, $shortcode = 'mailchimp' ) {
 
+			// Custom styles
+			wp_register_style( 'simple-subscribe-style', plugins_url('assets/css/style.css', __FILE__) );
+			wp_enqueue_style( 'simple-subscribe-style' );
+
+			// Magnific popup styles
+			wp_register_style( 'magnific-popup', plugins_url('assets/css/magnific-popup.css', __FILE__) );
+			wp_enqueue_style( 'magnific-popup' );
+
+			// Magnific popup scripts
+			wp_register_script( 'magnific-popup', plugins_url('assets/js/jquery.magnific-popup.min.js', __FILE__) );
+			wp_enqueue_script( 'magnific-popup' );
+
+			// Custom scripts
+			wp_register_script( 'mailchimp-script', plugins_url('assets/js/script.js', __FILE__) );
+			wp_enqueue_script( 'mailchimp-script' );
+
 			// Set up the default arguments.
 			$defaults = array(
 					'apikey'         	=> 0,
@@ -247,9 +262,9 @@ if (!class_exists('Cherry_MailChimp')) {
 					),
 					'content' => array(
 							'id'    => 'cherry_content',
-							'value' => __( 'Short description', 'cherry-team' ),
+							'value' => __( 'Content', 'cherry-team' ),
 							'open'  => '%%CONTENT%%',
-							'close' => '%%/CONTENT%%',
+							'close' => '',
 					),
 					'success_message' => array(
 							'id'    => 'cherry_success_message',
