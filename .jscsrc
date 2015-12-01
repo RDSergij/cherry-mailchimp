@@ -6,6 +6,8 @@
     "assets/js/jquery.magnific-popup.min.js",
     "assets/css/style.css.map",
     "assets/css/style.css",
-    "assets/js/script.min.js"
+    "assets/js/script.min.js",
+    "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.css",
+    "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.js"
   ]
 }
