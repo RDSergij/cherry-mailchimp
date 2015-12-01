@@ -1,31 +1,7 @@
-.cherry-mailchimp {
-	display: none;
-}
+#cherry-mailchimp-form input[type=email] { border: 1px #cccccc solid; background-color: #ebebeb; }
+#cherry-mailchimp-form button { background-color: #0b0b0b; }
+#cherry-mailchimp-form .message.fail_message { display: none; color: #900D25; }
+#cherry-mailchimp-form .message.success_message { display: none; color: #055F10; }
+#cherry-mailchimp-form .message.warning_message { display: none; color: #e3c000; }
 
-form#cherry-mailchimp-form {
-	width: 40%;
-	background: #FFF;
-	padding: 20px 30px;
-	text-align: left;
-	max-width: 650px;
-	margin: 40px auto;
-	position: relative;
-}
-
-form#cherry-mailchimp-form input {
-	max-width: 50%;
-	min-width: 200px;
-	margin: 0 auto;
-}
-
-form#cherry-mailchimp-form .message {
-	display: none;
-}
-
-form#cherry-mailchimp-form .success_message {
-	color: #055F10;
-}
-
-form#cherry-mailchimp-form .fail_message {
-	color: #900D25;
-}
+/*# sourceMappingURL=style.css.map */

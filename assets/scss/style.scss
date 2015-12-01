@@ -1,4 +1,5 @@
 $success-color: #055F10;
+$warning-color: #e3c000;
 $fail-color: #900D25;
 
 @mixin message($color: none) {
@@ -6,9 +7,14 @@ $fail-color: #900D25;
   color: $color;
 }
 
-.simple-form-mail-subscribe {
+#cherry-mailchimp-form {
   input[type=email] {
-    margin: 0 auto;
+    border: 1px #cccccc solid;
+    background-color: #ebebeb;
+  }
+
+  button {
+    background-color: #0b0b0b;
   }
 
   .message {
@@ -19,10 +25,8 @@ $fail-color: #900D25;
     &.success_message {
       @include message($success-color);
     }
+    &.warning_message {
+      @include message($warning-color);
+    }
   }
-
-  .incorrect-apikey {
-    color: $fail-color;
-  }
-
 }
