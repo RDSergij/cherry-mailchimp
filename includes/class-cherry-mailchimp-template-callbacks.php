@@ -1,12 +1,12 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: serhiiosadchyi
- * Class with callbacks methods
+ * @package Cherry_Mailchimp
+ *
+ * @since 1.0.0
  */
 
 class Cherry_Mailchimp_Template_Callbacks {
+
     /**
      * Shortcode attributes array
      * @var array
@@ -28,12 +28,11 @@ class Cherry_Mailchimp_Template_Callbacks {
      *
      * @since 1.0.0
      */
-
     public function get_placeholder() {
-        if (!empty($this->atts['placeholder'])) {
-            return $this->atts['placeholder'];
+        if ( ! empty( $this->atts[ 'placeholder' ] ) ) {
+            return $this->atts[ 'placeholder' ];
         } else {
-            return get_option('mailchimpplaceholder');
+            return get_option( 'mailchimpplaceholder' );
         }
 
     }
@@ -45,10 +44,10 @@ class Cherry_Mailchimp_Template_Callbacks {
      */
 
     public function get_button_text() {
-        if (!empty($this->atts['button_text'])) {
-            return $this->atts['button_text'];
+        if ( ! empty( $this->atts[ 'button_text' ] ) ) {
+            return $this->atts[ 'button_text' ];
         } else {
-            return get_option('mailchimpbutton_text');
+            return get_option( 'mailchimpbutton_text' );
         }
     }
 
@@ -59,10 +58,10 @@ class Cherry_Mailchimp_Template_Callbacks {
      */
 
     public function get_success_message() {
-        if (!empty($this->atts['success_message'])) {
-            return $this->atts['success_message'];
+        if ( ! empty( $this->atts[ 'success_message' ] ) ) {
+            return $this->atts[ 'success_message' ];
         } else {
-            return get_option('mailchimpsuccess_message');
+            return get_option( 'mailchimpsuccess_message' );
         }
     }
 
@@ -73,10 +72,10 @@ class Cherry_Mailchimp_Template_Callbacks {
      */
 
     public function get_fail_message() {
-        if (!empty($this->atts['fail_message'])) {
-            return $this->atts['fail_message'];
+        if ( ! empty( $this->atts[ 'fail_message' ] ) ) {
+            return $this->atts[ 'fail_message' ];
         } else {
-            return get_option('mailchimpfail_message');
+            return get_option( 'mailchimpfail_message' );
         }
     }
 
@@ -87,10 +86,10 @@ class Cherry_Mailchimp_Template_Callbacks {
      */
 
     public function get_warning_message() {
-        if (!empty($this->atts['warning_message'])) {
-            return $this->atts['warning_message'];
+        if ( ! empty( $this->atts[ 'warning_message' ] ) ) {
+            return $this->atts[ 'warning_message' ];
         } else {
-            return get_option('mailchimpwarning_message');
+            return get_option( 'mailchimpwarning_message' );
         }
     }
 

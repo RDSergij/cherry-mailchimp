@@ -1,5 +1,5 @@
 <?php
-/*
+/**
 Plugin Name:  Cherry MailChimp
 Plugin URI:
 Description: ShortCode for MailChimp
@@ -7,41 +7,62 @@ Version: 0.2
 Author: Cherry Team
 Author URI:
 */
-		
-if (!class_exists('Cherry_Mailchimp_Shortcode')) {
+
+if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	// simple api class for MailChimp from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
-	require_once('includes/MailChimp.php');
+	require_once( 'includes/MailChimp.php' );
 
 	// shortcode frontend generation
-	require_once('includes/cherry-mailChimp-data.php');
+	require_once( 'includes/cherry-mailChimp-data.php' );
 
 	/**
 	 * Define plugin
+	 *
+	 * @package Cherry_Mailchimp
+	 * @since  1.0.0
 	 */
 
 	class Cherry_Mailchimp_Shortcode {
 
+		/**
+		 * A reference to an instance of this class.
+		 *
+		 * @since 1.0.0
+		 * @var object
+		 */
 		private static $instance = null;
+
+		/**
+		 * Prefix name
+		 *
+		 * @since 1.0.0
+		 * @var string
+		 */
 		public static $name = 'mailchimp';
-		public $data = null;
+
+		/**
+		 * Options list of plugin
+		 *
+		 * @since 1.0.0
+		 * @var array
+		 */
 		public $options = array (
-				'apikey'            =>'',
-				'list'              =>'',
-				'confirm'           =>'',
-				'placeholder'       =>'',
-				'button_text'       =>'',
-				'success_message'   =>'',
-				'fail_message'      =>'',
-				'warning_message'   =>'',
+				'apikey'            => '',
+				'list'              => '',
+				'confirm'           => '',
+				'placeholder'       => '',
+				'button_text'       => '',
+				'success_message'   => '',
+				'fail_message'      => '',
+				'warning_message'   => '',
 		);
 
 		/**
-		 * Init plugin
+		 * Sets up our actions/filters.
 		 *
-		 * @param empty
-		 * @return void
+		 * @since 1.0.0
 		 */
-		
+
 		public function __construct() {
 
 			// Register shortcode on 'init'.
@@ -61,25 +82,30 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 			$this->data = Cherry_MailChimp_Data::get_instance();
 
 			// Create menu item
-			add_action( 'admin_menu', array(&$this, 'admin_menu') );
+			add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 
 			// Need for submit frontend form
-			add_action( 'wp_ajax_mailchimpsubscribe', array(&$this, 'subscriber_add') );
-			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array(&$this, 'subscriber_add') );
+			add_action( 'wp_ajax_mailchimpsubscribe', array( &$this, 'subscriber_add' ) );
+			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array( &$this, 'subscriber_add' ) );
 
 			// Style to filter for Cherry Framework
 			add_filter( 'cherry_compiler_static_css', array( $this, 'add_style_to_compiler' ) );
 
 			// Language include
-			add_action('plugins_loaded', array($this, 'include_languages') );
+			add_action('plugins_loaded', array( $this, 'include_languages' ) );
 
 			// Get options
 			$this->get_options();
 
 		}
 
+		/**
+		 * Load languages
+		 *
+		 * @since 1.0.0
+		 */
 		public function include_languages() {
-			load_plugin_textdomain( 'cherry-mailchimp', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
+			load_plugin_textdomain( 'cherry-mailchimp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
 
 		/**
@@ -170,8 +196,8 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		 * Pass style handle to CSS compiler.
 		 *
 		 * @since 1.0.0
-		 *
 		 * @param array $handles CSS handles to compile.
+		 * @return array $handles
 		 */
 		function add_style_to_compiler( $handles ) {
 			$handles = array_merge(
@@ -193,29 +219,29 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		public function do_shortcode( $atts, $content = null, $shortcode = 'mailchimp' ) {
 
 			// Custom styles
-			wp_register_style( 'simple-subscribe-style', plugins_url('assets/css/style.css', __FILE__) );
+			wp_register_style( 'simple-subscribe-style', plugins_url( 'assets/css/style.css', __FILE__ ) );
 			wp_enqueue_style( 'simple-subscribe-style' );
 
 			// Magnific popup styles
-			wp_register_style( 'magnific-popup', plugins_url('assets/css/magnific-popup.css', __FILE__) );
+			wp_register_style( 'magnific-popup', plugins_url( 'assets/css/magnific-popup.css', __FILE__ ) );
 			wp_enqueue_style( 'magnific-popup' );
 
 			// Magnific popup scripts
-			wp_register_script( 'magnific-popup', plugins_url('assets/js/jquery.magnific-popup.min.js', __FILE__) );
+			wp_register_script( 'magnific-popup', plugins_url( 'assets/js/jquery.magnific-popup.min.js', __FILE__ ) );
 			wp_enqueue_script( 'magnific-popup' );
 
 			// Custom scripts
-			wp_register_script( 'mailchimp-script', plugins_url('assets/js/script.min.js', __FILE__) );
-			wp_localize_script( 'mailchimp-script', 'param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+			wp_register_script( 'mailchimp-script', plugins_url( 'assets/js/script.min.js', __FILE__ ) );
+			wp_localize_script( 'mailchimp-script', 'param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'mailchimp-script' );
 
 			// Set up the default arguments.
 			$defaults = array(
-					'button'         	=> __('Subscribe', 'cherry-mailchimp'),
-					'placeholder'    	=> __('enter your email', 'cherry-mailchimp'),
-					'success_message'   => __('Successfully', 'cherry-mailchimp'),
-					'fail_message'     	=> __('Failed', 'cherry-mailchimp'),
-					'warning_message'   => __('Warning!', 'cherry-mailchimp'),
+					'button'         	=> __( 'Subscribe', 'cherry-mailchimp' ),
+					'placeholder'    	=> __( 'enter your email', 'cherry-mailchimp' ),
+					'success_message'   => __( 'Successfully', 'cherry-mailchimp' ),
+					'fail_message'     	=> __( 'Failed', 'cherry-mailchimp' ),
+					'warning_message'   => __( 'Warning!', 'cherry-mailchimp' ),
 					'template'       	=> 'default.tmpl',
 					'col_xs'         	=> '12',
 					'col_sm'         	=> '6',
@@ -292,7 +318,7 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		 * @return array
 		 */
 		public function add_mailchimp_data( $postdata, $post_id, $atts ) {
-			require_once(  '/includes/class-cherry-mailchimp-template-callbacks.php' );
+			require_once( '/includes/class-cherry-mailchimp-template-callbacks.php' );
 			$callbacks = new Cherry_Mailchimp_Template_Callbacks( $atts );
 			$postdata['placeholder']   		= $callbacks->get_placeholder();
 			$postdata['button_text']  		= $callbacks->get_button_text();
@@ -306,17 +332,17 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		/**
 		 * Process save
 		 *
-		 * @param empty
+		 * @since 1.0.0
 		 * @return void
 		 */
-		
+
 		private function save_options() {
-			if ( empty($_POST['action']) || 'Save' != $_POST['action'] ) {
+			if ( empty( $_POST[ 'action' ] ) || 'Save' != $_POST[ 'action' ] ) {
 				return;
 			}
 
-			foreach ( $this->options as $option_key=>$option_value ) {
-				$option_value = !empty($_POST[ $option_key ]) ? $_POST[ $option_key ] : '';
+			foreach ( $this->options as $option_key => $option_value ) {
+				$option_value = ! empty($_POST[ $option_key ]) ? $_POST[ $option_key ] : '';
 				update_option( self::$name . $option_key, $option_value );
 			}
 
@@ -324,9 +350,9 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		}
 
 		/**
-		 * get plugin options
+		 * Get plugin options
 		 *
-		 * @param empty
+		 * @since 1.0.0
 		 * @return void
 		 */
 
@@ -341,34 +367,32 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		/**
 		 * Create admin menu item
 		 *
-		 * @param empty
+		 * @since 1.0.0
 		 * @return void
 		 */
-		
+
 		public function admin_menu() {
-			add_menu_page( 'Cherry MailChimp Options', 'Cherry MailChimp', 'manage_options', 'cherry-mailchimp-options', array(&$this,
-					'options_page'
-			), null, 10 );
+			add_menu_page( 'Cherry MailChimp Options', 'Cherry MailChimp', 'manage_options', 'cherry-mailchimp-options', array( &$this, 'options_page' ), null, 10 );
 		}
 
 		/**
 		 * Admin options page
 		 *
-		 * @param empty
+		 * @since 1.0.0
 		 * @return void
 		 */
-		
+
 		public function options_page() {
-			if ( !current_user_can( 'manage_options' ) ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( __( 'Access denied.' ) );
 			}
 
 			wp_enqueue_style( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
 
-			$this->get_options();
 			$this->save_options();
+			$this->get_options();
 
-			if ( !empty($this->options['apikey']) && !empty($this->options['list']) ) {
+			if ( ! empty( $this->options[ 'apikey' ] ) && ! empty( $this->options[ 'list' ] ) ) {
 				$shortcode = $this->generation_shortcode();
 			}
 
@@ -376,8 +400,8 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 			 * Include ui-elements
 			 */
 
-			include (plugin_dir_path( __FILE__ ).'/admin/lib/ui-elements/ui-text/ui-text.php');
-			include (plugin_dir_path( __FILE__ ).'/admin/lib/ui-elements/ui-switcher/ui-switcher.php');
+			include ( plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-text/ui-text.php' );
+			include ( plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php' );
 
 			/**
 			 * Return html of options page
@@ -388,35 +412,40 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 
 		/**
 		 * Generation default shortcode on option page
+		 *
+		 * @since  1.0.0
 		 * @return string
 		 */
 
 		private function generation_shortcode() {
-			$shortcode = '[cherry_'.self::$name;
+			$shortcode = '[cherry_' . self::$name;
 			if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
 				foreach ( $this->options as $option_key => $option_value ) {
-					$shortcode.= ' '.$option_key.'="'.$option_value.'" ';
+					$shortcode .= ' ' . $option_key . '="' . $option_value . '" ';
 				}
 			}
-			$shortcode.= ']';
+			$shortcode .= ']';
 			return $shortcode;
 		}
 
 		/**
-		 * Check apikey
+		 * Check MailChimp account
+		 *
+		 * @since 1.0.0
+		 * @return bool
 		 */
 
 		private function check_apikey() {
-			if ( empty($this->options['apikey']) ) {
+			if ( empty( $this->options[ 'apikey' ] ) ) {
 				return false;
 			}
 
-			$mailChimpAPI_obj = new Drewm\MailChimp($this->options['apikey']);
-			$result = $mailChimpAPI_obj->call('/helper/ping', array(
-					'apikey'=>$this->options['apikey'],
+			$mailChimpAPI_obj = new MailChimp( $this->options[ 'apikey' ] );
+			$result = $mailChimpAPI_obj->call( '/helper/ping', array(
+					'apikey'    => $this->options['apikey'],
 			), 20);
 
-			if ( !empty($result['error']) || empty($result['msg']) )  {
+			if ( ! empty( $result[ 'error' ] ) || empty( $result[ 'msg' ] ) )  {
 				return false;
 			}
 
@@ -426,7 +455,7 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 		/**
 		 * Add email to subscriber list
 		 *
-		 * @param empty
+		 * @since 1.0.0
 		 * @return void
 		 */
 		
@@ -442,27 +471,27 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 						'status'=>'failed',
 					);
 
-			$email = sanitize_email( $_POST['email'] );
+			$email = sanitize_email( $_POST[ 'email' ] );
 
-			if ( is_email($email) && !empty($this->options['list']) && $this->check_apikey() ) {
+			if ( is_email( $email ) && ! empty( $this->options[ 'list' ]) && $this->check_apikey() ) {
 
 				/**
 				 * Call api
 				 */
 
-				$mailChimpAPI_obj = new Drewm\MailChimp( $this->options['apikey'] );
-				$result = $mailChimpAPI_obj->call('/lists/subscribe', array(
+				$mailChimpAPI_obj = new MailChimp( $this->options[ 'apikey' ] );
+				$result = $mailChimpAPI_obj->call( '/lists/subscribe', array(
 								'id'	=> $this->options['list'],
 								'email'=>array(
-											'email'    =>$email,
-											'euid'     =>time().rand(1,1000),
-											'leid'     =>time().rand(1,1000),
+											'email'    => $email,
+											'euid'     => time().rand(1,1000),
+											'leid'     => time().rand(1,1000),
 										),
-								'double_optin'	=> $this->options['confirm'],
+								'double_optin'	=> $this->options[ 'confirm' ],
 							), 20);
 
 
-				if ( !empty($result['leid']) ) {
+				if ( !empty( $result[ 'leid' ] ) ) {
 
 					/**
 					 * Success response
@@ -473,7 +502,7 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 					);
 				}
 
-				$return['result'] = $result;
+				$return[ 'result' ] = $result;
 
 			}
 
@@ -495,9 +524,9 @@ if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 
 			return self::$instance;
 		}
-		
+
 	}
 
 	Cherry_Mailchimp_Shortcode::get_instance();
-	
+
 }

@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: serhiiosadchyi
+ * @package Cherry_Mailchimp
  *
- * Created frontend view from template
+ * @since 1.0.0
  */
 
 
@@ -13,7 +12,7 @@ class Cherry_MailChimp_Data {
 	 * A reference to an instance of this class.
 	 *
 	 * @since 1.0.0
-	 * @var   object
+	 * @var object
 	 */
 	private static $instance = null;
 
@@ -54,11 +53,11 @@ class Cherry_MailChimp_Data {
 		 */
 
 		$defaults = apply_filters( 'cherry_the_team_default_args', array(
-				'button_text'       => __('Subscribe', 'cherry-mailchimp'),
-				'placeholder'    	=> __('enter your email', 'cherry-mailchimp'),
-				'success_message'   => __('Successfully', 'cherry-mailchimp'),
-				'fail_message'     	=> __('Failed', 'cherry-mailchimp'),
-				'warning_message'   => __('Warning!', 'cherry-mailchimp'),
+				'button_text'       => __( 'Subscribe', 'cherry-mailchimp' ),
+				'placeholder'    	=> __( 'enter your email', 'cherry-mailchimp' ),
+				'success_message'   => __( 'Successfully', 'cherry-mailchimp' ),
+				'fail_message'     	=> __( 'Failed', 'cherry-mailchimp' ),
+				'warning_message'   => __( 'Warning!', 'cherry-mailchimp' ),
 				'template'       	=> 'default.tmpl',
 				'col_xs'         	=> '12',
 				'col_sm'         	=> '6',
@@ -71,19 +70,18 @@ class Cherry_MailChimp_Data {
 		$output = '';
 
 		// The Display.
+		$output .= '<a class="subscribe-popup-link" href="#cherry-mailchimp-form">';
+        $output .= $args['button_text'];
+        $output .= '</a>';
 
-		$output.='<a class="subscribe-popup-link" href="#cherry-mailchimp-form">';
-        $output.= $args['button_text'];
-        $output.= '</a>';
-
-        $output.='<div class="cherry-mailchimp-container">';
-		$output.='<form id="cherry-mailchimp-form">';
-        $output.='<input type="hidden" name="action" value="mailchimpsubscribe">';
+        $output .= '<div class="cherry-mailchimp-container">';
+		$output .=' <form id="cherry-mailchimp-form">';
+        $output .= '<input type="hidden" name="action" value="mailchimpsubscribe">';
 
 		$output .= $this->get_mailchimp_loop( $args );
 
-		$output.='</form>';
-        $output.='</div>';
+		$output .= '</form>';
+        $output .= '</div>';
 
 		return $output;
 	}
@@ -134,7 +132,7 @@ class Cherry_MailChimp_Data {
 	public function get_mailchimp_loop( $args ) {
 
 		// Item template.
-		$template = $this->get_template_by_name( $args['template'], Cherry_Mailchimp_Shortcode::$name );
+		$template = $this->get_template_by_name( $args[ 'template' ], Cherry_Mailchimp_Shortcode::$name );
 
 		$macros    = '/%%([a-zA-Z_]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
 		$this->setup_template_data( $args );
@@ -206,8 +204,8 @@ class Cherry_MailChimp_Data {
 
 		if ( file_exists( trailingslashit( $basedir ) . $subdir ) ) {
 			$file = trailingslashit( $basedir ) . $subdir;
-		} elseif ( file_exists( plugin_dir_path( __FILE__ ) .'/../'. $subdir ) ) {
-			$file = plugin_dir_path( __FILE__ ) .'/../'. $subdir;
+		} elseif ( file_exists( plugin_dir_path( __FILE__ ) . '/../' . $subdir ) ) {
+			$file = plugin_dir_path( __FILE__ ) . '/../' . $subdir;
 		} else {
 			$file = $default;
 		}
