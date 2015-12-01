@@ -1,5 +1,7 @@
 <?php
 /**
+ * Class for frontend
+ *
  * @package Cherry_Mailchimp
  *
  * @since 1.0.0
@@ -75,7 +77,7 @@ class Cherry_MailChimp_Data {
         $output .= '</a>';
 
         $output .= '<div class="cherry-mailchimp-container">';
-		$output .=' <form id="cherry-mailchimp-form">';
+		$output .= '<form id="cherry-mailchimp-form">';
         $output .= '<input type="hidden" name="action" value="mailchimpsubscribe">';
 
 		$output .= $this->get_mailchimp_loop( $args );
@@ -125,14 +127,13 @@ class Cherry_MailChimp_Data {
 	 * Get team items.
 	 *
 	 * @since  1.0.0
-	 * @param  array $query WP_query object.
 	 * @param  array $args  The array of arguments.
 	 * @return string
 	 */
 	public function get_mailchimp_loop( $args ) {
 
 		// Item template.
-		$template = $this->get_template_by_name( $args[ 'template' ], Cherry_Mailchimp_Shortcode::$name );
+		$template = $this->get_template_by_name( $args['template'], Cherry_Mailchimp_Shortcode::$name );
 
 		$macros    = '/%%([a-zA-Z_]+[^%]{2})(=[\'\"]([a-zA-Z0-9-_\s]+)[\'\"])?%%/';
 		$this->setup_template_data( $args );

@@ -1,41 +1,41 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: serhiiosadchyi
+ * Admin options page
  *
- * Created admin options page
+ * @package Cherry_Mailchimp
+ *
+ * @since 1.0.0
  */
 
-
 // If this file is called directly, abort.
-if ( !defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 // Options fields
 $fields = array(
-	'apikey'            => __('Set your Api Key', 'cherry-mailchimp'),
-	'list'              => __('Subscribe list id', 'cherry-mailchimp'),
-	'confirm'           => __('Email confirmation', 'cherry-mailchimp'),
-	'placeholder'       => __('Placeholder of email input', 'cherry-mailchimp'),
-	'button_text'       => __('Submit button text', 'cherry-mailchimp'),
-	'success_message'   => __('Success message', 'cherry-mailchimp'),
-	'fail_message'      => __('Fail message', 'cherry-mailchimp'),
-	'warning_message'   => __('Warning message', 'cherry-mailchimp'),
+	'apikey'            => __( 'Set your Api Key', 'cherry-mailchimp' ),
+	'list'              => __( 'Subscribe list id', 'cherry-mailchimp' ),
+	'confirm'           => __( 'Email confirmation', 'cherry-mailchimp' ),
+	'placeholder'       => __( 'Placeholder of email input', 'cherry-mailchimp' ),
+	'button_text'       => __( 'Submit button text', 'cherry-mailchimp' ),
+	'success_message'   => __( 'Success message', 'cherry-mailchimp' ),
+	'fail_message'      => __( 'Fail message', 'cherry-mailchimp' ),
+	'warning_message'   => __( 'Warning message', 'cherry-mailchimp' ),
 );
 
 ?>
 
 <!-- Page Title -->
 <div class="wrap">
-	<h1><?php echo __('Plugin options', 'cherry-mailchimp') ?></h1>
+	<h1><?php echo __( 'Plugin options', 'cherry-mailchimp' ) ?></h1>
 </div>
 <!-- END Page Title -->
 
 <!-- Shortcode -->
-<?php if ( !empty($shortcode) ): ?>
+<?php if ( ! empty( $shortcod e) ): ?>
 <div class="wrap">
-	<h2><?php echo __('Shortcode', 'cherry-mailchimp') ?></h2>
+	<h2><?php echo __( 'Shortcode', 'cherry-mailchimp' ) ?></h2>
 	<div class="container">
 		<?php echo $shortcode ?>
 	</div>
@@ -48,16 +48,16 @@ $fields = array(
 	<form method="POST">
 		<table class="table table-striped">
 			<tr>
-				<td><?php echo __('Check account', 'cherry-mailchimp') ?></td>
+				<td><?php echo __( 'Check account', 'cherry-mailchimp' ) ?></td>
 				<td>
 					<?php
 
 					if ( $this->check_apikey() ) {
 						$connect_class = 'success';
-						$connect_message = __('CONNECT', 'cherry-mailchimp');
+						$connect_message = __( 'CONNECT', 'cherry-mailchimp' );
 					} else {
 						$connect_class = 'danger';
-						$connect_message = __('DISCONNECT', 'cherry-mailchimp');
+						$connect_message = __( 'DISCONNECT', 'cherry-mailchimp' );
 					}
 					?>
 
@@ -66,7 +66,7 @@ $fields = array(
 					</span>
 				</td>
 			</tr>
-			<?php foreach ($fields as $field=>$title): ?>
+			<?php foreach ( $fields as $field => $title ): ?>
 				<?php
 					// Render ui-element
 					if ( 'confirm' == $field ) {
@@ -105,7 +105,7 @@ $fields = array(
 				?>
 			<?php endforeach; ?>
 		</table>
-		<input type="submit" class="button button-primary" name="action" value="<?php echo __('Save', 'cherry-mailchimp') ?>">
+		<input type="submit" class="button button-primary" name="action" value="<?php echo __( 'Save', 'cherry-mailchimp' ) ?>">
 	</form>
 </div>
 <!-- END Options -->

@@ -8,6 +8,10 @@
     "assets/css/style.css",
     "assets/js/script.min.js",
     "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.css",
-    "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.js"
+    "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.js",
+    "admin/lib/ui-elements/ui-switcher/assets/ui-switcher.js",
+    "admin/lib/ui-elements/ui-switcher/assets/ui-switcher.scss",
+    "admin/lib/ui-elements/ui-text/assets/ui-text.js",
+    "admin/lib/ui-elements/ui-text/assets/ui-text.scss"
   ]
 }

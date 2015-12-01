@@ -8,6 +8,13 @@ Author: Cherry Team
 Author URI:
 */
 
+/**
+ * @package Cherry_Mailchimp
+ *
+ * @since 1.0.0
+ */
+
+
 if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	// simple api class for MailChimp from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
 	require_once( 'includes/MailChimp.php' );
@@ -335,9 +342,8 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-
 		private function save_options() {
-			if ( empty( $_POST[ 'action' ] ) || 'Save' != $_POST[ 'action' ] ) {
+			if ( empty( $_POST['action'] ) || 'Save' != $_POST['action'] ) {
 				return;
 			}
 
@@ -392,7 +398,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			$this->save_options();
 			$this->get_options();
 
-			if ( ! empty( $this->options[ 'apikey' ] ) && ! empty( $this->options[ 'list' ] ) ) {
+			if ( ! empty( $this->options['apikey'] ) && ! empty( $this->options['list'] ) ) {
 				$shortcode = $this->generation_shortcode();
 			}
 
@@ -407,7 +413,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			 * Return html of options page
 			 */
 
-			return include ( 'views/options_page.php' );
+			return include ( 'views/options-page.php' );
 		}
 
 		/**
@@ -436,16 +442,16 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 */
 
 		private function check_apikey() {
-			if ( empty( $this->options[ 'apikey' ] ) ) {
+			if ( empty( $this->options['apikey'] ) ) {
 				return false;
 			}
 
-			$mailChimpAPI_obj = new MailChimp( $this->options[ 'apikey' ] );
+			$mailChimpAPI_obj = new MailChimp( $this->options['apikey'] );
 			$result = $mailChimpAPI_obj->call( '/helper/ping', array(
 					'apikey'    => $this->options['apikey'],
 			), 20);
 
-			if ( ! empty( $result[ 'error' ] ) || empty( $result[ 'msg' ] ) )  {
+			if ( ! empty( $result['error'] ) || empty( $result['msg'] ) )  {
 				return false;
 			}
 
@@ -468,18 +474,18 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			 */
 
 			$return = array(
-						'status'=>'failed',
+						'status'	=> 'failed',
 					);
 
-			$email = sanitize_email( $_POST[ 'email' ] );
+			$email = sanitize_email( $_POST['email'] );
 
-			if ( is_email( $email ) && ! empty( $this->options[ 'list' ]) && $this->check_apikey() ) {
+			if ( is_email( $email ) && ! empty( $this->options['list']) && $this->check_apikey() ) {
 
 				/**
 				 * Call api
 				 */
 
-				$mailChimpAPI_obj = new MailChimp( $this->options[ 'apikey' ] );
+				$mailChimpAPI_obj = new MailChimp( $this->options['apikey'] );
 				$result = $mailChimpAPI_obj->call( '/lists/subscribe', array(
 								'id'	=> $this->options['list'],
 								'email'=>array(
@@ -491,7 +497,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 							), 20);
 
 
-				if ( !empty( $result[ 'leid' ] ) ) {
+				if ( !empty( $result['leid'] ) ) {
 
 					/**
 					 * Success response
@@ -502,7 +508,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 					);
 				}
 
-				$return[ 'result' ] = $result;
+				$return['result'] = $result;
 
 			}
 
