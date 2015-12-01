@@ -7,7 +7,6 @@ Version: 0.2
 Author: Cherry Team
 Author URI:
 */
-
 		
 if (!class_exists('Cherry_Mailchimp_Shortcode')) {
 	// simple api class for MailChimp from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php

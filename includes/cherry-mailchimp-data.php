@@ -6,6 +6,7 @@
  * Created frontend view from template
  */
 
+
 class Cherry_MailChimp_Data {
 
 	/**

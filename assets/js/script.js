@@ -2,6 +2,7 @@
  * Submit event
  */
 
+
 jQuery(document).ready(function() {
 
 	jQuery('#cherry-mailchimp-form').submit(

@@ -5,6 +5,7 @@
  * User: serhiiosadchyi
  * Class with callbacks methods
  */
+
 class Cherry_Mailchimp_Template_Callbacks {
     /**
      * Shortcode attributes array
