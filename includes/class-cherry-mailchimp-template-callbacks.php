@@ -29,39 +29,13 @@ class Cherry_Mailchimp_Template_Callbacks {
      * @since 1.0.3
      */
 
-    public function get_apikey() {
-        if (!empty($this->atts['apikey'])) {
-            return $this->atts['apikey'];
-        } else {
-            return get_option('mailchimpapikey');
-        }
-
-    }
-
-    public function get_list() {
-        if (!empty($this->atts['list'])) {
-            return $this->atts['list'];
-        } else {
-            return get_option('mailchimplist');
-        }
-
-    }
-
     public function get_placeholder() {
-        if (!empty($this->atts['content'])) {
+        if (!empty($this->atts['placeholder'])) {
             return $this->atts['placeholder'];
         } else {
             return get_option('mailchimpplaceholder');
         }
 
-    }
-
-    public function get_content() {
-        if (!empty($this->atts['content'])) {
-            return $this->atts['content'];
-        } else {
-            return get_option('mailchimpcontent');
-        }
     }
 
     public function get_button_text() {

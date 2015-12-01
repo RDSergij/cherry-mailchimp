@@ -6,24 +6,24 @@ if ( !defined( 'WPINC' ) ) {
 }
 
 $fields = array(
-	'apikey'            => __('Set your Api Key'),
-	'list'              => __('Subscribe list id'),
-	'confirm'           => __('Email confirmation'),
-	'placeholder'       => __('Placeholder of email input'),
-	'button_text'       => __('Submit button text'),
-	'success_message'   => __('Success_message'),
-	'fail_message'      => __('Fail message'),
-	'warning_message'   => __('Warning message'),
+	'apikey'            => __('Set your Api Key', 'cherry-mailchimp'),
+	'list'              => __('Subscribe list id', 'cherry-mailchimp'),
+	'confirm'           => __('Email confirmation', 'cherry-mailchimp'),
+	'placeholder'       => __('Placeholder of email input', 'cherry-mailchimp'),
+	'button_text'       => __('Submit button text', 'cherry-mailchimp'),
+	'success_message'   => __('Success_message', 'cherry-mailchimp'),
+	'fail_message'      => __('Fail message', 'cherry-mailchimp'),
+	'warning_message'   => __('Warning message', 'cherry-mailchimp'),
 );
 
 ?>
 
 <div class="wrap">
-	<h1><?php echo __('Plugin options') ?></h1>
+	<h1><?php echo __('Plugin options', 'cherry-mailchimp') ?></h1>
 
 	<?php if ( !empty($shortcode) ): ?>
 
-	<h2><?php echo __('Shortcode') ?></h2>
+	<h2><?php echo __('Shortcode', 'cherry-mailchimp') ?></h2>
 	<div class="container">
 		<?php echo $shortcode ?>
 	</div>
@@ -36,16 +36,16 @@ $fields = array(
 	<form method="POST">
 		<table class="table table-striped">
 			<tr>
-				<td><?php echo __('Check account') ?></td>
+				<td><?php echo __('Check account', 'cherry-mailchimp') ?></td>
 				<td>
 					<?php
 
 					if ($this->check_apikey()) {
 						$connect_class = 'success';
-						$connect_message = __('CONNECT');
+						$connect_message = __('CONNECT', 'cherry-mailchimp');
 					} else {
 						$connect_class = 'danger';
-						$connect_message = __('DISCONNECT');
+						$connect_message = __('DISCONNECT', 'cherry-mailchimp');
 					}
 					?>
 
@@ -92,6 +92,6 @@ $fields = array(
 				?>
 			<?php endforeach; ?>
 		</table>
-		<input type="submit" class="button button-primary" name="action" value="Save">
+		<input type="submit" class="button button-primary" name="action" value="<?php echo __('Save', 'cherry-mailchimp') ?>">
 	</form>
 </div>

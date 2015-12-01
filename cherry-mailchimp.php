@@ -70,8 +70,20 @@ if (!class_exists('Cherry_MailChimp')) {
 			 * Need for submit frontend form
 			 */
 			
-			add_action( 'wp_ajax_mailchimpsubscribe', array(&$this, 'subscriberAdd') );
-			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array(&$this, 'subscriberAdd') );
+			add_action( 'wp_ajax_mailchimpsubscribe', array(&$this, 'subscriber_add') );
+			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array(&$this, 'subscriber_add') );
+
+
+			// Style to filter for Cherry Framework
+			add_filter( 'cherry_compiler_static_css', array( $this, 'add_style_to_compiler' ) );
+
+			// Language include
+			add_action('plugins_loaded', array($this, 'include_languages') );
+
+		}
+
+		public function include_languages() {
+			load_plugin_textdomain( 'cherry-mailchimp', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
 		}
 
 
@@ -114,50 +126,35 @@ if (!class_exists('Cherry_MailChimp')) {
 		public function shortcodes( $shortcodes ) {
 
 			$shortcodes[ self::$name ] = array(
-					'name'  => __( 'MailChimp', 'cherry-team' ), // Shortcode name.
-					'desc'  => __( 'MailChimp shortcode', 'cherry-team' ),
+					'name'  => __( 'MailChimp', 'cherry-mailchimp' ), // Shortcode name.
+					'desc'  => __( 'MailChimp shortcode', 'cherry-mailchimp' ),
 					'type'  => 'single', // Can be 'wrap' or 'single'. Example: [b]this is wrapped[/b], [this_is_single]
 					'group' => 'content', // Can be 'content', 'box', 'media' or 'other'. Groups can be mixed
 					'atts'  => array( // List of shortcode params (attributes).
-							'apikey' => array(
-									'default' => 0,
-									'name'    => __( 'API key', 'cherry-team' ),
-									'desc'    => __( 'Enter api key of mailchimp account', 'cherry-team' ),
-							),
-							'list' => array(
-									'default' => '',
-									'name'    => __( 'List id', 'cherry-team' ),
-									'desc'    => __( 'Enter list id', 'cherry-team' ),
-							),
-							'class' => array(
-									'default' => '',
-									'name'    => __( 'Class', 'cherry-team' ),
-									'desc'    => __( 'Extra CSS class', 'cherry-team' ),
-							),
 							'button_text' => array(
 									'default' => '',
-									'name'    => __( 'Button', 'cherry-team' ),
-									'desc'    => __( 'Enter button title', 'cherry-team' ),
+									'name'    => __( 'Button', 'cherry-mailchimp' ),
+									'desc'    => __( 'Enter button title', 'cherry-mailchimp' ),
 							),
 							'placeholder' => array(
 									'default' => '',
-									'name'    => __( 'Placeholder', 'cherry-team' ),
-									'desc'    => __( 'Enter placeholder of email input', 'cherry-team' ),
+									'name'    => __( 'Placeholder', 'cherry-mailchimp' ),
+									'desc'    => __( 'Enter placeholder for email input', 'cherry-mailchimp' ),
 							),
 							'success_message' => array(
 									'default' => '',
-									'name'    => __( 'Success message', 'cherry-team' ),
-									'desc'    => __( 'Enter success message', 'cherry-team' ),
+									'name'    => __( 'Success message', 'cherry-mailchimp' ),
+									'desc'    => __( 'Enter success message', 'cherry-mailchimp' ),
 							),
 							'fail_message' => array(
 									'default' => '',
-									'name'    => __( 'Fail message', 'cherry-team' ),
-									'desc'    => __( 'Enter fail message', 'cherry-team' ),
+									'name'    => __( 'Fail message', 'cherry-mailchimp' ),
+									'desc'    => __( 'Enter fail message', 'cherry-mailchimp' ),
 							),
 							'warning_message' => array(
 									'default' => '',
-									'name'    => __( 'Warning message', 'cherry-team' ),
-									'desc'    => __( 'Enter warning message', 'cherry-team' ),
+									'name'    => __( 'Warning message', 'cherry-mailchimp' ),
+									'desc'    => __( 'Enter warning message', 'cherry-mailchimp' ),
 							),
 							'template' => array(
 									'type'   => 'select',
@@ -173,6 +170,21 @@ if (!class_exists('Cherry_MailChimp')) {
 					'function' => array( $this, 'do_shortcode' ), // Name of shortcode function.
 			);
 			return $shortcodes;
+		}
+
+		/**
+		 * Pass style handle to CSS compiler.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array $handles CSS handles to compile.
+		 */
+		function add_style_to_compiler( $handles ) {
+			$handles = array_merge(
+					array( 'cherry-team' => plugins_url( 'assets/css/style.css', __FILE__ ) ),
+					$handles
+			);
+			return $handles;
 		}
 
 		/**
@@ -199,19 +211,17 @@ if (!class_exists('Cherry_MailChimp')) {
 			wp_enqueue_script( 'magnific-popup' );
 
 			// Custom scripts
-			wp_register_script( 'mailchimp-script', plugins_url('assets/js/script.js', __FILE__) );
+			wp_register_script( 'mailchimp-script', plugins_url('assets/js/script.min.js', __FILE__) );
 			wp_localize_script( 'mailchimp-script', 'param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 			wp_enqueue_script( 'mailchimp-script' );
 
 			// Set up the default arguments.
 			$defaults = array(
-					'apikey'         	=> 0,
-					'list'        	 	=> 'testList',
-					'button'         	=> __('Subscribe'),
-					'placeholder'    	=> __('enter your email'),
-					'success_message'   => __('Successfully'),
-					'fail_message'     	=> __('Failed'),
-					'warning_message'   => __('Warning!'),
+					'button'         	=> __('Subscribe', 'cherry-mailchimp'),
+					'placeholder'    	=> __('enter your email', 'cherry-mailchimp'),
+					'success_message'   => __('Successfully', 'cherry-mailchimp'),
+					'fail_message'     	=> __('Failed', 'cherry-mailchimp'),
+					'warning_message'   => __('Warning!', 'cherry-mailchimp'),
 					'template'       	=> 'default.tmpl',
 					'col_xs'         	=> '12',
 					'col_sm'         	=> '6',
@@ -246,37 +256,31 @@ if (!class_exists('Cherry_MailChimp')) {
 			$macros_buttons = array(
 					'placeholder' => array(
 							'id'    => 'cherry_placeholder',
-							'value' => __( 'Placeholder', 'cherry-team' ),
+							'value' => __( 'Placeholder', 'cherry-mailchimp' ),
 							'open'  => '%%PLACEHOLDER%%',
 							'close' => '',
 					),
 					'button_text' => array(
 							'id'    => 'cherry_button_text',
-							'value' => __( 'Button text', 'cherry-team' ),
+							'value' => __( 'Button text', 'cherry-mailchimp' ),
 							'open'  => '%%BUTTON_TEXT%%',
-							'close' => '',
-					),
-					'content' => array(
-							'id'    => 'cherry_content',
-							'value' => __( 'Content', 'cherry-team' ),
-							'open'  => '%%CONTENT%%',
 							'close' => '',
 					),
 					'success_message' => array(
 							'id'    => 'cherry_success_message',
-							'value' => __( 'Success message', 'cherry-team' ),
+							'value' => __( 'Success message', 'cherry-mailchimp' ),
 							'open'  => '%%SUCCESS_MESSAGE%%',
 							'close' => '',
 					),
 					'fail_message' => array(
 							'id'    => 'cherry_fail_message',
-							'value' => __( 'Fail message', 'cherry-team' ),
+							'value' => __( 'Fail message', 'cherry-mailchimp' ),
 							'open'  => '%%FAIL_MESSAGE%%',
 							'close' => '',
 					),
 					'warning_message' => array(
 							'id'    => 'cherry_warning_message',
-							'value' => __( 'Warning message', 'cherry-team' ),
+							'value' => __( 'Warning message', 'cherry-mailchimp' ),
 							'open'  => '%%WARNING_MESSAGE%%',
 							'close' => '',
 					),
@@ -301,7 +305,6 @@ if (!class_exists('Cherry_MailChimp')) {
 			$callbacks = new Cherry_Mailchimp_Template_Callbacks( $atts );
 			$postdata['placeholder']   		= $callbacks->get_placeholder();
 			$postdata['button_text']  		= $callbacks->get_button_text();
-			$postdata['content']  			= $callbacks->get_content();
 			$postdata['success_message'] 	= $callbacks->get_success_message();
 			$postdata['fail_message']   	= $callbacks->get_fail_message();
 			$postdata['warning_message']    = $callbacks->get_warning_message();
@@ -436,7 +439,9 @@ if (!class_exists('Cherry_MailChimp')) {
 		 * @return void
 		 */
 		
-		public function subscriberAdd() {
+		public function subscriber_add() {
+
+			$this->get_options();
 
 			/**
 			 * Default fail response
@@ -445,19 +450,18 @@ if (!class_exists('Cherry_MailChimp')) {
 			$return = array(
 						'status'=>'failed',
 					);
-			$email = $_POST[ 'email' ];
-			$list = $_POST[ 'list' ];
-			if ( is_email($email) && !empty($list) ) {
 
-				$apikey = !empty($_POST[ 'apikey' ]) ? $_POST[ 'apikey' ] : $this->options['apikey'];
+			$email = $_POST[ 'email' ];
+
+			if ( is_email($email) && !empty($this->options['list']) && $this->check_apikey() ) {
 
 				/**
 				 * Call api
 				 */
 
-				$mailChimpAPI_obj = new Drewm\MailChimp($apikey);
+				$mailChimpAPI_obj = new Drewm\MailChimp($this->options['apikey']);
 				$result = $mailChimpAPI_obj->call('/lists/subscribe', array(
-								'id'	=> $list,
+								'id'	=> $this->options['list'],
 								'email'=>array(
 											'email'    =>$email,
 											'euid'     =>time().rand(1,1000),
@@ -465,6 +469,8 @@ if (!class_exists('Cherry_MailChimp')) {
 										),
 								'double_optin'	=> $this->options['confirm'],
 							), 20);
+
+
 				if (!empty($result[ 'leid' ])) {
 
 					/**
@@ -475,6 +481,8 @@ if (!class_exists('Cherry_MailChimp')) {
 							'status' => 'success'
 					);
 				}
+
+				$return['result'] = $result;
 
 			}
 			wp_send_json($return);

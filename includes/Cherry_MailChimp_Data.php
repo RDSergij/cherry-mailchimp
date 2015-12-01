@@ -56,13 +56,11 @@ class Cherry_MailChimp_Data {
 		 */
 
 		$defaults = apply_filters( 'cherry_the_team_default_args', array(
-				'apikey'         	=> 0,
-				'list'        	 	=> 'testList',
-				'button_text'       => __('Subscribe'),
-				'placeholder'    	=> __('enter your email'),
-				'success_message'   => __('Successfully'),
-				'fail_message'     	=> __('Failed'),
-				'warning_message'   => __('Warning!'),
+				'button_text'       => __('Subscribe', 'cherry-mailchimp'),
+				'placeholder'    	=> __('enter your email', 'cherry-mailchimp'),
+				'success_message'   => __('Successfully', 'cherry-mailchimp'),
+				'fail_message'     	=> __('Failed', 'cherry-mailchimp'),
+				'warning_message'   => __('Warning!', 'cherry-mailchimp'),
 				'template'       	=> 'default.tmpl',
 				'col_xs'         	=> '12',
 				'col_sm'         	=> '6',
@@ -192,10 +190,7 @@ class Cherry_MailChimp_Data {
 		require_once( 'class-cherry-mailchimp-template-callbacks.php' );
 		$callbacks = new Cherry_Mailchimp_Template_Callbacks( $atts );
 		$data = array(
-			'apikey'    		=> array( $callbacks, 'get_apikey' ),
-			'list'     			=> array( $callbacks, 'get_list' ),
 			'placeholder' 		=> array( $callbacks, 'get_placeholder' ),
-			'content'  			=> array( $callbacks, 'get_content' ),
 			'button_text'  		=> array( $callbacks, 'get_button_text' ),
 			'success_message' 	=> array( $callbacks, 'get_success_message' ),
 			'fail_message'    	=> array( $callbacks, 'get_fail_message' ),
