@@ -6,8 +6,6 @@
  *
  * @since 1.0.0
  */
-
-
 class Cherry_MailChimp_Data {
 
 	/**

@@ -33,7 +33,8 @@ $fields = array(
 <!-- END Page Title -->
 
 <!-- Shortcode -->
-<?php if ( ! empty( $shortcod e) ): ?>
+<?php if ( ! empty( $shortcod ) ) : ?>
+
 <div class="wrap">
 	<h2><?php echo __( 'Shortcode', 'cherry-mailchimp' ) ?></h2>
 	<div class="container">
@@ -66,7 +67,7 @@ $fields = array(
 					</span>
 				</td>
 			</tr>
-			<?php foreach ( $fields as $field => $title ): ?>
+			<?php foreach ( $fields as $field => $title ) : ?>
 				<?php
 					// Render ui-element
 					if ( 'confirm' == $field ) {

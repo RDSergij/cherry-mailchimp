@@ -5,7 +5,7 @@
 jQuery( document ).ready( function() {
 
 	jQuery( '#cherry-mailchimp-form' ).submit(
-		function ( e ) {
+		function( e ) {
 			var form = jQuery( this );
 			var data = jQuery( this ).serialize();
 			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -16,6 +16,7 @@ jQuery( document ).ready( function() {
 
 			// Valid email
 			if ( false == regex.test( form.find( 'input[type=email]' ).val() ) ) {
+
 				// Show warning message
 				form.find( '.message-warning' ).show( 'slow' ).delay( 5000 ).fadeOut();
 				return true;
@@ -30,7 +31,7 @@ jQuery( document ).ready( function() {
 				function( response ) {
 
 					// Show message
-					if ( response.status === 'success' ) {
+					if ( 'success' === response.status ) {
 						form.find( '.message-success' ).show( 'slow' ).delay( 5000 ).fadeOut();
 					} else {
 						form.find( '.message-fail' ).show( 'slow' ).delay( 5000 ).fadeOut();
@@ -55,4 +56,4 @@ jQuery( document ).ready( function() {
 		focus: '#cherry-mailchimp-form input[type=email]'
 	} );
 
-});
+} );

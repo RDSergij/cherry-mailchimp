@@ -1,10 +1,11 @@
 <?php
 /**
+ * Class with callbacks methods
+ *
  * @package Cherry_Mailchimp
  *
  * @since 1.0.0
  */
-
 class Cherry_Mailchimp_Template_Callbacks {
 
     /**
@@ -35,7 +36,6 @@ class Cherry_Mailchimp_Template_Callbacks {
         } else {
             return get_option( 'mailchimpplaceholder' );
         }
-
     }
 
     /**
@@ -43,7 +43,6 @@ class Cherry_Mailchimp_Template_Callbacks {
      *
      * @since 1.0.0
      */
-
     public function get_button_text() {
         if ( ! empty( $this->atts['button_text'] ) ) {
             return $this->atts['button_text'];
@@ -57,7 +56,6 @@ class Cherry_Mailchimp_Template_Callbacks {
      *
      * @since 1.0.0
      */
-
     public function get_success_message() {
         if ( ! empty( $this->atts['success_message'] ) ) {
             return $this->atts['success_message'];
@@ -71,7 +69,6 @@ class Cherry_Mailchimp_Template_Callbacks {
      *
      * @since 1.0.0
      */
-
     public function get_fail_message() {
         if ( ! empty( $this->atts['fail_message'] ) ) {
             return $this->atts['fail_message'];
@@ -85,7 +82,6 @@ class Cherry_Mailchimp_Template_Callbacks {
      *
      * @since 1.0.0
      */
-
     public function get_warning_message() {
         if ( ! empty( $this->atts['warning_message'] ) ) {
             return $this->atts['warning_message'];

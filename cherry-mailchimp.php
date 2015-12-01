@@ -1,14 +1,12 @@
 <?php
 /**
-Plugin Name:  Cherry MailChimp
-Plugin URI:
-Description: ShortCode for MailChimp
-Version: 0.2
-Author: Cherry Team
-Author URI:
-*/
-
-/**
+ * Plugin Name:  Cherry MailChimp
+ * Plugin URI:
+ * Description: ShortCode for MailChimp
+ * Version: 0.2
+ * Author: Cherry Team
+ * Author URI:
+ *
  * @package Cherry_Mailchimp
  *
  * @since 1.0.0
@@ -28,7 +26,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	 * @package Cherry_Mailchimp
 	 * @since  1.0.0
 	 */
-
 	class Cherry_Mailchimp_Shortcode {
 
 		/**
@@ -69,7 +66,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-
 		public function __construct() {
 
 			// Register shortcode on 'init'.
@@ -361,7 +357,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-
 		private function get_options() {
 			if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
 				foreach ( $this->options as $option_key => $option_value ) {
@@ -376,7 +371,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-
 		public function admin_menu() {
 			add_menu_page( 'Cherry MailChimp Options', 'Cherry MailChimp', 'manage_options', 'cherry-mailchimp-options', array( &$this, 'options_page' ), null, 10 );
 		}
@@ -387,7 +381,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-
 		public function options_page() {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( __( 'Access denied.' ) );
@@ -402,17 +395,11 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 				$shortcode = $this->generation_shortcode();
 			}
 
-			/**
-			 * Include ui-elements
-			 */
-
+			// Include ui-elements
 			include ( plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-text/ui-text.php' );
 			include ( plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php' );
 
-			/**
-			 * Return html of options page
-			 */
-
+			// Return html of options page
 			return include ( 'views/options-page.php' );
 		}
 
@@ -422,7 +409,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since  1.0.0
 		 * @return string
 		 */
-
 		private function generation_shortcode() {
 			$shortcode = '[cherry_' . self::$name;
 			if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
@@ -440,7 +426,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return bool
 		 */
-
 		private function check_apikey() {
 			if ( empty( $this->options['apikey'] ) ) {
 				return false;
@@ -464,7 +449,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-		
 		public function subscriber_add() {
 
 			$this->get_options();
