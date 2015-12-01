@@ -22,7 +22,6 @@ if (!class_exists('Cherry_MailChimp')) {
 
 		private static $instance = null;
 		public static $name = 'mailchimp';
-		private $ApiKey;
 		public $data = null;
 		public $options = array (
 				'apikey'            =>'',
@@ -58,21 +57,14 @@ if (!class_exists('Cherry_MailChimp')) {
 			add_filter( 'cherry_shortcodes_add_mailchimp_macros', array( $this, 'extend_mailchimp_macros' ) );
 			add_filter( 'cherry-shortcode-swiper-mailchimp-postdata', array( $this, 'add_mailchimp_data' ), 10, 3 );
 
-			$this->data = Cherry_MailChimp_Data::get_instance(); // сам клас відредагую пізніше
+			$this->data = Cherry_MailChimp_Data::get_instance();
 
-			/**
-			 * Create menu item
-			 */
-
+			// Create menu item
 			add_action( 'admin_menu', array(&$this, 'admin_menu') );
 
-			/**
-			 * Need for submit frontend form
-			 */
-			
+			// Need for submit frontend form
 			add_action( 'wp_ajax_mailchimpsubscribe', array(&$this, 'subscriber_add') );
 			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array(&$this, 'subscriber_add') );
-
 
 			// Style to filter for Cherry Framework
 			add_filter( 'cherry_compiler_static_css', array( $this, 'add_style_to_compiler' ) );
@@ -80,13 +72,14 @@ if (!class_exists('Cherry_MailChimp')) {
 			// Language include
 			add_action('plugins_loaded', array($this, 'include_languages') );
 
+			// Get options
+			$this->get_options();
+
 		}
 
 		public function include_languages() {
 			load_plugin_textdomain( 'cherry-mailchimp', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
 		}
-
-
 
 		/**
 		 * Adds team template directory to shortcodes templater
@@ -166,7 +159,7 @@ if (!class_exists('Cherry_MailChimp')) {
 									'desc'    => __( 'Shortcode template', 'cherry-team' ),
 							),
 					),
-					'icon'     => 'users', // Custom icon (font-awesome).
+					'icon'     => 'envelope', // Custom icon (font-awesome).
 					'function' => array( $this, 'do_shortcode' ), // Name of shortcode function.
 			);
 			return $shortcodes;
@@ -236,7 +229,6 @@ if (!class_exists('Cherry_MailChimp')) {
 			 */
 			$atts = shortcode_atts( $defaults, $atts, $shortcode );
 
-
 			return $this->data->the_mailchimp( $atts );
 		}
 
@@ -287,8 +279,6 @@ if (!class_exists('Cherry_MailChimp')) {
 			);
 			return $macros_buttons;
 		}
-
-
 
 		/**
 		 * Add team macros data to process it in mailchimp shortcode
