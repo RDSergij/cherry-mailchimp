@@ -19,99 +19,135 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/includes/class-cherry-portfolio-admin.php:104
-#: public/includes/classes/class-cherry-portfolio-shortcode.php:223
+#: cherry-mailchimp.php:124
 msgid "MailChimp"
 msgstr ""
 
-#: admin/includes/class-cherry-portfolio-admin.php:105
+#: cherry-mailchimp.php:125
 msgid "MailChimp shortcode"
 msgstr ""
 
+#: cherry-mailchimp.php:131
 msgid "Button"
 msgstr ""
 
+#: cherry-mailchimp.php:132
 msgid "Enter button title"
 msgstr ""
 
+#: cherry-mailchimp.php:136
+#: cherry-mailchimp.php:253
 msgid "Placeholder"
 msgstr ""
 
+#: cherry-mailchimp.php:137
 msgid "Enter placeholder for email input"
 msgstr ""
 
-
+#: cherry-mailchimp.php:141,265
+#: views/options_page.php:14
 msgid "Success message"
 msgstr ""
 
+#: cherry-mailchimp.php:142
 msgid "Enter success message"
 msgstr ""
 
+#: cherry-mailchimp.php:146,274
+#: views/options_page.php:15
 msgid "Fail message"
 msgstr ""
 
+#: cherry-mailchimp.php:147
 msgid "Enter fail message"
 msgstr ""
 
+#: cherry-mailchimp.php:151,277
+#: views/options_page.php:16
 msgid "Warning message"
 msgstr ""
 
+#: cherry-mailchimp.php:152
 msgid "Enter warning message"
 msgstr ""
 
+#: cherry-mailchimp.php:215
+#: includes/cherry-mailchimp-data.php:59
 msgid "Subscribe"
 msgstr ""
 
+#: cherry-mailchimp.php:216
+#: includes/cherry-mailchimp-data.php:60
 msgid "enter your email"
 msgstr ""
 
+#: cherry-mailchimp.php:217
+#: includes/cherry-mailchimp-data.php:61
 msgid "Successfully"
 msgstr ""
 
+#: cherry-mailchimp.php:218
+#: includes/cherry-mailchimp-data.php:62
 msgid "Failed"
 msgstr ""
 
+#: cherry-mailchimp.php:219
+#: includes/cherry-mailchimp-data.php:63
 msgid "Warning"
 msgstr ""
 
+#: views/options_page.php:9
 msgid "Set your Api Key"
 msgstr ""
 
+#: views/options_page.php:10
 msgid "Subscribe list id"
 msgstr ""
 
+#: views/options_page.php:11
 msgid "Email confirmation"
 msgstr ""
 
+#: views/options_page.php:12
 msgid "Placeholder of email input"
 msgstr ""
 
+#: views/options_page.php:13
 msgid "Submit button text"
 msgstr ""
 
+#: views/options_page.php:14
 msgid "Success_message"
 msgstr ""
 
+#: views/options_page.php:15
 msgid "Fail message"
 msgstr ""
 
+#: views/options_page.php:16
 msgid "Warning message"
 msgstr ""
 
+#: views/options_page.php:17
 msgid "Plugin options"
 msgstr ""
 
+#: views/options_page.php:18
 msgid "Shortcode"
 msgstr ""
 
+#: views/options_page.php:19
 msgid "Check account"
 msgstr ""
 
+#: views/options_page.php:45
 msgid "CONNECT"
 msgstr ""
 
+#: views/options_page.php:48
 msgid "DISCONNECT"
 msgstr ""
 
+#: views/options_page.php:95
 msgid "Save"
 msgstr ""

@@ -2,12 +2,9 @@
 /**
  * Created by PhpStorm.
  * User: serhiiosadchyi
- * Date: 27.11.15
- * Time: 14:35
+ *
+ * Created frontend view from template
  */
-
-//namespace Drewm;
-
 
 class Cherry_MailChimp_Data {
 
@@ -70,31 +67,15 @@ class Cherry_MailChimp_Data {
 		), $args );
 		$args = wp_parse_args( $args, $defaults );
 
-		/**
-		 * Filter the array of arguments.
-		 *
-		 * @since 1.0.0
-		 * @param array Arguments.
-		 */
-		//$args = apply_filters( 'cherry_the_team_args', $args );
 		$output = '';
-		/**
-		 * Fires before the team listing.
-		 *
-		 * @since 1.0.0
-		 * @param array $array The array of arguments.
-		 */
-		//do_action( 'cherry_team_before', $args );
 
 		// The Display.
-
-
 
 		$output.='<a class="subscribe-popup-link" href="#cherry-mailchimp-form">';
         $output.= $args['button_text'];
         $output.= '</a>';
 
-        $output.='<div class="cherry-mailchimp">';
+        $output.='<div class="cherry-mailchimp-container">';
 		$output.='<form id="cherry-mailchimp-form">';
         $output.='<input type="hidden" name="action" value="mailchimpsubscribe">';
 
@@ -103,25 +84,7 @@ class Cherry_MailChimp_Data {
 		$output.='</form>';
         $output.='</div>';
 
-		/**
-		 * Filters HTML-formatted team before display or return.
-		 *
-		 * @since 1.0.0
-		 * @param string $output The HTML-formatted team.
-		 * @param array  $query  List of WP_Post objects.
-		 * @param array  $args   The array of arguments.
-		 */
-		//$output = apply_filters( 'cherry_team_html', $output, $args );
 		return $output;
-		/**
-		 * Fires after the team listing.
-		 *
-		 * This hook fires only when "echo" is set to true.
-		 *
-		 * @since 1.0.0
-		 * @param array $array The array of arguments.
-		 */
-		//do_action( 'cherry_team_after', $args );
 	}
 
 
@@ -238,14 +201,12 @@ class Cherry_MailChimp_Data {
 		$default    = plugin_dir_path( __FILE__ ).'templates/shortcodes/mailchimp/default.tmpl';
 		$upload_dir = wp_upload_dir();
 		$basedir    = $upload_dir['basedir'];
-		$content = apply_filters(
-			'cherry_team_fallback_template',
-			'%%photo%%<div>%%name%%</div><div>%%position%%</div><div>%%content%%</div>'
-		);
+		$content = '';
+
 		if ( file_exists( trailingslashit( $basedir ) . $subdir ) ) {
 			$file = trailingslashit( $basedir ) . $subdir;
-		} elseif ( file_exists( CHERRY_TEAM_DIR . $subdir ) ) {
-			$file = CHERRY_TEAM_DIR . $subdir;
+		} elseif ( file_exists( plugin_dir_path( __FILE__ ) .'/../'. $subdir ) ) {
+			$file = plugin_dir_path( __FILE__ ) .'/../'. $subdir;
 		} else {
 			$file = $default;
 		}

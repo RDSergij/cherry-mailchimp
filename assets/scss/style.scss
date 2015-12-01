@@ -1,20 +1,36 @@
+/*
+* @section Color list
+*/
+
 $success-color: #055F10;
 $warning-color: #e3c000;
 $fail-color: #900D25;
 
+/*
+* @section Messages
+*/
 @mixin message($color: none) {
   display: none;
   color: $color;
 }
 
+/*
+* @section Link for popup
+*/
 .subscribe-popup-link {
   text-decoration: none;
 }
 
-.cherry-mailchimp {
+/*
+* @section Form Container
+*/
+.cherry-mailchimp-container {
   display: none;
 }
 
+/*
+* @section Subscribe Form
+*/
 #cherry-mailchimp-form {
 
   width: 420px;
@@ -35,14 +51,14 @@ $fail-color: #900D25;
   }
 
   .message {
-    &.fail_message {
+    &.message-fail {
       @include message($fail-color);
     }
 
-    &.success_message {
+    &.message-success {
       @include message($success-color);
     }
-    &.warning_message {
+    &.message-warning {
       @include message($warning-color);
     }
   }

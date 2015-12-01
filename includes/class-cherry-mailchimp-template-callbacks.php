@@ -3,8 +3,7 @@
 /**
  * Created by PhpStorm.
  * User: serhiiosadchyi
- * Date: 30.11.15
- * Time: 10:30
+ * Class with callbacks methods
  */
 class Cherry_Mailchimp_Template_Callbacks {
     /**
@@ -24,9 +23,9 @@ class Cherry_Mailchimp_Template_Callbacks {
     }
 
     /**
-     * Get data
+     * Get placeholder
      *
-     * @since 1.0.3
+     * @since 1.0.0
      */
 
     public function get_placeholder() {
@@ -38,6 +37,12 @@ class Cherry_Mailchimp_Template_Callbacks {
 
     }
 
+    /**
+     * Get button text
+     *
+     * @since 1.0.0
+     */
+
     public function get_button_text() {
         if (!empty($this->atts['button_text'])) {
             return $this->atts['button_text'];
@@ -45,6 +50,12 @@ class Cherry_Mailchimp_Template_Callbacks {
             return get_option('mailchimpbutton_text');
         }
     }
+
+    /**
+     * Get success message
+     *
+     * @since 1.0.0
+     */
 
     public function get_success_message() {
         if (!empty($this->atts['success_message'])) {
@@ -54,6 +65,12 @@ class Cherry_Mailchimp_Template_Callbacks {
         }
     }
 
+    /**
+     * Get faul message
+     *
+     * @since 1.0.0
+     */
+
     public function get_fail_message() {
         if (!empty($this->atts['fail_message'])) {
             return $this->atts['fail_message'];
@@ -62,31 +79,18 @@ class Cherry_Mailchimp_Template_Callbacks {
         }
     }
 
+    /**
+     * Get warning message
+     *
+     * @since 1.0.0
+     */
+
     public function get_warning_message() {
         if (!empty($this->atts['warning_message'])) {
             return $this->atts['warning_message'];
         } else {
             return get_option('mailchimpwarning_message');
         }
-    }
-
-    /**
-     * Wrap single team item into HTML wrapper with custom class
-     *
-     * @since  1.0.0
-     * @param  string $value meta value.
-     * @param  string $class custom CSS class.
-     * @return string
-     */
-    public function meta_wrap( $value = null, $class = null ) {
-        if ( ! $value ) {
-            return;
-        }
-        $css_class = 'team-meta_item';
-        if ( $class ) {
-            $css_class .= ' ' . sanitize_html_class( $class );
-        }
-        return sprintf( '<span class="%s">%s</span>', $css_class, $value );
     }
 
 }

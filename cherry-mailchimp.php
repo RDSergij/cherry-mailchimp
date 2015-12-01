@@ -9,10 +9,12 @@ Author URI:
 */
 
 		
-if (!class_exists('Cherry_MailChimp')) {
-	
-	require_once('includes/MailChimp.php'); //simple api class from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
-	require_once('includes/Cherry_MailChimp_Data.php'); //simple api class from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
+if (!class_exists('Cherry_Mailchimp_Shortcode')) {
+	// simple api class for MailChimp from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
+	require_once('includes/MailChimp.php');
+
+	// shortcode frontend generation
+	require_once('includes/cherry-mailChimp-data.php');
 
 	/**
 	 * Define plugin
@@ -26,7 +28,7 @@ if (!class_exists('Cherry_MailChimp')) {
 		public $options = array (
 				'apikey'            =>'',
 				'list'              =>'',
-				'confirm'              =>'',
+				'confirm'           =>'',
 				'placeholder'       =>'',
 				'button_text'       =>'',
 				'success_message'   =>'',
@@ -310,12 +312,12 @@ if (!class_exists('Cherry_MailChimp')) {
 		 */
 		
 		private function save_options() {
-			if ( empty($_POST[ 'action' ]) || 'Save' != $_POST[ 'action' ] ) {
+			if ( empty($_POST['action']) || 'Save' != $_POST['action'] ) {
 				return;
 			}
 
-			foreach ($this->options as $option_key=>$option_value) {
-				$option_value = !empty($_POST[$option_key]) ? $_POST[$option_key] : '';
+			foreach ( $this->options as $option_key=>$option_value ) {
+				$option_value = !empty($_POST[ $option_key ]) ? $_POST[ $option_key ] : '';
 				update_option( self::$name . $option_key, $option_value );
 			}
 
@@ -331,8 +333,8 @@ if (!class_exists('Cherry_MailChimp')) {
 
 		private function get_options() {
 			if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
-				foreach ( $this->options as $option_key => &$option_value ) {
-					$this->options[$option_key] = get_option( self::$name . $option_key );
+				foreach ( $this->options as $option_key => $option_value ) {
+					$this->options[ $option_key ] = get_option( self::$name . $option_key );
 				}
 			}
 		}
@@ -367,7 +369,7 @@ if (!class_exists('Cherry_MailChimp')) {
 			$this->get_options();
 			$this->save_options();
 
-			if ( !empty($this->options[ 'apikey' ]) && !empty($this->options[ 'list' ]) ) {
+			if ( !empty($this->options['apikey']) && !empty($this->options['list']) ) {
 				$shortcode = $this->generation_shortcode();
 			}
 
@@ -415,7 +417,7 @@ if (!class_exists('Cherry_MailChimp')) {
 					'apikey'=>$this->options['apikey'],
 			), 20);
 
-			if ( !empty($result[ 'error' ]) || empty($result[ 'msg' ]) )  {
+			if ( !empty($result['error']) || empty($result['msg']) )  {
 				return false;
 			}
 
@@ -441,7 +443,7 @@ if (!class_exists('Cherry_MailChimp')) {
 						'status'=>'failed',
 					);
 
-			$email = $_POST[ 'email' ];
+			$email = sanitize_email( $_POST['email'] );
 
 			if ( is_email($email) && !empty($this->options['list']) && $this->check_apikey() ) {
 
@@ -449,7 +451,7 @@ if (!class_exists('Cherry_MailChimp')) {
 				 * Call api
 				 */
 
-				$mailChimpAPI_obj = new Drewm\MailChimp($this->options['apikey']);
+				$mailChimpAPI_obj = new Drewm\MailChimp( $this->options['apikey'] );
 				$result = $mailChimpAPI_obj->call('/lists/subscribe', array(
 								'id'	=> $this->options['list'],
 								'email'=>array(
@@ -461,7 +463,7 @@ if (!class_exists('Cherry_MailChimp')) {
 							), 20);
 
 
-				if (!empty($result[ 'leid' ])) {
+				if ( !empty($result['leid']) ) {
 
 					/**
 					 * Success response
@@ -475,7 +477,9 @@ if (!class_exists('Cherry_MailChimp')) {
 				$return['result'] = $result;
 
 			}
-			wp_send_json($return);
+
+			// Send answer
+			wp_send_json( $return );
 		}
 
 		/**
