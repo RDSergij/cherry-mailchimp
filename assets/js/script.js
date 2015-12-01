@@ -4,7 +4,7 @@
 
 jQuery(document).ready(function() {
 
-	jQuery('.simpleFormStyleClass').submit(
+	jQuery('#cherry-mailchimp-form').submit(
 		function(e) {
 			e.preventDefault();
 			$_form = jQuery(this);

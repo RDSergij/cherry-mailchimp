@@ -135,7 +135,7 @@ if ( ! class_exists( 'UI_Checkbox' ) ) {
 				'ui-checkbox-min',
 				self::get_current_file_url() . '/assets/min/ui-checkbox.min.js',
 				array( 'jquery' ),
-				CHERRY_VERSION,
+				'1.0.0',
 				true
 			);
 

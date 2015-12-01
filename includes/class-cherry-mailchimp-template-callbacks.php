@@ -30,37 +30,70 @@ class Cherry_Mailchimp_Template_Callbacks {
      */
 
     public function get_apikey() {
-        return $this->atts['apikey'];
+        if (!empty($this->atts['apikey'])) {
+            return $this->atts['apikey'];
+        } else {
+            return get_option('mailchimpapikey');
+        }
+
     }
 
     public function get_list() {
-        return $this->atts['list'];
+        if (!empty($this->atts['list'])) {
+            return $this->atts['list'];
+        } else {
+            return get_option('mailchimplist');
+        }
+
     }
 
     public function get_placeholder() {
-        return $this->atts['placeholder'];
+        if (!empty($this->atts['content'])) {
+            return $this->atts['placeholder'];
+        } else {
+            return get_option('mailchimpplaceholder');
+        }
+
     }
 
     public function get_content() {
         if (!empty($this->atts['content'])) {
             return $this->atts['content'];
-        } else return ' ';
+        } else {
+            return get_option('mailchimpcontent');
+        }
     }
 
     public function get_button_text() {
-        return $this->atts['button_text'];
+        if (!empty($this->atts['button_text'])) {
+            return $this->atts['button_text'];
+        } else {
+            return get_option('mailchimpbutton_text');
+        }
     }
 
     public function get_success_message() {
-        return $this->atts['success_message'];
+        if (!empty($this->atts['success_message'])) {
+            return $this->atts['success_message'];
+        } else {
+            return get_option('mailchimpsuccess_message');
+        }
     }
 
     public function get_fail_message() {
-        return $this->atts['fail_message'];
+        if (!empty($this->atts['fail_message'])) {
+            return $this->atts['fail_message'];
+        } else {
+            return get_option('mailchimpfail_message');
+        }
     }
 
     public function get_warning_message() {
-        return $this->atts['warning_message'];
+        if (!empty($this->atts['warning_message'])) {
+            return $this->atts['warning_message'];
+        } else {
+            return get_option('mailchimpwarning_message');
+        }
     }
 
     /**
@@ -81,35 +114,5 @@ class Cherry_Mailchimp_Template_Callbacks {
         }
         return sprintf( '<span class="%s">%s</span>', $css_class, $value );
     }
-    /**
-     * Wrap person email into link with mailto:
-     *
-     * @since  1.0.0
-     * @param  string $email Person email.
-     * @return string
-     */
-    public function mail_wrap( $email ) {
-        if ( ! is_email( $email ) ) {
-            return;
-        }
-        return sprintf( '<a href="mailto:%1$s" class="team-email-link">%1$s</a>', $email );
-    }
-    /**
-     * Get user website HTML
-     *
-     * @since  1.0.0
-     *
-     * @param  string $url  personal wesite URL.
-     * @param  string $name person name.
-     * @return string
-     */
-    public function get_website_html( $url = null, $name = null ) {
-        $format = apply_filters(
-            'cherry_team_personal_website_format',
-            '<a href="%s" class="team-website" rel="nofollow">%s</a>'
-        );
-        $url   = esc_url( $url );
-        $label = __( 'Personal website', 'cherry-team' );
-        return sprintf( $format, $url, $label );
-    }
+
 }

@@ -27,6 +27,7 @@ if (!class_exists('Cherry_MailChimp')) {
 		public $options = array (
 				'apikey'            =>'',
 				'list'              =>'',
+				'confirm'              =>'',
 				'placeholder'       =>'',
 				'button_text'       =>'',
 				'success_message'   =>'',
@@ -64,12 +65,6 @@ if (!class_exists('Cherry_MailChimp')) {
 			 */
 
 			add_action( 'admin_menu', array(&$this, 'admin_menu') );
-
-			/**
-			 * Create shortcode
-			 */
-			
-			//add_shortcode( 'simplesubscribe', array(&$this, 'subscribeView') );
 
 			/**
 			 * Need for submit frontend form
@@ -205,6 +200,7 @@ if (!class_exists('Cherry_MailChimp')) {
 
 			// Custom scripts
 			wp_register_script( 'mailchimp-script', plugins_url('assets/js/script.js', __FILE__) );
+			wp_localize_script( 'mailchimp-script', 'param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 			wp_enqueue_script( 'mailchimp-script' );
 
 			// Set up the default arguments.
@@ -373,16 +369,21 @@ if (!class_exists('Cherry_MailChimp')) {
 				wp_die( __( 'Access denied.' ) );
 			}
 
+			wp_enqueue_style( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
+
 			$this->get_options();
 			$this->save_options();
-			
-			$shortcode = $this->generation_shortcode();
+
+			if ( !empty($this->options[ 'apikey' ]) && !empty($this->options[ 'list' ]) ) {
+				$shortcode = $this->generation_shortcode();
+			}
 
 			/**
 			 * Include ui-elements
 			 */
 
 			include (plugin_dir_path( __FILE__ ).'/admin/lib/ui-elements/ui-text/ui-text.php');
+			include (plugin_dir_path( __FILE__ ).'/admin/lib/ui-elements/ui-switcher/ui-switcher.php');
 
 			/**
 			 * Return html of options page
@@ -407,43 +408,25 @@ if (!class_exists('Cherry_MailChimp')) {
 			return $shortcode;
 		}
 
-
-
 		/**
-		 * Shortcode view
-		 *
-		 * @param array
-		 * @return string
+		 * Check apikey
 		 */
-		
-		public function subscribeView( $atts ) {
-			 $args = shortcode_atts( array(
-				'apikey'			=> $this->ApiKey,
-				'button' 			=> 'Subscribe',
-				'list' 				=> '0', //list id
-				'placeholder' 		=> 'Please, input your email',
-				'class' 			=> '',
-				'id'				=> 'simple_subscribe_form',
-				'success_message'	=> 'Subscribe successful',
-				'fail_message'		=> 'Subscribe failed',
-			), $atts );
 
-			wp_register_style( 'simple-subscribe-style', plugins_url('assets/css/style.css', __FILE__) );
-			wp_enqueue_style( 'simple-subscribe-style' );
-			
-			wp_deregister_script( 'jquery' );
-			wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js');
-			wp_enqueue_script( 'jquery' );
-			
-			wp_register_script( 'simple-subscribe-script', plugins_url('assets/js/script.js', __FILE__) );
-			wp_localize_script( 'simple-subscribe-script', 'param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));  
-			wp_enqueue_script( 'simple-subscribe-script' );
+		private function check_apikey() {
+			if ( empty($this->options['apikey']) ) {
+				return false;
+			}
 
-			/**
-			 * Return shortcode html
-			 */
+			$mailChimpAPI_obj = new Drewm\MailChimp($this->options['apikey']);
+			$result = $mailChimpAPI_obj->call('/helper/ping', array(
+					'apikey'=>$this->options['apikey'],
+			), 20);
 
-			return include ( 'views/shortcode.php' );
+			if ( !empty($result[ 'error' ]) || empty($result[ 'msg' ]) )  {
+				return false;
+			}
+
+			return true;
 		}
 
 		/**
@@ -474,12 +457,13 @@ if (!class_exists('Cherry_MailChimp')) {
 
 				$mailChimpAPI_obj = new Drewm\MailChimp($apikey);
 				$result = $mailChimpAPI_obj->call('/lists/subscribe', array(
-								'id'=>$list,
+								'id'	=> $list,
 								'email'=>array(
 											'email'    =>$email,
 											'euid'     =>time().rand(1,1000),
 											'leid'     =>time().rand(1,1000),
 										),
+								'double_optin'	=> $this->options['confirm'],
 							), 20);
 				if (!empty($result[ 'leid' ])) {
 

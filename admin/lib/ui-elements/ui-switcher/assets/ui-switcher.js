@@ -57,5 +57,5 @@
 			})
 		}
 	}
-	//CHERRY_API.ui_elements.switcher.init( $('body') );
+	CHERRY_API.ui_elements.switcher.init( $('body') );
 }(jQuery));

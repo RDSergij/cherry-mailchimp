@@ -42,6 +42,7 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 			$this->settings = wp_parse_args( $args, $this->defaults_settings );
 
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
+			self::enqueue_assets();
 		}
 
 		/**
@@ -83,9 +84,11 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 		 * @since  4.0.0
 		 */
 		public static function enqueue_assets(){
+			//echo self::get_current_file_url() . '/assets/min/ui-switcher.min.js';
+			//wp_die();
 			wp_enqueue_script(
 				'ui-switcher-min',
-				self::get_current_file_url() . '/assets/min/ui-switcher.min.js',
+				self::get_current_file_url() . '/assets/ui-switcher.js',
 				array( 'jquery' ),
 				'1.0.0',
 				true
