@@ -33,7 +33,7 @@ $fields = array(
 <!-- END Page Title -->
 
 <!-- Shortcode -->
-<?php if ( ! empty( $shortcod ) ) : ?>
+<?php if ( ! empty( $shortcode ) ) : ?>
 
 <div class="wrap">
 	<h2><?php echo __( 'Shortcode', 'cherry-mailchimp' ) ?></h2>
