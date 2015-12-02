@@ -50,7 +50,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @var array
 		 */
-		public $options = array (
+		public $options = array(
 				'apikey'            => '',
 				'list'              => '',
 				'confirm'           => '',
@@ -95,7 +95,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			add_filter( 'cherry_compiler_static_css', array( $this, 'add_style_to_compiler' ) );
 
 			// Language include
-			add_action('plugins_loaded', array( $this, 'include_languages' ) );
+			add_action( 'plugins_loaded', array( $this, 'include_languages' ) );
 
 			// Get options
 			$this->get_options();
@@ -344,7 +344,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			}
 
 			foreach ( $this->options as $option_key => $option_value ) {
-				$option_value = ! empty($_POST[ $option_key ]) ? $_POST[ $option_key ] : '';
+				$option_value = ! empty( $_POST[ $option_key ] ) ? $_POST[ $option_key ] : '';
 				update_option( self::$name . $option_key, $option_value );
 			}
 
@@ -379,7 +379,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * Admin options page
 		 *
 		 * @since 1.0.0
-		 * @return void
+		 * @return string
 		 */
 		public function options_page() {
 			if ( ! current_user_can( 'manage_options' ) ) {
@@ -396,11 +396,11 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			}
 
 			// Include ui-elements
-			include ( plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-text/ui-text.php' );
-			include ( plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php' );
+			include plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-text/ui-text.php';
+			include plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php';
 
 			// Return html of options page
-			return include ( 'views/options-page.php' );
+			return include_once 'views/options-page.php';
 		}
 
 		/**
@@ -436,7 +436,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 					'apikey'    => $this->options['apikey'],
 			), 20);
 
-			if ( ! empty( $result['error'] ) || empty( $result['msg'] ) )  {
+			if ( ! empty( $result['error'] ) || empty( $result['msg'] ) ) {
 				return false;
 			}
 
@@ -463,7 +463,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			$email = sanitize_email( $_POST['email'] );
 
-			if ( is_email( $email ) && ! empty( $this->options['list']) && $this->check_apikey() ) {
+			if ( is_email( $email ) && ! empty( $this->options['list'] ) && $this->check_apikey() ) {
 
 				/**
 				 * Call api
@@ -472,23 +472,22 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 				$mailChimpAPI_obj = new MailChimp( $this->options['apikey'] );
 				$result = $mailChimpAPI_obj->call( '/lists/subscribe', array(
 								'id'	=> $this->options['list'],
-								'email'=>array(
+								'email'	=> array(
 											'email'    => $email,
-											'euid'     => time().rand(1,1000),
-											'leid'     => time().rand(1,1000),
+											'euid'     => time() . rand( 1, 1000 ),
+											'leid'     => time() . rand( 1, 1000 ),
 										),
-								'double_optin'	=> $this->options[ 'confirm' ],
+								'double_optin'	=> $this->options['confirm'],
 							), 20);
 
-
-				if ( !empty( $result['leid'] ) ) {
+				if ( ! empty( $result['leid'] ) ) {
 
 					/**
 					 * Success response
 					 */
 
 					$return = array(
-							'status' => 'success'
+							'status' => 'success',
 					);
 				}
 
@@ -509,14 +508,11 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		public static function get_instance() {
 
 			// If the single instance hasn't been set, set it now.
-			if ( null == self::$instance )
+			if ( null == self::$instance ) {
 				self::$instance = new self;
-
+			}
 			return self::$instance;
 		}
-
 	}
-
 	Cherry_Mailchimp_Shortcode::get_instance();
-
 }

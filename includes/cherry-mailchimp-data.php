@@ -2,8 +2,7 @@
 /**
  * Class for frontend
  *
- * @package Cherry_Mailchimp
- *
+ * @package Cherry_MailChimp_Data
  * @since 1.0.0
  */
 class Cherry_MailChimp_Data {
@@ -12,11 +11,12 @@ class Cherry_MailChimp_Data {
 	 * A reference to an instance of this class.
 	 *
 	 * @since 1.0.0
-	 * @var object
+	 * return array
 	 */
 	private static $instance = null;
 
 	/**
+	 *
 	 * The array of arguments for template file.
 	 *
 	 * @since 1.0.0
@@ -85,7 +85,6 @@ class Cherry_MailChimp_Data {
 
 		return $output;
 	}
-
 
 	/**
 	 * Callback to replace macros with data

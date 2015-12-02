@@ -54,6 +54,5 @@ jQuery( document ).ready( function() {
 		type: 'inline',
 		preloader: false,
 		focus: '#cherry-mailchimp-form input[type=email]'
-	} );
-
-} );
+	});
+});

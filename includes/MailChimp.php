@@ -1,9 +1,7 @@
 <?php
 
-//namespace Drewm;
-
 /**
- * Super-simple, minimum abstraction MailChimp API v2 wrapper
+ * Simple MailChimp API v2
  *
  * Uses curl if available, falls back to file_get_contents and HTTP stream.
  * This probably has more comments than code.
