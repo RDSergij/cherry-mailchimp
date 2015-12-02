@@ -19,7 +19,6 @@ if ( ! class_exists( 'UI_Text' ) ) {
 
 	/**
 	 * Class UI_Text generic ui-element text field
-	 *
 	 */
 	class UI_Text {
 
@@ -65,7 +64,7 @@ if ( ! class_exists( 'UI_Text' ) ) {
 		 */
 		public function render() {
 			$html = '';
-			if( '' !== $this->settings['label'] ) {
+			if ( '' !== $this->settings['label'] ) {
 				$html .= '<label for="' . $this->settings['id'] . '">' . $this->settings['label'] . '</label> ';
 			}
 			$html .= '<input type="' . $this->settings['type'] . '" id="' . $this->settings['id']  . '" class="widefat cherry-ui-text ' . $this->settings['class'] . '"  name="' . $this->settings['name'] . '"  value="' . esc_html( $this->settings['value'] ) . '" placeholder="' . $this->settings['placeholder'] . '">';

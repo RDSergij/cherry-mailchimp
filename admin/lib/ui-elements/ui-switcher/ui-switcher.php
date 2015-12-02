@@ -19,7 +19,6 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 
 	/**
 	 * Class UI_Switcher generic ui-element switcher
-	 *
 	 */
 	class UI_Switcher {
 
@@ -43,9 +42,9 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 				'true_toggle'	=> 'On',
 				'false_toggle'	=> 'Off',
 				'true_slave'	=> '',
-				'false_slave'	=> ''
+				'false_slave'	=> '',
 			),
-			'style'				=> 'normal', //large, normal, small
+			'style'				=> 'normal',
 			'class'				=> '',
 		);
 
@@ -68,8 +67,8 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 		 * @since  4.0.0
 		 */
 		public function render() {
-			$data_attr_line = ( !empty( $this->settings['toggle']['true_slave'] ) ) ? 'data-true-slave="' . $this->settings['toggle']['true_slave'] . '"' : '';
-			$data_attr_line .= ( !empty( $this->settings['toggle']['false_slave'] ) ) ? ' data-false-slave="' . $this->settings['toggle']['false_slave'] . '"' : '';
+			$data_attr_line = ( ! empty( $this->settings['toggle']['true_slave'] ) ) ? 'data-true-slave="' . $this->settings['toggle']['true_slave'] . '"' : '';
+			$data_attr_line .= ( ! empty( $this->settings['toggle']['false_slave'] ) ) ? ' data-false-slave="' . $this->settings['toggle']['false_slave'] . '"' : '';
 
 			$html = '';
 			$html .= '<div class="cherry-switcher-wrap size-' . $this->settings['style'] . ' ' . $this->settings['class'] . '">';

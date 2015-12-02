@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Simple MailChimp API v2
  *
@@ -12,6 +11,14 @@
  *
  * @author Drew McLellan <drew.mclellan@gmail.com>
  * @version 1.1.1
+ *
+ * @package Cherry_Mailchimp
+ */
+
+/**
+ * Class MailChimp api .
+ *
+ * @since 1.1.2
  */
 class MailChimp
 {
@@ -44,7 +51,7 @@ class MailChimp
 	 * @param string $api_key Your MailChimp API key
 	 * @return void
 	 */
-	public function __construct($api_key) {
+	public function __construct( $api_key ) {
 		$this->api_key = $api_key;
 		list( , $datacentre) = explode( '-', $this->api_key );
 		$this->api_endpoint = str_replace('<dc>', $datacentre, $this->api_endpoint);
@@ -53,7 +60,7 @@ class MailChimp
 	/**
 	 * Validates MailChimp API Key
 	 */
-	public function validateApiKey() {
+	public function validate_api_key() {
 		$request = $this->call('helper/ping');
 		return ! empty( $request );
 	}
@@ -79,7 +86,7 @@ class MailChimp
 		$args['apikey'] = $this->api_key;
 
 		$url = $this->api_endpoint . '/' . $method . '.json';
-		$json_data = json_encode($args);
+		$json_data = json_encode( $args );
 
 		if ( function_exists('curl_init') && function_exists('curl_setopt') ) {
 			$ch = curl_init();
@@ -96,7 +103,7 @@ class MailChimp
 			$result = curl_exec( $ch );
 			curl_close( $ch );
 		} else {
-			$result    = file_get_contents($url, null, stream_context_create(array(
+			$result = file_get_contents($url, null, stream_context_create(array(
 				'http' => array(
 					'protocol_version' => 1.1,
 					'user_agent'       => 'PHP-MCAPI/2.0',
