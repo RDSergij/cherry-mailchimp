@@ -15,7 +15,7 @@ jQuery( document ).ready( function() {
 			form.find( '.message' ).hide();
 
 			// Valid email
-			if ( false == regex.test( form.find( 'input[type=email]' ).val() ) ) {
+			if ( false === regex.test( form.find( 'input[type=email]' ).val() ) ) {
 
 				// Show warning message
 				form.find( '.message-warning' ).show( 'slow' ).delay( 5000 ).fadeOut();
@@ -27,7 +27,7 @@ jQuery( document ).ready( function() {
 			form.find( 'button' ).attr( 'disabled', 'disabled' );
 
 			// Send data
-			jQuery.post( param.ajaxurl, data,
+			jQuery.post( window.cherryMailchimpParam.ajaxurl, data,
 				function( response ) {
 
 					// Show message

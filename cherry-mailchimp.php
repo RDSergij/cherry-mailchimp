@@ -235,7 +235,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			// Custom scripts
 			wp_register_script( 'mailchimp-script', plugins_url( 'assets/js/script.min.js', __FILE__ ) );
-			wp_localize_script( 'mailchimp-script', 'param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+			wp_localize_script( 'mailchimp-script', 'cherryMailchimpParam', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'mailchimp-script' );
 
 			// Set up the default arguments.
