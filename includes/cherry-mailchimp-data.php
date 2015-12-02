@@ -9,6 +9,7 @@
  * @link      http://www.cherryframework.com/
  * @copyright 2015 Cherry Team
  */
+
 /**
  * Class for MailChimp data.
  *
@@ -80,17 +81,17 @@ class Cherry_MailChimp_Data {
 
 		// The Display.
 		$output .= '<a class="subscribe-popup-link" href="#cherry-mailchimp-form">';
-        $output .= $args['button_text'];
-        $output .= '</a>';
+		$output .= $args['button_text'];
+		$output .= '</a>';
 
-        $output .= '<div class="cherry-mailchimp-container">';
+		$output .= '<div class="cherry-mailchimp-container">';
 		$output .= '<form id="cherry-mailchimp-form">';
-        $output .= '<input type="hidden" name="action" value="mailchimpsubscribe">';
+		$output .= '<input type="hidden" name="action" value="mailchimpsubscribe">';
 
 		$output .= $this->get_mailchimp_loop( $args );
 
 		$output .= '</form>';
-        $output .= '</div>';
+		$output .= '</div>';
 
 		return $output;
 	}

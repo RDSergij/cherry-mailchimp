@@ -31,7 +31,7 @@
 					$('.sw-disable', this).removeClass('selected');
 
 				}
-			})
+			});
 
 			$('.cherry-switcher-wrap', target).on('click', function () {
 				var
@@ -56,6 +56,6 @@
 				}
 			})
 		}
-	}
+	};
 	CHERRY_API.ui_elements.switcher.init( $('body') );
 }(jQuery));
