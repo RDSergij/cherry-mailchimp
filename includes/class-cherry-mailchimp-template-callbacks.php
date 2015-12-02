@@ -1,10 +1,21 @@
 <?php
 /**
- * Class with callbacks methods
+ * Define callback functions for templater
  *
- * @package Cherry_Mailchimp
+ * @package   Cherry_MailChimp
+ * @author    Cherry Team
+ * @license   GPL-2.0+
+ * @link      http://www.cherryframework.com/
+ * @copyright 2015 Cherry Team
+ */
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+/**
+ * Callbcks for MailChimp shortcode templater
  *
- * @since 1.0.0
+ * @since  1.0.0
  */
 class Cherry_Mailchimp_Template_Callbacks {
 

@@ -1,8 +1,17 @@
 <?php
 /**
- * Class for frontend
+ * Cherry MailChimp Data class.
+ * main public class. Grab team data form database and output it
  *
- * @package Cherry_MailChimp_Data
+ * @package   Cherry_MailChimp
+ * @author    Cherry Team
+ * @license   GPL-2.0+
+ * @link      http://www.cherryframework.com/
+ * @copyright 2015 Cherry Team
+ */
+/**
+ * Class for MailChimp data.
+ *
  * @since 1.0.0
  */
 class Cherry_MailChimp_Data {
@@ -11,7 +20,7 @@ class Cherry_MailChimp_Data {
 	 * A reference to an instance of this class.
 	 *
 	 * @since 1.0.0
-	 * return array
+	 * @var   object
 	 */
 	private static $instance = null;
 
