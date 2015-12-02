@@ -19,7 +19,12 @@ if ( ! defined( 'WPINC' ) ) {
  * @since  1.0.0
  */
 class Cherry_Mailchimp_Template_Callbacks {
-
+	/**
+	 * Shortcode attributes
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	public $atts = array();
 
 	/**

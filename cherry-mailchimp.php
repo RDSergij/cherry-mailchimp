@@ -15,7 +15,7 @@
 
 if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	// simple api class for MailChimp from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
-	require_once( 'includes/MailChimp.php' );
+	require_once( 'includes/mailchimp-api.php' );
 
 	// shortcode frontend generation
 	require_once( 'includes/cherry-mailChimp-data.php' );
