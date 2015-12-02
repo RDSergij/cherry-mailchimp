@@ -44,8 +44,7 @@ class MailChimp
 	 * @param string $api_key Your MailChimp API key
 	 * @return void
 	 */
-	public function __construct($api_key)
-	{
+	public function __construct($api_key) {
 		$this->api_key = $api_key;
 		list( , $datacentre) = explode( '-', $this->api_key );
 		$this->api_endpoint = str_replace('<dc>', $datacentre, $this->api_endpoint);
@@ -54,10 +53,9 @@ class MailChimp
 	/**
 	 * Validates MailChimp API Key
 	 */
-	public function validateApiKey()
-	{
+	public function validateApiKey() {
 		$request = $this->call('helper/ping');
-		return !empty( $request );
+		return ! empty( $request );
 	}
 
 	/**
@@ -66,8 +64,7 @@ class MailChimp
 	 * @param  array  $args   An array of arguments to pass to the method. Will be json-encoded for you.
 	 * @return array          Associative array of json decoded API response.
 	 */
-	public function call($method, $args = array(), $timeout = 10)
-	{
+	public function call($method, $args = array(), $timeout = 10) {
 		return $this->makeRequest($method, $args, $timeout);
 	}
 
@@ -81,7 +78,7 @@ class MailChimp
 	{
 		$args['apikey'] = $this->api_key;
 
-		$url = $this->api_endpoint.'/'.$method.'.json';
+		$url = $this->api_endpoint . '/' . $method . '.json';
 		$json_data = json_encode($args);
 
 		if ( function_exists('curl_init') && function_exists('curl_setopt') ) {

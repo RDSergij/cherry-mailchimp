@@ -11,14 +11,30 @@
  */
 
 // If this file is called directly, abort.
-if ( !defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 if ( ! class_exists( 'UI_Switcher' ) ) {
+
+	/**
+	 * Class UI_Switcher generic ui-element switcher
+	 *
+	 */
 	class UI_Switcher {
 
+		/**
+		 * Switcher settings
+		 *
+		 * @var array
+		 */
 		private $settings = array();
+
+		/**
+		 * Default settings
+		 *
+		 * @var array
+		 */
 		private $defaults_settings = array(
 			'id'				=> 'cherry-ui-swither-id',
 			'name'				=> 'cherry-ui-swither-name',
@@ -32,13 +48,14 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 			'style'				=> 'normal', //large, normal, small
 			'class'				=> '',
 		);
+
 		/**
 		 * Constructor method for the UI_Switcher class.
 		 *
 		 * @since  4.0.0
 		 */
 		function __construct( $args = array() ) {
-			$this->defaults_settings['id'] = 'cherry-ui-swither-'.uniqid();
+			$this->defaults_settings['id'] = 'cherry-ui-swither-' . uniqid();
 			$this->settings = wp_parse_args( $args, $this->defaults_settings );
 
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
@@ -83,9 +100,7 @@ if ( ! class_exists( 'UI_Switcher' ) ) {
 		 *
 		 * @since  4.0.0
 		 */
-		public static function enqueue_assets(){
-			//echo self::get_current_file_url() . '/assets/min/ui-switcher.min.js';
-			//wp_die();
+		public static function enqueue_assets() {
 			wp_enqueue_script(
 				'ui-switcher-min',
 				self::get_current_file_url() . '/assets/ui-switcher.js',

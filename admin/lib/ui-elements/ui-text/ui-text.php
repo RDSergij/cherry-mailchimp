@@ -11,16 +11,32 @@
  */
 
 // If this file is called directly, abort.
-if ( !defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 if ( ! class_exists( 'UI_Text' ) ) {
+
+	/**
+	 * Class UI_Text generic ui-element text field
+	 *
+	 */
 	class UI_Text {
 
+		/**
+		 * Switcher settings
+		 *
+		 * @var array
+		 */
 		private $settings = array();
+
+		/**
+		 * Default settings
+		 *
+		 * @var array
+		 */
 		private $defaults_settings = array(
-			'type'			=> 'text',// text, email, password, search
+			'type'			=> 'text', // text, email, password, search
 			'id'			=> 'cherry-ui-input-id',
 			'name'			=> 'cherry-ui-input-name',
 			'value'			=> '',
@@ -35,7 +51,7 @@ if ( ! class_exists( 'UI_Text' ) ) {
 		 * @since  4.0.0
 		 */
 		function __construct( $args = array() ) {
-			$this->defaults_settings['id'] = 'cherry-ui-input-text-'.uniqid();
+			$this->defaults_settings['id'] = 'cherry-ui-input-text-' . uniqid();
 			$this->settings = wp_parse_args( $args, $this->defaults_settings );
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
 
@@ -49,7 +65,7 @@ if ( ! class_exists( 'UI_Text' ) ) {
 		 */
 		public function render() {
 			$html = '';
-			if( '' !== $this->settings['label'] ){
+			if( '' !== $this->settings['label'] ) {
 				$html .= '<label for="' . $this->settings['id'] . '">' . $this->settings['label'] . '</label> ';
 			}
 			$html .= '<input type="' . $this->settings['type'] . '" id="' . $this->settings['id']  . '" class="widefat cherry-ui-text ' . $this->settings['class'] . '"  name="' . $this->settings['name'] . '"  value="' . esc_html( $this->settings['value'] ) . '" placeholder="' . $this->settings['placeholder'] . '">';
@@ -63,13 +79,6 @@ if ( ! class_exists( 'UI_Text' ) ) {
 		 * @since  4.0.0
 		 */
 		public static function get_current_file_url() {
-			/*$abs_path = str_replace('/', '\\', ABSPATH);
-			$assets_url = dirname( __FILE__ );
-			$assets_url = str_replace( $abs_path, '', $assets_url );
-			$assets_url = site_url().'/'.$assets_url;
-			$assets_url = str_replace( '\\', '/', $assets_url );*/
-
-
 			$assets_url = dirname( __FILE__ );
 			$site_url = site_url();
 			$assets_url = str_replace( untrailingslashit( ABSPATH ), $site_url, $assets_url );
@@ -83,8 +92,7 @@ if ( ! class_exists( 'UI_Text' ) ) {
 		 *
 		 * @since  4.0.0
 		 */
-		public static function enqueue_assets(){
-
+		public static function enqueue_assets() {
 			wp_enqueue_style(
 				'ui-text',
 				self::get_current_file_url() . '/assets/ui-text.css',
@@ -93,6 +101,5 @@ if ( ! class_exists( 'UI_Text' ) ) {
 				'all'
 			);
 		}
-
 	}
 }
