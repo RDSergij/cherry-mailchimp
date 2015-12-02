@@ -77,11 +77,11 @@ class MailChimp
 
 	/**
 	 * Performs the underlying HTTP request. Not very exciting
-	 * @param  string $method.
-	 * @param  array  $args.
+	 * @param  string $method Api Method.
+	 * @param  array  $args Api parameters.
 	 * @return array
 	 */
-	private function make_request($method, $args = array(), $timeout = 10 ) {
+	private function make_request( $method, $args = array(), $timeout = 10 ) {
 
 		$args['apikey'] = $this->api_key;
 
@@ -91,7 +91,7 @@ class MailChimp
 		if ( function_exists( 'curl_init' ) && function_exists( 'curl_setopt' ) ) {
 			$ch = curl_init();
 			curl_setopt( $ch, CURLOPT_URL, $url );
-			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json' ) );
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ) );
 			curl_setopt( $ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0' );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 			curl_setopt( $ch, CURLOPT_TIMEOUT, $timeout );
@@ -108,9 +108,7 @@ class MailChimp
 					'protocol_version' => 1.1,
 					'user_agent'       => 'PHP-MCAPI/2.0',
 					'method'           => 'POST',
-					'header'           => "Content-type: application/json\r\n".
-						"Connection: close\r\n" .
-						"Content-length: " . strlen( $json_data ) . "\r\n",
+					'header'           => "Content-type: application/json\r\nConnection: close\r\nContent-length: " . strlen( $json_data ) . "\r\n",
 					'content'          => $json_data,
 				),
 			)));
