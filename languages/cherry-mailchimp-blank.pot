@@ -58,6 +58,9 @@ msgstr ""
 msgid "Fail message"
 msgstr ""
 
+msgid "Subscribed failed"
+msgstr ""
+
 #: cherry-mailchimp.php:147
 msgid "Enter fail message"
 msgstr ""
@@ -69,6 +72,9 @@ msgstr ""
 
 #: cherry-mailchimp.php:152
 msgid "Enter warning message"
+msgstr ""
+
+msgid "Email is incorect"
 msgstr ""
 
 #: cherry-mailchimp.php:215
@@ -86,6 +92,9 @@ msgstr ""
 msgid "Successfully"
 msgstr ""
 
+msgid "Subscribed successfully"
+msgstr ""
+
 #: cherry-mailchimp.php:218
 #: includes/cherry-mailchimp-data.php:62
 msgid "Failed"
@@ -97,15 +106,21 @@ msgid "Warning"
 msgstr ""
 
 #: views/options_page.php:9
-msgid "Set your Api Key"
+msgid "Set your Api Key (find in MailChimp account)"
 msgstr ""
 
 #: views/options_page.php:10
 msgid "Subscribe list id"
 msgstr ""
 
+msgid "List"
+msgstr ""
+
 #: views/options_page.php:11
 msgid "Email confirmation"
+msgstr ""
+
+msgid "Confirmation"
 msgstr ""
 
 #: views/options_page.php:12
