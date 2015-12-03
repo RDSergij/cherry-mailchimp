@@ -14,15 +14,56 @@ if ( ! defined( 'WPINC' ) ) {
 
 // Options fields
 $fields = array(
-	'apikey'            => __( 'Set your Api Key', 'cherry-mailchimp' ),
-	'list'              => __( 'Subscribe list id', 'cherry-mailchimp' ),
-	'confirm'           => __( 'Email confirmation', 'cherry-mailchimp' ),
-	'placeholder'       => __( 'Placeholder of email input', 'cherry-mailchimp' ),
-	'button_text'       => __( 'Submit button text', 'cherry-mailchimp' ),
-	'success_message'   => __( 'Success message', 'cherry-mailchimp' ),
-	'fail_message'      => __( 'Fail message', 'cherry-mailchimp' ),
-	'warning_message'   => __( 'Warning message', 'cherry-mailchimp' ),
+	'apikey'            => array(
+									'title'         => __( 'Api Key', 'cherry-mailchimp' ),
+									'description'   => __( 'Set your Api Key (find in MailChimp account)', 'cherry-mailchimp' ),
+									'value'         => __( '', 'cherry-mailchimp' ),
+								),
+	'list'              => array(
+									'title'        => __( 'List' ),
+									'description'  => __( 'Subscribe list id', 'cherry-mailchimp' ),
+									'value'        => __( '', 'cherry-mailchimp' ),
+								),
+	'confirm'           => array(
+									'title'        => __( 'Confirmation' ),
+									'description'  => __( 'Email confirmation', 'cherry-mailchimp' ),
+									'value'        => __( '', 'cherry-mailchimp' ),
+								),
+	'placeholder'       => array(
+									'title'        => __( 'Placeholder' ),
+									'description'  => __( 'Placeholder of email input', 'cherry-mailchimp' ),
+									'value'        => __( 'Enter your email', 'cherry-mailchimp' ),
+								),
+	'button_text'       => array(
+									'title'        => __( 'Button' ),
+									'description'  => __( 'Submit button text', 'cherry-mailchimp' ),
+									'value'        => __( 'Subscribe', 'cherry-mailchimp' ),
+								),
+	'success_message'   => array(
+									'title'        => __( 'Success message', 'cherry-mailchimp' ),
+									'description'  => __( 'Enter success message', 'cherry-mailchimp' ),
+									'value'        => __( 'Subscribed successfully', 'cherry-mailchimp' ),
+								),
+	'fail_message'      => array(
+									'title'        => __( 'Fail message', 'cherry-mailchimp' ),
+									'description'  => __( 'Enter fail message', 'cherry-mailchimp' ),
+									'value'        => __( 'Subscribed failed', 'cherry-mailchimp' ),
+								),
+	'warning_message'   => array(
+									'title'        => __( 'Warning message', 'cherry-mailchimp' ),
+									'description'  => __( 'Enter warning message', 'cherry-mailchimp' ),
+									'value'        => __( 'Email is incorect', 'cherry-mailchimp' ),
+								),
 );
+
+// Check connect
+if ( $this->check_apikey() ) {
+	$connect_class = 'success';
+	$connect_message = __( 'CONNECT', 'cherry-mailchimp' );
+} else {
+	$connect_class = 'danger';
+	$connect_message = __( 'DISCONNECT', 'cherry-mailchimp' );
+}
 
 ?>
 
@@ -33,80 +74,78 @@ $fields = array(
 <!-- END Page Title -->
 
 <!-- Shortcode -->
-<?php if ( ! empty( $shortcode ) ) : ?>
-
 <div class="wrap">
-	<h2><?php echo __( 'Shortcode', 'cherry-mailchimp' ) ?></h2>
 	<div class="container">
-		<?php echo $shortcode ?>
+		<span class="pull-right">
+		<?php
+			do_action( 'cherry_shortcode_generator_buttons' );
+		?>
+		</span>
 	</div>
 </div>
-<?php endif; ?>
 <!-- END Shortcode -->
 
 <!-- Options -->
 <div class="wrap">
-	<form method="POST">
-		<table class="table table-striped">
-			<tr>
-				<td><?php echo __( 'Check account', 'cherry-mailchimp' ) ?></td>
-				<td>
-					<?php
+	<form class="cherry-option" method="POST">
+		<div class="container">
+			<?php foreach ( $fields as $field => $strings ) : ?>
+			<?php
+				// Render ui-element
+				if ( 'confirm' == $field ) {
+					$confirm = empty($this->options['confirm']) ? 'true' : $this->options['confirm'];
+					$ui_{$field} = new UI_Switcher(
+							array(
+									'name'				=> 'confirm',
+									'value'				=> $confirm,
+									'toggle'			=> array(
+											'true_toggle'	=> 'On',
+											'false_toggle'	=> 'Off',
+									),
 
-					if ( $this->check_apikey() ) {
-						$connect_class = 'success';
-						$connect_message = __( 'CONNECT', 'cherry-mailchimp' );
-					} else {
-						$connect_class = 'danger';
-						$connect_message = __( 'DISCONNECT', 'cherry-mailchimp' );
-					}
-					?>
+									'style'		=> 'normal',
+							)
+					);
+				} else {
+					$value = empty($this->options[ $field ]) ? $strings[ 'value' ] : $this->options[ $field ];
+					$ui_{$field} = new UI_Text(
+							array(
+									'id'            => $field,
+									'type'          => 'text',
+									'name'          => $field,
+									'placeholder'   => $strings['title'],
+									'value'         => $value,
+									'label'         => '',
+							)
+					);
+				}
 
-					<span class="text-<?php echo $connect_class ?>">
-						<?php echo $connect_message ?>
-					</span>
-				</td>
-			</tr>
-			<?php foreach ( $fields as $field => $title ) : ?>
-				<?php
-					// Render ui-element
-					if ( 'confirm' == $field ) {
-						$ui_{$field} = new UI_Switcher(
-								array(
-										'name'				=> 'confirm',
-										'value'				=> $this->options['confirm'],
-										'toggle'			=> array(
-												'true_toggle'	=> 'On',
-												'false_toggle'	=> 'Off',
-										),
-
-										'style'		=> 'small',
-								)
-						);
-					} else {
-						$ui_{$field} = new UI_Text(
-								array(
-										'id'            => $field,
-										'type'          => 'text',
-										'name'          => $field,
-										'placeholder'   => $title,
-										'value'         => $this->options[ $field ],
-										'label'         => '',
-								)
-						);
-					}
-
-					$html = $ui_{$field}->render();
-					?>
-					<tr>
-						<td><?php echo $title ?></td>
-						<td><?php echo $html ?></td>
-					</tr>
-					<?php
-				?>
+				$html = $ui_{$field}->render();
+			?>
+			<div class="row">
+				<div class="col-md-12">
+					<h4>
+						<?php echo $strings['title'] ?>
+						<?php if ( 'apikey' === $field ) : ?>
+							<small class="text-<?php echo $connect_class ?>">
+								(<?php echo $connect_message ?>)
+							</small>
+						<?php endif; ?>
+					</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"><?php echo $strings['description'] ?></div>
+				<div class="col-md-8"><?php echo $html ?></div>
+			</div>
 			<?php endforeach; ?>
-		</table>
-		<input type="submit" class="button button-primary" name="action" value="<?php echo __( 'Save', 'cherry-mailchimp' ) ?>">
+			<div class="row">
+				<div class="col-md-12">
+					<input type="submit" class="button button-primary pull-right" name="action" value="<?php echo __( 'Save', 'cherry-mailchimp' ) ?>">
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
 <!-- END Options -->
+<div class="cherry-clear"></div>

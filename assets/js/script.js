@@ -29,7 +29,7 @@ jQuery( document ).ready( function() {
 			// Send data
 			jQuery.post( window.cherryMailchimpParam.ajaxurl, data,
 				function( response ) {
-
+                    form.find( '.message' ).hide();
 					// Show message
 					if ( 'success' === response.status ) {
 						form.find( '.message-success' ).show( 'slow' ).delay( 5000 ).fadeOut();
@@ -52,6 +52,7 @@ jQuery( document ).ready( function() {
 	// Popup window init
 	jQuery( '.subscribe-popup-link' ).magnificPopup( {
 		type: 'inline',
+        width: 400,
 		preloader: false,
 		focus: '#cherry-mailchimp-form input[type=email]'
 	});

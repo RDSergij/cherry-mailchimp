@@ -4,7 +4,7 @@
  * Plugin URI:
  * Description: ShortCode for MailChimp
  * Version: 0.2
- * Author: Cherry Team
+ * Author: Cherry
  * Author URI:
  *
  * @package Cherry_Mailchimp
@@ -18,7 +18,22 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	require_once( 'includes/mailchimp-api.php' );
 
 	// shortcode frontend generation
-	require_once( 'includes/cherry-mailChimp-data.php' );
+	require_once( 'includes/cherry-mailchimp-data.php' );
+
+	/**
+	 * Set constant path to the plugin directory.
+	 *
+	 * @since 1.0.0
+	 */
+	define( 'CHERRY_MAILCHIMP_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+
+	/**
+	 * Set constant path to the plugin URI.
+	 *
+	 * @since 1.0.0
+	 */
+	define( 'CHERRY_MAILCHIMP_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+
 
 	/**
 	 * Define plugin
@@ -99,7 +114,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			// Get options
 			$this->get_options();
-
 		}
 
 		/**
@@ -240,7 +254,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			// Set up the default arguments.
 			$defaults = array(
-					'button'         	=> __( 'Subscribe', 'cherry-mailchimp' ),
+					'button_text'       => __( 'Subscribe', 'cherry-mailchimp' ),
 					'placeholder'    	=> __( 'enter your email', 'cherry-mailchimp' ),
 					'success_message'   => __( 'Successfully', 'cherry-mailchimp' ),
 					'fail_message'     	=> __( 'Failed', 'cherry-mailchimp' ),
@@ -386,38 +400,99 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 				wp_die( __( 'Access denied.' ) );
 			}
 
+			if ( ! isset( $_GET['page'] ) || 'cherry-mailchimp-options' !== $_GET['page'] ) {
+				return;
+			}
+
+			// Custom styles
+			wp_register_style( 'simple-subscribe-admin', plugins_url( 'assets/css/admin.css', __FILE__ ) );
+			wp_enqueue_style( 'simple-subscribe-admin' );
+
+			// Custom scripts
+			wp_register_script( 'mailchimp-script-api', plugins_url( 'assets/js/cherry-api.min.js', __FILE__ ) );
+			wp_localize_script( 'mailchimp-script-api', 'cherry_ajax', wp_create_nonce("cherry_ajax_nonce") );
+			wp_localize_script( 'mailchimp-script-api', 'wp_load_style', null );
+			wp_localize_script( 'mailchimp-script-api', 'wp_load_script', null );
+			wp_enqueue_script( 'mailchimp-script-api' );
+
+			// Shortcode generator
+			$base_url = trailingslashit( CHERRY_MAILCHIMP_URI ) . 'admin/includes/class-cherry-shortcode-generator/';
+			$base_dir = trailingslashit( CHERRY_MAILCHIMP_DIR ) . 'admin/includes/class-cherry-shortcode-generator/';
+			require_once( $base_dir . 'class-cherry-shortcode-generator.php' );
+
+			add_filter( 'cherry_shortcode_generator_register', array( $this, 'add_shortcode_to_generator' ), 10, 2 );
+
+			new Cherry_Shortcode_Generator( $base_dir, $base_url, 'cherry-mailchimp' );
+
 			wp_enqueue_style( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
 
 			$this->save_options();
 			$this->get_options();
 
-			if ( ! empty( $this->options['apikey'] ) && ! empty( $this->options['list'] ) ) {
-				$shortcode = $this->generation_shortcode();
-			}
-
 			// Include ui-elements
-			include plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-text/ui-text.php';
-			include plugin_dir_path( __FILE__ ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php';
+			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-text/ui-text.php';
+			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php';
+			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-textarea/ui-textarea.php';
 
 			// Return html of options page
 			return include_once 'views/options-page.php';
 		}
 
-		/**
-		 * Generation default shortcode on option page
-		 *
-		 * @since  1.0.0
-		 * @return string
-		 */
-		private function generation_shortcode() {
-			$shortcode = '[cherry_' . self::$name;
-			if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
-				foreach ( $this->options as $option_key => $option_value ) {
-					$shortcode .= ' ' . $option_key . '="' . $option_value . '" ';
-				}
-			}
-			$shortcode .= ']';
-			return $shortcode;
+		public function add_shortcode_to_generator( $shortcodes, $plugin ) {
+			$shortcodes = array(
+					'team' => array(
+						'name' => __('MailChimp', 'cherry-mailchimp'),
+						'slug' => 'cherry_mailchimp',
+						'desc' => __('Cherry MailChimp shortcode', 'cherry-mailchimp'),
+						'type' => 'single',
+						'atts' => array(
+							array(
+								'name' => 'placeholder',
+								'id' => 'placeholder',
+								'type' => 'text',
+								'value' => __('enter your email', 'cherry-mailchimp'),
+								'label' => __('Placeholder', 'cherry-team'),
+								'desc' => __('Placeholder for email input', 'cherry-mailchimp'),
+							),
+							array(
+								'name' => 'button_text',
+								'id' => 'button_text',
+								'type' => 'text',
+								'value' => __('Subscribe', 'cherry-mailchimp'),
+								'label' => __('Button', 'cherry-team'),
+								'desc' => __('Enter button title', 'cherry-mailchimp'),
+							),
+							array(
+								'name' => 'success_message',
+								'id' => 'success_message',
+								'type' => 'text',
+								'value' => __('Subscribed successfully', 'cherry-mailchimp'),
+								'label' => __('Success message', 'cherry-team'),
+								'desc' => __('Enter success message', 'cherry-mailchimp'),
+							),
+							array(
+								'name' => 'fail_message',
+								'id' => 'fail_message',
+								'type' => 'text',
+								'value' => __('Subscribed failed', 'cherry-mailchimp'),
+								'label' => __('Fail message', 'cherry-team'),
+								'desc' => __('Enter fail message', 'cherry-mailchimp'),
+							),
+							array(
+								'name' => 'warning_message',
+								'id' => 'warning_message',
+								'type' => 'text',
+								'value' => __('Email is incorect', 'cherry-mailchimp'),
+								'label' => __('Warning message', 'cherry-team'),
+								'desc' => __('Enter warning message', 'cherry-mailchimp'),
+							),
+						),
+						'icon' => 'envelope',
+						'function' => array($this, 'do_shortcode') // Name of shortcode function.
+					),
+				);
+
+	        return $shortcodes;
 		}
 
 		/**
