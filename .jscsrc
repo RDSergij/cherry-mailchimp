@@ -8,6 +8,7 @@
     "assets/css/style.css",
     "assets/js/script.min.js",
     "assets/js/cherry-api.min.js",
+    "assets/js/cherry-api.js",
     "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.css",
     "admin/lib/ui-elements/ui-switcher/assets/min/ui-switcher.min.js",
     "admin/lib/ui-elements/ui-switcher/assets/ui-switcher.js",
