@@ -34,7 +34,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	 */
 	define( 'CHERRY_MAILCHIMP_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-
 	/**
 	 * Define plugin
 	 *
@@ -477,12 +476,12 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'desc'  => __( 'Enter success message', 'cherry-mailchimp' ),
 							),
 							array(
-								'name' => 'fail_message',
-								'id' => 'fail_message',
-								'type' => 'text',
-								'value' => __('Subscribed failed', 'cherry-mailchimp'),
-								'label' => __('Fail message', 'cherry-team'),
-								'desc' => __('Enter fail message', 'cherry-mailchimp'),
+								'name'  => 'fail_message',
+								'id'    => 'fail_message',
+								'type'  => 'text',
+								'value' => __( 'Subscribed failed', 'cherry-mailchimp' ),
+								'label' => __( 'Fail message', 'cherry-team' ),
+								'desc'  => __( 'Enter fail message', 'cherry-mailchimp' ),
 							),
 							array(
 								'name'  => 'warning_message',
@@ -494,7 +493,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 							),
 						),
 						'icon'      => 'envelope',
-						'function'  => array( $this, 'do_shortcode' ) // Name of shortcode function.
+						'function'  => array( $this, 'do_shortcode' ), // Name of shortcode function.
 					),
 				);
 

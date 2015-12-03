@@ -30,6 +30,7 @@ jQuery( document ).ready( function() {
 			jQuery.post( window.cherryMailchimpParam.ajaxurl, data,
 				function( response ) {
                     form.find( '.message' ).hide();
+
 					// Show message
 					if ( 'success' === response.status ) {
 						form.find( '.message-success' ).show( 'slow' ).delay( 5000 ).fadeOut();
