@@ -11,14 +11,29 @@
  */
 
 // If this file is called directly, abort.
-if ( !defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 if ( ! class_exists( 'UI_Textarea' ) ) {
+
+	/**
+	 * Class UI_Textarea generic ui-element textarea field
+	 */
 	class UI_Textarea {
 
+		/**
+		 * Textarea settings
+		 *
+		 * @var array
+		 */
 		private $settings = array();
+
+		/**
+		 * Default settings
+		 *
+		 * @var array
+		 */
 		private $defaults_settings = array(
 			'id'			=> 'cherry-ui-textarea-id',
 			'name'			=> 'cherry-ui-textarea-name',
@@ -72,7 +87,7 @@ if ( ! class_exists( 'UI_Textarea' ) ) {
 		 *
 		 * @since  4.0.0
 		 */
-		public static function enqueue_assets(){
+		public static function enqueue_assets() {
 			wp_enqueue_style(
 				'ui-textarea',
 				self::get_current_file_url() . '/assets/ui-textarea.css',
@@ -81,6 +96,5 @@ if ( ! class_exists( 'UI_Textarea' ) ) {
 				'all'
 			);
 		}
-
 	}
 }

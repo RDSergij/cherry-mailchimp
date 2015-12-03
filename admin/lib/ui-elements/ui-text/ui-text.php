@@ -23,7 +23,7 @@ if ( ! class_exists( 'UI_Text' ) ) {
 	class UI_Text {
 
 		/**
-		 * Switcher settings
+		 * Text settings
 		 *
 		 * @var array
 		 */

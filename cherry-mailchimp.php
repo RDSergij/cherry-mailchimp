@@ -410,7 +410,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			// Custom scripts
 			wp_register_script( 'mailchimp-script-api', plugins_url( 'assets/js/cherry-api.min.js', __FILE__ ) );
-			wp_localize_script( 'mailchimp-script-api', 'cherry_ajax', wp_create_nonce("cherry_ajax_nonce") );
+			wp_localize_script( 'mailchimp-script-api', 'cherry_ajax', wp_create_nonce( 'cherry_ajax_nonce' ) );
 			wp_localize_script( 'mailchimp-script-api', 'wp_load_style', null );
 			wp_localize_script( 'mailchimp-script-api', 'wp_load_script', null );
 			wp_enqueue_script( 'mailchimp-script-api' );
@@ -438,37 +438,43 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			return include_once 'views/options-page.php';
 		}
 
-		public function add_shortcode_to_generator( $shortcodes, $plugin ) {
+		/**
+		 * Add MailChimp shortcode to generator
+		 *
+		 * @since 1.0.0
+		 * @return array
+		 */
+		public function add_shortcode_to_generator() {
 			$shortcodes = array(
 					'team' => array(
-						'name' => __('MailChimp', 'cherry-mailchimp'),
+						'name' => __( 'MailChimp', 'cherry-mailchimp' ),
 						'slug' => 'cherry_mailchimp',
-						'desc' => __('Cherry MailChimp shortcode', 'cherry-mailchimp'),
+						'desc' => __( 'Cherry MailChimp shortcode', 'cherry-mailchimp' ),
 						'type' => 'single',
 						'atts' => array(
 							array(
-								'name' => 'placeholder',
-								'id' => 'placeholder',
-								'type' => 'text',
-								'value' => __('enter your email', 'cherry-mailchimp'),
-								'label' => __('Placeholder', 'cherry-team'),
-								'desc' => __('Placeholder for email input', 'cherry-mailchimp'),
+								'name'  => 'placeholder',
+								'id'    => 'placeholder',
+								'type'  => 'text',
+								'value' => __( 'enter your email', 'cherry-mailchimp' ),
+								'label' => __( 'Placeholder', 'cherry-team' ),
+								'desc'  => __( 'Placeholder for email input', 'cherry-mailchimp' ),
 							),
 							array(
-								'name' => 'button_text',
-								'id' => 'button_text',
-								'type' => 'text',
-								'value' => __('Subscribe', 'cherry-mailchimp'),
-								'label' => __('Button', 'cherry-team'),
-								'desc' => __('Enter button title', 'cherry-mailchimp'),
+								'name'  => 'button_text',
+								'id'    => 'button_text',
+								'type'  => 'text',
+								'value' => __( 'Subscribe', 'cherry-mailchimp' ),
+								'label' => __( 'Button', 'cherry-team' ),
+								'desc'  => __( 'Enter button title', 'cherry-mailchimp' ),
 							),
 							array(
-								'name' => 'success_message',
-								'id' => 'success_message',
-								'type' => 'text',
-								'value' => __('Subscribed successfully', 'cherry-mailchimp'),
-								'label' => __('Success message', 'cherry-team'),
-								'desc' => __('Enter success message', 'cherry-mailchimp'),
+								'name'  => 'success_message',
+								'id'    => 'success_message',
+								'type'  => 'text',
+								'value' => __( 'Subscribed successfully', 'cherry-mailchimp' ),
+								'label' => __( 'Success message', 'cherry-team' ),
+								'desc'  => __( 'Enter success message', 'cherry-mailchimp' ),
 							),
 							array(
 								'name' => 'fail_message',
@@ -479,16 +485,16 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'desc' => __('Enter fail message', 'cherry-mailchimp'),
 							),
 							array(
-								'name' => 'warning_message',
-								'id' => 'warning_message',
-								'type' => 'text',
-								'value' => __('Email is incorect', 'cherry-mailchimp'),
-								'label' => __('Warning message', 'cherry-team'),
-								'desc' => __('Enter warning message', 'cherry-mailchimp'),
+								'name'  => 'warning_message',
+								'id'    => 'warning_message',
+								'type'  => 'text',
+								'value' => __( 'Email is incorect', 'cherry-mailchimp' ),
+								'label' => __( 'Warning message', 'cherry-team' ),
+								'desc'  => __( 'Enter warning message', 'cherry-mailchimp' ),
 							),
 						),
-						'icon' => 'envelope',
-						'function' => array($this, 'do_shortcode') // Name of shortcode function.
+						'icon'      => 'envelope',
+						'function'  => array( $this, 'do_shortcode' ) // Name of shortcode function.
 					),
 				);
 

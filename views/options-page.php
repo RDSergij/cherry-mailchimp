@@ -93,7 +93,7 @@ if ( $this->check_apikey() ) {
 			<?php
 				// Render ui-element
 				if ( 'confirm' == $field ) {
-					$confirm = empty($this->options['confirm']) ? 'true' : $this->options['confirm'];
+					$confirm = empty( $this->options['confirm'] ) ? 'true' : $this->options['confirm'];
 					$ui_{$field} = new UI_Switcher(
 							array(
 									'name'				=> 'confirm',
@@ -107,7 +107,7 @@ if ( $this->check_apikey() ) {
 							)
 					);
 				} else {
-					$value = empty($this->options[ $field ]) ? $strings[ 'value' ] : $this->options[ $field ];
+					$value = empty( $this->options[ $field ] ) ? $strings['value'] : $this->options[ $field ];
 					$ui_{$field} = new UI_Text(
 							array(
 									'id'            => $field,
