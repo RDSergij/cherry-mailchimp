@@ -16,40 +16,40 @@
 		},
 		render: function ( target ) {
 
-			$('.cherry-switcher-wrap', target).each(function(){
+			jQuery('.cherry-switcher-wrap', target).each(function(){
 				var
-					input = $('.cherry-input-switcher', this)
+					input = jQuery('.cherry-input-switcher', this)
 				,	inputValue = ( input.val() === "true" )
 				;
 
 				if( !inputValue ){
-					$('.sw-enable', this).removeClass('selected');
-					$('.sw-disable', this).addClass('selected');
+					jQuery('.sw-enable', this).removeClass('selected');
+					jQuery('.sw-disable', this).addClass('selected');
 
 				}else{
-					$('.sw-enable', this).addClass('selected');
-					$('.sw-disable', this).removeClass('selected');
+					jQuery('.sw-enable', this).addClass('selected');
+					jQuery('.sw-disable', this).removeClass('selected');
 
 				}
 			});
 
-			$('.cherry-switcher-wrap', target).on('click', function () {
+			jQuery('.cherry-switcher-wrap', target).on('click', function () {
 				var
-					input = $('.cherry-input-switcher', this)
+					input = jQuery('.cherry-input-switcher', this)
 				,	inputValue = ( input.val() === "true" )
 				,	true_slave = ( typeof input.data('true-slave') != 'undefined' ) ? input.data('true-slave') : null
 				,	false_slave = ( typeof input.data('false-slave') != 'undefined' ) ? input.data('false-slave') : null
 				;
 
 				if( !inputValue ){
-					$('.sw-enable', this).addClass('selected');
-					$('.sw-disable', this).removeClass('selected');
+					jQuery('.sw-enable', this).addClass('selected');
+					jQuery('.sw-disable', this).removeClass('selected');
 					input.attr('value', true );
 
 					input.trigger('switcher_enabled_event', [true_slave, false_slave]);
 				}else{
-					$('.sw-disable', this).addClass('selected');
-					$('.sw-enable', this).removeClass('selected');
+					jQuery('.sw-disable', this).addClass('selected');
+					jQuery('.sw-enable', this).removeClass('selected');
 					input.attr('value', false );
 
 					input.trigger('switcher_disabled_event', [true_slave, false_slave]);
@@ -57,5 +57,5 @@
 			})
 		}
 	};
-	CHERRY_API.ui_elements.switcher.init( $('body') );
+	CHERRY_API.ui_elements.switcher.init( jQuery('body') );
 }(jQuery));

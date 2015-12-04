@@ -2,13 +2,17 @@
 * @section Color list
 */
 /*
+* @section Form element mixin
+*/
+/*
 * @section Options fields
 */
-.cherry-option .container .row { padding-bottom: 5px; }
-.cherry-option .container .row h4 { margin-bottom: 4px; margin-top: 4px; }
-.cherry-option .container .row:nth-child(4n+1) { border-top: 1px solid #bababa; background-color: #e6e6e6; }
-.cherry-option .container .row:nth-child(4n+2) { border-bottom: 1px solid #bababa; background-color: #e6e6e6; }
-.cherry-option .container .row:last-child { border-top: 1px solid #bababa; background-color: #fff; padding-top: 10px; }
+.cherry-option .container .row { padding-bottom: 5px; background-color: #FBFBFB; }
+.cherry-option .container .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
+.cherry-option .container .row:nth-child(4n+1) { border-top: 1px solid #E3E4E5; background-color: #F0F1F2; }
+.cherry-option .container .row:nth-child(4n+2) { border-bottom: 1px solid #E3E4E5; background-color: #F0F1F2; }
+.cherry-option .container .row:last-child { border-top: 1px solid #E3E4E5; background-color: #fff; padding-top: 10px; }
+.cherry-option .container .description { color: #999; font-size: 11px; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
 
 .cherry-clear { clear: both; width: 100%; height: 10px; display: block; }
 

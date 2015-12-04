@@ -15,12 +15,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'UI_Switcher' ) ) {
+if ( ! class_exists( 'UI_Switcher2' ) ) {
 
 	/**
 	 * Class UI_Switcher generic ui-element switcher
 	 */
-	class UI_Switcher {
+	class UI_Switcher2 {
 
 		/**
 		 * Switcher settings

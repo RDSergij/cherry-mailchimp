@@ -2,7 +2,18 @@
 * @section Color list
 */
 
-$even: #e6e6e6;
+$even: #F0F1F2;
+$odd: #FBFBFB;
+$border-row: #E3E4E5;
+$descriptopn-color: #999;
+
+/*
+* @section Form element mixin
+*/
+@mixin fields_fonts() {
+  font-family: "Open Sans",sans-serif;
+  line-height: 1.4em;
+}
 
 /*
 * @section Options fields
@@ -13,27 +24,38 @@ $even: #e6e6e6;
 
     .row {
       padding-bottom: 5px;
+      background-color: $odd;
 
       h4 {
         margin-bottom: 4px;
         margin-top: 4px;
+        font-size: 1em;
+        font-weight: 600;
+        color: #444;
+        @include fields_fonts();
       }
     }
 
     .row:nth-child(4n+1){
-      border-top: 1px solid #bababa;
+      border-top: 1px solid $border-row;
       background-color: $even;
     }
 
     .row:nth-child(4n+2){
-      border-bottom: 1px solid #bababa;
+      border-bottom: 1px solid $border-row;
       background-color: $even;
     }
 
     .row:last-child{
-      border-top: 1px solid #bababa;
+      border-top: 1px solid $border-row;
       background-color: #fff;
       padding-top: 10px;
+    }
+
+    .description {
+      color: $descriptopn-color;
+      font-size: 11px;
+      @include fields_fonts();
     }
 
   }

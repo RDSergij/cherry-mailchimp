@@ -15,6 +15,14 @@ $fail-color: #900D25;
 }
 
 /*
+* @section Form element mixin
+*/
+@mixin form_element_mobile() {
+  width: 100%;
+  margin: 5px;
+}
+
+/*
 * @section Link for popup
 */
 .subscribe-popup-link {
@@ -35,23 +43,43 @@ $fail-color: #900D25;
 
   position: relative;
   background: #FFF;
-  padding: 20px 50px 20px 20px;
+  padding: 50px 40px 40px 40px;
   width: auto;
-  max-width: 500px;
-  margin: 20px auto;
+  max-width: 350px;
+  margin: 0 auto;
 
   input[type=email] {
     border: 1px #cccccc solid;
     background-color: #ebebeb;
     width: auto;
-    max-width: 250px;
     display: inline;
+    padding: 10px;
+    @include form_element_mobile();
   }
 
-  button {
+  input[type=email][placeholder] {
+    text-overflow: ellipsis;
+  }
+
+  input[type=email]::-moz-placeholder {
+    text-overflow: ellipsis;
+  }
+
+  input[type=email]:-moz-placeholder {
+    text-overflow: ellipsis;
+  }
+
+  button[type=submit] {
     background-color: #0b0b0b;
     color: #ffffff;
     display: inline;
+    padding: 10px;
+    @include form_element_mobile();
+  }
+
+  button[type=submit]:hover {
+    background-color: #8a8a8a;
+    color: #000000;
   }
 
   .message {
@@ -66,4 +94,8 @@ $fail-color: #900D25;
       @include message($warning-color);
     }
   }
+}
+
+.mfp-close-btn-in .mfp-close {
+  top: 0;
 }

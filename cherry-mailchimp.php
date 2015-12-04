@@ -165,7 +165,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 					'name'  => __( 'MailChimp', 'cherry-mailchimp' ), // Shortcode name.
 					'desc'  => __( 'MailChimp shortcode', 'cherry-mailchimp' ),
 					'type'  => 'single', // Can be 'wrap' or 'single'. Example: [b]this is wrapped[/b], [this_is_single]
-					'group' => 'content', // Can be 'content', 'box', 'media' or 'other'. Groups can be mixed
+					'group' => 'other', // Can be 'content', 'box', 'media' or 'other'. Groups can be mixed
 					'atts'  => array( // List of shortcode params (attributes).
 							'button_text' => array(
 									'default' => '',
@@ -414,6 +414,9 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			wp_localize_script( 'mailchimp-script-api', 'wp_load_script', null );
 			wp_enqueue_script( 'mailchimp-script-api' );
 
+			$this->save_options();
+			$this->get_options();
+
 			// Shortcode generator
 			$base_url = trailingslashit( CHERRY_MAILCHIMP_URI ) . 'admin/includes/class-cherry-shortcode-generator/';
 			$base_dir = trailingslashit( CHERRY_MAILCHIMP_DIR ) . 'admin/includes/class-cherry-shortcode-generator/';
@@ -424,9 +427,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			new Cherry_Shortcode_Generator( $base_dir, $base_url, 'cherry-mailchimp' );
 
 			wp_enqueue_style( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
-
-			$this->save_options();
-			$this->get_options();
 
 			// Include ui-elements
 			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-text/ui-text.php';
@@ -444,6 +444,13 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @return array
 		 */
 		public function add_shortcode_to_generator() {
+
+			$placeholder        = empty( $this->options['placeholder'] )        ? __( 'enter your email', 'cherry-mailchimp' )          : $this->options['placeholder'];
+			$button_text        = empty( $this->options['button_text'] )        ? __( 'Subscribe', 'cherry-mailchimp' )                 : $this->options['button_text'];
+			$success_message    = empty( $this->options['success_message'] )    ? __( 'Subscribed successfully', 'cherry-mailchimp' )   : $this->options['success_message'];
+			$fail_message       = empty( $this->options['fail_message'] )       ? __( 'Subscribed failed', 'cherry-mailchimp' )         : $this->options['fail_message'];
+			$warning_message    = empty( $this->options['warning_message'] )    ? __( 'Email is incorect', 'cherry-mailchimp' )         : $this->options['warning_message'];
+
 			$shortcodes = array(
 					'team' => array(
 						'name' => __( 'MailChimp', 'cherry-mailchimp' ),
@@ -455,7 +462,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'name'  => 'placeholder',
 								'id'    => 'placeholder',
 								'type'  => 'text',
-								'value' => __( 'enter your email', 'cherry-mailchimp' ),
+								'value' => $placeholder,
 								'label' => __( 'Placeholder', 'cherry-team' ),
 								'desc'  => __( 'Placeholder for email input', 'cherry-mailchimp' ),
 							),
@@ -463,7 +470,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'name'  => 'button_text',
 								'id'    => 'button_text',
 								'type'  => 'text',
-								'value' => __( 'Subscribe', 'cherry-mailchimp' ),
+								'value' => $button_text,
 								'label' => __( 'Button', 'cherry-team' ),
 								'desc'  => __( 'Enter button title', 'cherry-mailchimp' ),
 							),
@@ -471,7 +478,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'name'  => 'success_message',
 								'id'    => 'success_message',
 								'type'  => 'text',
-								'value' => __( 'Subscribed successfully', 'cherry-mailchimp' ),
+								'value' => $success_message,
 								'label' => __( 'Success message', 'cherry-team' ),
 								'desc'  => __( 'Enter success message', 'cherry-mailchimp' ),
 							),
@@ -479,7 +486,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'name'  => 'fail_message',
 								'id'    => 'fail_message',
 								'type'  => 'text',
-								'value' => __( 'Subscribed failed', 'cherry-mailchimp' ),
+								'value' => $fail_message,
 								'label' => __( 'Fail message', 'cherry-team' ),
 								'desc'  => __( 'Enter fail message', 'cherry-mailchimp' ),
 							),
@@ -487,7 +494,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 								'name'  => 'warning_message',
 								'id'    => 'warning_message',
 								'type'  => 'text',
-								'value' => __( 'Email is incorect', 'cherry-mailchimp' ),
+								'value' => $warning_message,
 								'label' => __( 'Warning message', 'cherry-team' ),
 								'desc'  => __( 'Enter warning message', 'cherry-mailchimp' ),
 							),

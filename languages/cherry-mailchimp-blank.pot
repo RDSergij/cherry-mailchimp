@@ -133,26 +133,35 @@ msgid "Email confirmation"
 msgstr ""
 
 #: views/options_page.php:34
-msgid "Placeholder of email input"
+msgid "Default placeholder of email input"
 msgstr ""
 
 #: views/options_page.php:39
-msgid "Submit button text"
+msgid "Default submit button text"
 msgstr ""
 
 #: cherry-mailchimp.php:306
-#: views/options_page.php:43
 msgid "Success message"
 msgstr ""
 
+#: views/options_page.php:43
+msgid "Default success message"
+msgstr ""
+
 #: cherry-mailchimp.php:312
-#: views/options_page.php:48
 msgid "Fail message"
 msgstr ""
 
+#: views/options_page.php:48
+msgid "Default fail message"
+msgstr ""
+
 #: cherry-mailchimp.php:318
-#: views/options_page.php:16
 msgid "Warning message"
+msgstr ""
+
+#: views/options_page.php:16
+msgid "Default warning message"
 msgstr ""
 
 #: views/options_page.php:72

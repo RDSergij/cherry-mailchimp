@@ -31,27 +31,27 @@ $fields = array(
 								),
 	'placeholder'       => array(
 									'title'        => __( 'Placeholder' ),
-									'description'  => __( 'Placeholder of email input', 'cherry-mailchimp' ),
-									'value'        => __( 'Enter your email', 'cherry-mailchimp' ),
+									'description'  => __( 'Defaulr placeholder of email input', 'cherry-mailchimp' ),
+									'value'        => __( 'enter your email', 'cherry-mailchimp' ),
 								),
 	'button_text'       => array(
 									'title'        => __( 'Button' ),
-									'description'  => __( 'Submit button text', 'cherry-mailchimp' ),
+									'description'  => __( 'Default submit button text', 'cherry-mailchimp' ),
 									'value'        => __( 'Subscribe', 'cherry-mailchimp' ),
 								),
 	'success_message'   => array(
 									'title'        => __( 'Success message', 'cherry-mailchimp' ),
-									'description'  => __( 'Enter success message', 'cherry-mailchimp' ),
+									'description'  => __( 'Default success message', 'cherry-mailchimp' ),
 									'value'        => __( 'Subscribed successfully', 'cherry-mailchimp' ),
 								),
 	'fail_message'      => array(
 									'title'        => __( 'Fail message', 'cherry-mailchimp' ),
-									'description'  => __( 'Enter fail message', 'cherry-mailchimp' ),
+									'description'  => __( 'Default fail message', 'cherry-mailchimp' ),
 									'value'        => __( 'Subscribed failed', 'cherry-mailchimp' ),
 								),
 	'warning_message'   => array(
 									'title'        => __( 'Warning message', 'cherry-mailchimp' ),
-									'description'  => __( 'Enter warning message', 'cherry-mailchimp' ),
+									'description'  => __( 'Default warning message', 'cherry-mailchimp' ),
 									'value'        => __( 'Email is incorect', 'cherry-mailchimp' ),
 								),
 );
@@ -94,8 +94,9 @@ if ( $this->check_apikey() ) {
 				// Render ui-element
 				if ( 'confirm' == $field ) {
 					$confirm = empty( $this->options['confirm'] ) ? 'true' : $this->options['confirm'];
-					$ui_{$field} = new UI_Switcher(
+					$ui_{$field} = new UI_Switcher2(
 							array(
+									'id'				=> 'confirm',
 									'name'				=> 'confirm',
 									'value'				=> $confirm,
 									'toggle'			=> array(
@@ -135,7 +136,7 @@ if ( $this->check_apikey() ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4"><?php echo $strings['description'] ?></div>
+				<div class="col-md-4 description"><?php echo $strings['description'] ?></div>
 				<div class="col-md-8"><?php echo $html ?></div>
 			</div>
 			<?php endforeach; ?>
