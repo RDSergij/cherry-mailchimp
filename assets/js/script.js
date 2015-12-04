@@ -4,9 +4,6 @@
 
 jQuery( document ).ready( function() {
 
-    jQuery( window ).trigger( 'cherry-ui-elements-init', { 'target': '#confirm' } );
-    CHERRY_API.ui_elements.switcher.init( $('body') );
-
     jQuery( '#cherry-mailchimp-form' ).submit(
 		function( e ) {
 			var form = jQuery( this );
