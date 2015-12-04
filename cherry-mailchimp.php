@@ -255,9 +255,9 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			$defaults = array(
 					'button_text'       => __( 'Subscribe', 'cherry-mailchimp' ),
 					'placeholder'    	=> __( 'enter your email', 'cherry-mailchimp' ),
-					'success_message'   => __( 'Successfully', 'cherry-mailchimp' ),
-					'fail_message'     	=> __( 'Failed', 'cherry-mailchimp' ),
-					'warning_message'   => __( 'Warning!', 'cherry-mailchimp' ),
+					'success_message'   => __( 'Subscribed successfully', 'cherry-mailchimp' ),
+					'fail_message'     	=> __( 'Subscribed failed', 'cherry-mailchimp' ),
+					'warning_message'   => __( 'Email is incorect', 'cherry-mailchimp' ),
 					'template'       	=> 'default.tmpl',
 					'col_xs'         	=> '12',
 					'col_sm'         	=> '6',
