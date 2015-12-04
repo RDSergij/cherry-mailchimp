@@ -74,6 +74,7 @@ $fail-color: #900D25;
     color: #ffffff;
     display: inline;
     padding: 10px;
+    border: 0;
     @include form_element_mobile();
   }
 
