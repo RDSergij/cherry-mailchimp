@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Independente shortcode generator class.
  *
