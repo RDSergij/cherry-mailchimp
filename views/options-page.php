@@ -31,7 +31,7 @@ $fields = array(
 								),
 	'placeholder'       => array(
 									'title'        => __( 'Placeholder' ),
-									'description'  => __( 'Defaulr placeholder of email input', 'cherry-mailchimp' ),
+									'description'  => __( 'Defaulr placeholder for email input', 'cherry-mailchimp' ),
 									'value'        => __( 'enter your email', 'cherry-mailchimp' ),
 								),
 	'button_text'       => array(

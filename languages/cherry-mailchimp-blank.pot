@@ -133,7 +133,7 @@ msgid "Email confirmation"
 msgstr ""
 
 #: views/options_page.php:34
-msgid "Default placeholder of email input"
+msgid "Default placeholder for email input"
 msgstr ""
 
 #: views/options_page.php:39
