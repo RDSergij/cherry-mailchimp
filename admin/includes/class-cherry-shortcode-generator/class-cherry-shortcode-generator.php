@@ -189,8 +189,8 @@ if ( ! class_exists( 'Cherry_Shortcode_Generator' ) ) {
 		/**
 		 * Print button and generator popup for passed shortcode
 		 *
-		 * @param  array $shortcode registered shortcode params
-		 * @return void|null
+		 * @param  array $shortcode registered shortcode params.
+		 * @return void
 		 */
 		public function print_shortcode_button( $shortcode ) {
 
@@ -218,7 +218,7 @@ if ( ! class_exists( 'Cherry_Shortcode_Generator' ) ) {
 		 * Get shortcode popup
 		 *
 		 * @param  array $shortcode shortcode data.
-		 * @return string
+		 * @return void
 		 */
 		public function get_shortcode_popup( $shortcode ) {
 

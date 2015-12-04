@@ -24,7 +24,7 @@
 		result += ']';
 
 		if ( 'single' !== sType ) {
-			result += '[/' + shortcode + ']'
+			result += '[/' + shortcode + ']';
 		}
 
 		return result;
@@ -36,7 +36,7 @@
 	}
 
 	$( window ).load( function() {
-		$('.cherry-sg-open').magnificPopup({
+		$( '.cherry-sg-open' ).magnificPopup({
 			type: 'inline',
 			preloader: false,
 			focus: '#name',
