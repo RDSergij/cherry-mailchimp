@@ -1,4 +1,3 @@
-
 /**
  * Shortcode generator
  */
