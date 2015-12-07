@@ -63,18 +63,18 @@ function noticeCreate( type, message ) {
     jQuery( '#cherry-mailchimp-option' ).append( notice );
     reposition();
     rightDelta = -1 * ( notice.outerWidth( true ) + 10 );
-    notice.css ( {'right' : rightDelta } );
+    notice.css( { 'right': rightDelta } );
 
     timeoutId = setTimeout( function() {
-        notice.css( {'right' : 10 } ).addClass( 'show-state' )
+        notice.css( { 'right': 10 } ).addClass( 'show-state' )
     }, 100 );
 
-    timeoutId = setTimeout( function () {
+    timeoutId = setTimeout( function (){
         rightDelta = -1 * ( notice.outerWidth( true ) + 10 );
         notice.css( { right: rightDelta } ).removeClass( 'show-state' );
     }, 4000 );
 
-    timeoutId = setTimeout( function () {
+    timeoutId = setTimeout( function() {
         notice.remove();
         clearTimeout( timeoutId );
     }, 4500 );
@@ -85,6 +85,6 @@ function noticeCreate( type, message ) {
         jQuery( '.notice-box' ).each( function( index ) {
             jQuery( this ).css( { top: topDelta } );
             topDelta += jQuery( this ).outerHeight( true );
-        })
+        });
     }
 }
