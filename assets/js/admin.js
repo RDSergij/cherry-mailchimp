@@ -14,8 +14,8 @@ jQuery( document ).ready( function() {
             function( response ) {
                 var message = '';
                 var type = '';
-                form.find( '#cherry-mail-chimp-message').removeClass( 'cherry-message-success' );
-                form.find( '#cherry-mail-chimp-message').removeClass( 'cherry-message-failed' );
+                form.find( '#cherry-mail-chimp-message' ).removeClass( 'cherry-message-success' );
+                form.find( '#cherry-mail-chimp-message' ).removeClass( 'cherry-message-failed' );
 
                 if ( ! response.message ) {
                     message = window.cherryMailchimpParam.default_error_message;
@@ -31,7 +31,7 @@ jQuery( document ).ready( function() {
 
                 if ( ! response.connect_status ) {
                     jQuery( '#cherry-mail-chimp-connect' ).removeClass( 'text-success' );
-                    jQuery( '#cherry-mail-chimp-connect').addClass( 'text-danger' );
+                    jQuery( '#cherry-mail-chimp-connect' ).addClass( 'text-danger' );
                 } else {
                     jQuery( '#cherry-mail-chimp-connect' ).removeClass( 'text-danger' );
                     jQuery( '#cherry-mail-chimp-connect' ).removeClass( 'text-success' );
@@ -44,9 +44,8 @@ jQuery( document ).ready( function() {
                     jQuery( '#cherry-mail-chimp-connect' ).html( '(' + response.connect_message + ')' );
                 }
 
-
                 noticeCreate( type, message );
-                //jQuery( this ).find( 'div' ).removeClass( 'spinner-state' );
+
                 jQuery( '#cherry-mailchimp-options-save' ).find( 'div' ).removeClass( 'active' );
             }
         );
@@ -55,29 +54,28 @@ jQuery( document ).ready( function() {
 
 function noticeCreate( type, message ) {
     var
-        notice = jQuery('<div class="notice-box ' + type + '"><span class="dashicons"></span><div class="inner">' + message + '</div></div>'),
+        notice = jQuery( '<div class="notice-box ' + type + '"><span class="dashicons"></span><div class="inner">' + message + '</div></div>' ),
         rightDelta = 0,
-        timeoutId
-        ;
+        timeoutId;
 
-    jQuery('#cherry-mailchimp-option').append( notice );
+    jQuery( '#cherry-mailchimp-option' ).append( notice );
     reposition();
     rightDelta = -1 * ( notice.outerWidth( true ) + 10 );
-    notice.css({'right' : rightDelta });
+    notice.css ( {'right' : rightDelta } );
 
-    timeoutId = setTimeout( function () {
-        notice.css({'right' : 10 }).addClass('show-state')
+    timeoutId = setTimeout( function() {
+        notice.css( {'right' : 10 } ).addClass( 'show-state' )
     }, 100 );
 
     timeoutId = setTimeout( function () {
-        rightDelta = -1*(notice.outerWidth( true ) + 10);
-        notice.css({ right: rightDelta }).removeClass('show-state');
+        rightDelta = -1 * ( notice.outerWidth( true ) + 10 );
+        notice.css( { right: rightDelta } ).removeClass( 'show-state' );
     }, 4000 );
 
     function reposition() {
         var topDelta = 100;
 
-        jQuery('.notice-box').each( function( index ) {
+        jQuery( '.notice-box' ).each( function( index ) {
             jQuery( this ).css( { top: topDelta } );
             topDelta += jQuery( this ).outerHeight( true );
         })
