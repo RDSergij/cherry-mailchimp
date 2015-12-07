@@ -66,10 +66,10 @@ function noticeCreate( type, message ) {
     notice.css( { 'right': rightDelta } );
 
     timeoutId = setTimeout( function() {
-        notice.css( { 'right': 10 } ).addClass( 'show-state' )
+        notice.css( { 'right': 10 } ).addClass( 'show-state' );
     }, 100 );
 
-    timeoutId = setTimeout( function (){
+    timeoutId = setTimeout( function() {
         rightDelta = -1 * ( notice.outerWidth( true ) + 10 );
         notice.css( { right: rightDelta } ).removeClass( 'show-state' );
     }, 4000 );
