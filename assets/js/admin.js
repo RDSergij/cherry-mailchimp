@@ -82,7 +82,7 @@ function noticeCreate( type, message ) {
     function reposition() {
         var topDelta = 100;
 
-        jQuery( jQuery( '.notice-box').get().reverse() ).each( function( index ) {
+        jQuery( jQuery( '.notice-box' ).get().reverse() ).each( function( index ) {
             jQuery( this ).css( { top: topDelta } );
             topDelta += jQuery( this ).outerHeight( true );
         });
