@@ -24,6 +24,7 @@
 .cherry-option .button-default_ { font-size: 13px; background-color: #ffffff; border: 2px solid #dddcdc; border-radius: 6px; line-height: 38px; margin: 0; padding: 0 14px; box-shadow: none; color: #464646; height: auto; }
 .cherry-option .button-secondary_ { font-size: 13px; background-color: #8bc735; border-radius: 6px; line-height: 42px; margin: 0; padding: 0 16px; box-shadow: none; color: #FFFFFF; height: auto; border-style: none; }
 .cherry-option .button-secondary_:hover, .cherry-option .button-secondary_:active, .cherry-option .button-secondary_:focus { text-decoration: none; color: #FFFFFF; box-shadow: none; cursor: pointer; border-radius: 6px; background: #6f9f2a; }
+.cherry-option #cherry-mailchimp-options-save.right-spiner { padding-right: 40px; }
 .cherry-option .spinner-wordpress-type-2 { opacity: 0; }
 .cherry-option .spinner-wordpress-type-2.active { opacity: 1; -webkit-transition: opacity 300ms ease-in-out 150ms; transition: opacity 300ms ease-in-out 150ms; }
 .cherry-option .notice-box { background: #222222; position: fixed; margin: 5px 0; border-left: 5px solid #2a445d; box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); box-sizing: border-box; padding: 15px 20px 15px 15px; min-width: 200px; overflow: hidden; z-index: 999; -webkit-transition: all 250ms cubic-bezier(0.85, 0.04, 1, 1); transition: all 250ms cubic-bezier(0.85, 0.04, 1, 1); }

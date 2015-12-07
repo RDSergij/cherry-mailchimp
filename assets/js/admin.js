@@ -8,6 +8,7 @@ jQuery( document ).ready( function() {
         var data = form.serialize();
 
         jQuery( this ).find( 'div' ).addClass( 'active' );
+        jQuery( this ).addClass( 'right-spiner' );
 
         // Send data
         jQuery.post( window.cherryMailchimpParam.ajaxurl, data,
@@ -47,6 +48,7 @@ jQuery( document ).ready( function() {
                 noticeCreate( type, message );
 
                 jQuery( '#cherry-mailchimp-options-save' ).find( 'div' ).removeClass( 'active' );
+                jQuery( '#cherry-mailchimp-options-save' ).removeClass( 'right-spiner' );
             }
         );
     });
@@ -71,6 +73,11 @@ function noticeCreate( type, message ) {
         rightDelta = -1 * ( notice.outerWidth( true ) + 10 );
         notice.css( { right: rightDelta } ).removeClass( 'show-state' );
     }, 4000 );
+
+    timeoutId = setTimeout( function () {
+        notice.remove();
+        clearTimeout( timeoutId );
+    }, 4500 );
 
     function reposition() {
         var topDelta = 100;

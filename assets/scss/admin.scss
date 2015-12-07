@@ -182,6 +182,12 @@ $secondary-color: #8bc735;
       }
     }
 
+    #cherry-mailchimp-options-save {
+      &.right-spiner {
+        padding-right: 40px;
+      }
+    }
+
     .spinner-wordpress-type-2 {
       opacity: 0;
 
