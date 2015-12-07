@@ -375,7 +375,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 				$connect_message = __( 'DISCONNECT', 'cherry-mailchimp' );
 			}
 
-			$answer = array (
+			$answer = array(
 				'type'                  => 'success',
 				'message'               => __( 'Options have been saved', 'cherry-mailchimp' ),
 				'connect_status'        => $connect_status,
@@ -438,12 +438,11 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			wp_localize_script( 'mailchimp-script-custom', 'cherryMailchimpParam', array(
 																				'ajaxurl'                       => admin_url( 'admin-ajax.php' ),
 																				'default_error_message'         => __( 'Error', 'cherry-mailchimp' ),
-																				'default_disconnect_message'    => __( 'DISCONNECT', 'cherry-mailchimp' )
+																				'default_disconnect_message'    => __( 'DISCONNECT', 'cherry-mailchimp' ),
 																			)
 																		);
 			wp_enqueue_script( 'mailchimp-script-custom' );
 
-			//$this->save_options();
 			$this->get_options();
 
 			// Shortcode generator
