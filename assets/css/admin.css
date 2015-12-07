@@ -11,7 +11,6 @@
 .cherry-option .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
 .cherry-option .row:nth-child(4n) { border-top: 1px solid #D4D5D6; background-color: #F0F1F2; }
 .cherry-option .row:nth-child(4n+1) { border-bottom: 1px solid #D4D5D6; background-color: #F0F1F2; }
-.cherry-option .row:last-child { padding: 10px 0; background-color: #FBFBFB; }
 .cherry-option .description { color: #999; font-size: 11px; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
 .cherry-option .cherry-switcher-wrap label { margin: 0; }
 .cherry-option .cherry-mail-chimp-action .cherry-mail-chimp-action-button { float: right; margin: 5px 15px; }
