@@ -7,12 +7,22 @@
 /*
 * @section Options fields
 */
-.cherry-option .container .row { padding-bottom: 5px; background-color: #FBFBFB; }
-.cherry-option .container .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
-.cherry-option .container .row:nth-child(4n+1) { border-top: 1px solid #E3E4E5; background-color: #F0F1F2; }
-.cherry-option .container .row:nth-child(4n+2) { border-bottom: 1px solid #E3E4E5; background-color: #F0F1F2; }
-.cherry-option .container .row:last-child { border-top: 1px solid #E3E4E5; background-color: #fff; padding-top: 10px; }
-.cherry-option .container .description { color: #999; font-size: 11px; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
+.cherry-option .row { padding-bottom: 5px; background-color: #FBFBFB; -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.cherry-option .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
+.cherry-option .row:nth-child(4n+1) { border-top: 1px solid #D4D5D6; background-color: #F0F1F2; }
+.cherry-option .row:nth-child(4n+2) { border-bottom: 1px solid #D4D5D6; background-color: #F0F1F2; }
+.cherry-option .row:last-child { padding: 10px 0; }
+.cherry-option .description { color: #999; font-size: 11px; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
+.cherry-option .cherry-switcher-wrap label { margin: 0; }
+.cherry-option .button_, .cherry-option .button-primary_, .cherry-option .button-default_, .cherry-option .button-secondary_ { display: inline-block; cursor: pointer; white-space: nowrap; text-decoration: none; box-sizing: border-box; backface-visibility: hidden; box-shadow: 0 0 1px transparent; position: relative; transform: translateZ(0px); transition-duration: 0.5s; transition-property: color; vertical-align: middle; }
+.cherry-option .button_:hover, .cherry-option .button-primary_:hover, .cherry-option .button-primary_:active, .cherry-option .button-primary_:focus, .cherry-option .button-default_:hover, .cherry-option .button-secondary_:hover, .cherry-option .button_:active, .cherry-option .button-primary_:active, .cherry-option .button-default_:active, .cherry-option .button-secondary_:active, .cherry-option .button_:focus, .cherry-option .button-primary_:focus, .cherry-option .button-default_:focus, .cherry-option .button-secondary_:focus { outline: none; }
+.cherry-option .button-primary_ { background-color: #f62e46; border: medium none; border-radius: 6px; box-shadow: none; color: #ffffff; font-size: 13px; height: auto; line-height: 42px; padding: 0 16px; }
+.cherry-option .button-primary_:before { background-color: #cf0921; bottom: 0; content: ""; left: 0; position: absolute; right: 0; top: 0; transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1); transform: scale(0); transition-duration: 0.1s; transition-property: transform; transition-timing-function: ease-out; z-index: -1; border-radius: 6px; }
+.cherry-option .button-primary_:hover, .cherry-option .button-primary_:active, .cherry-option .button-primary_:focus { text-decoration: none; color: #FFFFFF; box-shadow: none; cursor: pointer; border-radius: 6px; background: #f62e46; }
+.cherry-option .button-primary_:link { text-decoration: none; color: #FFFFFF; box-shadow: none; cursor: pointer; }
+.cherry-option .button-default_ { font-size: 13px; background-color: #ffffff; border: 2px solid #dddcdc; border-radius: 6px; line-height: 38px; margin: 0; padding: 0 14px; box-shadow: none; color: #464646; height: auto; }
+.cherry-option .button-secondary_ { font-size: 13px; background-color: #8bc735; border-radius: 6px; line-height: 42px; margin: 0; padding: 0 16px; box-shadow: none; color: #FFFFFF; height: auto; border-style: none; }
+.cherry-option .button-secondary_:hover, .cherry-option .button-secondary_:active, .cherry-option .button-secondary_:focus { text-decoration: none; color: #FFFFFF; box-shadow: none; cursor: pointer; border-radius: 6px; background: #6f9f2a; }
 
 .cherry-clear { clear: both; width: 100%; height: 10px; display: block; }
 

@@ -72,23 +72,9 @@ if ( $this->check_apikey() ) {
 	<h1><?php echo __( 'Plugin options', 'cherry-mailchimp' ) ?></h1>
 </div>
 <!-- END Page Title -->
-
-<!-- Shortcode -->
-<div class="wrap">
-	<div class="container">
-		<span class="pull-right">
-		<?php
-			do_action( 'cherry_shortcode_generator_buttons' );
-		?>
-		</span>
-	</div>
-</div>
-<!-- END Shortcode -->
-
 <!-- Options -->
-<div class="wrap">
-	<form class="cherry-option" method="POST">
-		<div class="container">
+<div class="wrap cherry-option">
+	<form id="cherry-mailchimp-option" method="POST">
 			<?php foreach ( $fields as $field => $strings ) : ?>
 			<?php
 				// Render ui-element
@@ -140,13 +126,20 @@ if ( $this->check_apikey() ) {
 				<div class="col-md-8"><?php echo $html ?></div>
 			</div>
 			<?php endforeach; ?>
-			<div class="row">
-				<div class="col-md-12">
-					<input type="submit" class="button button-primary pull-right" name="action" value="<?php echo __( 'Save', 'cherry-mailchimp' ) ?>">
-				</div>
-			</div>
-		</div>
 	</form>
+	<div class="row">
+		<div class="col-md-8"></div>
+		<div class="col-md-3">
+			<!-- Shortcode -->
+			<?php
+			do_action( 'cherry_shortcode_generator_buttons' );
+			?>
+			<!-- END Shortcode -->
+		</div>
+		<div class="col-md-1">
+			<input form="cherry-mailchimp-option" type="submit" class="button button-secondary_ " name="action" value="<?php echo __( 'Save', 'cherry-mailchimp' ) ?>">
+		</div>
+	</div>
 </div>
 <!-- END Options -->
 <div class="cherry-clear"></div>

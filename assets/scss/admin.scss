@@ -4,8 +4,10 @@
 
 $even: #F0F1F2;
 $odd: #FBFBFB;
-$border-row: #E3E4E5;
+$border-row: #D4D5D6;
 $descriptopn-color: #999;
+$primary-color: #f62e46;
+$secondary-color: #8bc735;
 
 /*
 * @section Form element mixin
@@ -20,11 +22,18 @@ $descriptopn-color: #999;
 */
 
 .cherry-option {
-  .container {
+
 
     .row {
       padding-bottom: 5px;
       background-color: $odd;
+
+
+      -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+      box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
 
       h4 {
         margin-bottom: 4px;
@@ -36,20 +45,18 @@ $descriptopn-color: #999;
       }
     }
 
-    .row:nth-child(4n+1){
+    .row:nth-child(4n+1) {
       border-top: 1px solid $border-row;
       background-color: $even;
     }
 
-    .row:nth-child(4n+2){
+    .row:nth-child(4n+2) {
       border-bottom: 1px solid $border-row;
       background-color: $even;
     }
 
-    .row:last-child{
-      border-top: 1px solid $border-row;
-      background-color: #fff;
-      padding-top: 10px;
+    .row:last-child {
+      padding: 10px 0;
     }
 
     .description {
@@ -58,7 +65,114 @@ $descriptopn-color: #999;
       @include fields_fonts();
     }
 
-  }
+    .cherry-switcher-wrap label {
+      margin: 0;
+    }
+
+    ////////////////////Buttons//////////////////////
+    .button_{
+      display: inline-block;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      box-sizing: border-box;
+      backface-visibility: hidden;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+      position: relative;
+      transform: translateZ(0px);
+      transition-duration: 0.5s;
+      transition-property: color;
+      vertical-align: middle;
+      &:hover,
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+    .button-primary_{
+      @extend .button_;
+      background-color: $primary-color;
+      border: medium none;
+      border-radius: 6px;
+      box-shadow: none;
+      color: #ffffff;
+      font-size: 13px;
+      height: auto;
+      line-height: 42px;
+      padding: 0 16px;
+      &:before {
+        background-color: darken($primary-color, 15%);
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: all 500ms cubic-bezier(0.075, 0.820, 0.165, 1.000);
+        transform: scale(0);
+        transition-duration: 0.1s;
+        transition-property: transform;
+        transition-timing-function: ease-out;
+        z-index: -1;
+        border-radius: 6px;
+      }
+      &:hover{
+        text-decoration: none;
+        color: #FFFFFF;
+        box-shadow: none;
+        cursor: pointer;border-radius: 6px;
+        background: $primary-color;
+      }
+      &:link{
+        text-decoration: none;
+        color: #FFFFFF;
+        box-shadow: none;
+        cursor: pointer;
+      }
+      &:active{
+        @extend .button-primary_:hover;
+      }
+      &:focus{
+        @extend .button-primary_:hover;
+      }
+    }
+
+    .button-default_{
+      @extend .button_;
+      font-size: 13px;
+      background-color: #ffffff;
+      border: 2px solid #dddcdc;
+      border-radius: 6px;
+      line-height: 38px;
+      margin: 0;
+      padding: 0 14px;
+      box-shadow: none;
+      color: #464646;
+      height: auto;
+    }
+    .button-secondary_ {
+      @extend .button_;
+      font-size: 13px;
+      background-color: $secondary-color;
+      border-radius: 6px;
+      line-height: 42px;
+      margin: 0;
+      padding: 0 16px;
+      box-shadow: none;
+      color: #FFFFFF;
+      height: auto;
+      border-style: none;
+      &:hover,
+      &:active,
+      &:focus {
+        text-decoration: none;
+        color: #FFFFFF;
+        box-shadow: none;
+        cursor: pointer;
+        border-radius: 6px;
+        background: darken($secondary-color, 10%);
+      }
+    }
 }
 
 .cherry-clear {
@@ -67,4 +181,3 @@ $descriptopn-color: #999;
   height: 10px;
   display: block;
 }
-
