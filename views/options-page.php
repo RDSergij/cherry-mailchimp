@@ -75,6 +75,7 @@ if ( $this->check_apikey() ) {
 <!-- Options -->
 <div class="wrap cherry-option">
 	<form id="cherry-mailchimp-option" method="POST">
+		<input type="hidden" name="action" value="cherry_mailchimp_save_options">
 			<?php foreach ( $fields as $field => $strings ) : ?>
 			<?php
 				// Render ui-element
@@ -114,7 +115,7 @@ if ( $this->check_apikey() ) {
 					<h4>
 						<?php echo $strings['title'] ?>
 						<?php if ( 'apikey' === $field ) : ?>
-							<small class="text-<?php echo $connect_class ?>">
+							<small id="cherry-mail-chimp-connect" class="text-<?php echo $connect_class ?>">
 								(<?php echo $connect_message ?>)
 							</small>
 						<?php endif; ?>
@@ -126,18 +127,29 @@ if ( $this->check_apikey() ) {
 				<div class="col-md-8"><?php echo $html ?></div>
 			</div>
 			<?php endforeach; ?>
+		<!-- Message
+		<div id="cherry-mail-chimp-message" class="notice-box success-notice show-state">
+			<span class="dashicons"></span>
+			<div class="inner"></div>
+		</div>
+		End Message -->
 	</form>
 	<div class="row">
-		<div class="col-md-8"></div>
-		<div class="col-md-3">
-			<!-- Shortcode -->
-			<?php
-			do_action( 'cherry_shortcode_generator_buttons' );
-			?>
-			<!-- END Shortcode -->
-		</div>
-		<div class="col-md-1">
-			<input form="cherry-mailchimp-option" type="submit" class="button button-secondary_ " name="action" value="<?php echo __( 'Save', 'cherry-mailchimp' ) ?>">
+		<div class="col-md-6"></div>
+		<div class="col-md-6 cherry-mail-chimp-action">
+			<div class="cherry-mail-chimp-action-button">
+				<a id="cherry-mailchimp-options-save" class="button button-secondary_ ">
+					<?php echo __( 'Save options', 'cherry-mailchimp' ) ?>
+					<div class="cherry-spinner-wordpress spinner-wordpress-type-2"><span class="cherry-inner-circle"></span></div>
+				</a>
+			</div>
+			<div class="cherry-mail-chimp-action-button">
+				<!-- Shortcode -->
+				<?php
+				do_action( 'cherry_shortcode_generator_buttons' );
+				?>
+				<!-- END Shortcode -->
+			</div>
 		</div>
 	</div>
 </div>

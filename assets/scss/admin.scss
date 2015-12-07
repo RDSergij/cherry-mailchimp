@@ -45,18 +45,19 @@ $secondary-color: #8bc735;
       }
     }
 
-    .row:nth-child(4n+1) {
+    .row:nth-child(4n) {
       border-top: 1px solid $border-row;
       background-color: $even;
     }
 
-    .row:nth-child(4n+2) {
+    .row:nth-child(4n+1) {
       border-bottom: 1px solid $border-row;
       background-color: $even;
     }
 
     .row:last-child {
       padding: 10px 0;
+      background-color: $odd;
     }
 
     .description {
@@ -70,6 +71,13 @@ $secondary-color: #8bc735;
     }
 
     ////////////////////Buttons//////////////////////
+    .cherry-mail-chimp-action {
+      .cherry-mail-chimp-action-button {
+        float: right;
+        margin: 5px 15px;
+      }
+    }
+
     .button_{
       display: inline-block;
       cursor: pointer;
@@ -173,6 +181,93 @@ $secondary-color: #8bc735;
         background: darken($secondary-color, 10%);
       }
     }
+
+    .spinner-wordpress-type-2 {
+      opacity: 0;
+
+      &.active {
+        opacity: 1;
+        -webkit-transition: opacity 300ms ease-in-out 150ms;
+        transition: opacity 300ms ease-in-out 150ms;
+      }
+    }
+
+  .notice-box {
+    background: #222222;
+    position: fixed;
+    margin: 5px 0;
+    border-left: 5px solid #2a445d;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    padding: 15px 20px 15px 15px;
+    min-width: 200px;
+    overflow: hidden;
+    z-index: 999;
+    -webkit-transition: all 250ms cubic-bezier(0.85, 0.04, 1, 1);
+    transition: all 250ms cubic-bezier(0.85, 0.04, 1, 1);
+
+    span.dashicons {
+      position: relative;
+      margin-right: 20px;
+    }
+    span.dashicons:before {
+      position: absolute;
+      font-size: 40px;
+      left: -10px;
+      top: -10px;
+    }
+
+    &.success {
+      border-color: #8bc735;
+
+      span.dashicons {
+        color: #8bc735;
+        &:before {
+          content: "\f147";
+        }
+      }
+
+      .inner b {
+        color: #8bc735;
+      }
+    }
+
+    &.info {
+      border-color: #ffcc00;
+      span.dashicons {
+        color: #ffcc00;
+      }
+      span.dashicons:before {
+        content: "\f348";
+      }
+      .inner b {
+        color: #ffcc00;
+      }
+    }
+
+    &.error {
+      border-color: #f62e46;
+      span.dashicons {
+        color: #f62e46;
+      }
+      span.dashicons:before {
+        content: "\f158";
+      }
+    }
+
+    &.show-state {
+      -webkit-transition: all 500ms cubic-bezier(0.1, 0.67, 0.26, 1);
+      transition: all 500ms cubic-bezier(0.1, 0.67, 0.26, 1);
+    }
+
+    .inner {
+      display: inline-block;
+      color: #fff;
+    }
+
+  }
+
+
 }
 
 .cherry-clear {

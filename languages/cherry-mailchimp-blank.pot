@@ -177,5 +177,11 @@ msgid "DISCONNECT"
 msgstr ""
 
 #: views/options_page.php:144
-msgid "Save"
+msgid "Save options"
+msgstr ""
+
+msgid "Options have been saved"
+msgstr ""
+
+msgid "Error"
 msgstr ""

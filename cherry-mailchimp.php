@@ -105,6 +105,10 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			add_action( 'wp_ajax_mailchimpsubscribe', array( &$this, 'subscriber_add' ) );
 			add_action( 'wp_ajax_nopriv_mailchimpsubscribe', array( &$this, 'subscriber_add' ) );
 
+			// Need for save options
+			add_action( 'wp_ajax_cherry_mailchimp_save_options', array( &$this, 'save_options' ) );
+			add_action( 'wp_ajax_nopriv_cherry_mailchimp_save_options', array( &$this, 'save_options' ) );
+
 			// Style to filter for Cherry Framework
 			add_filter( 'cherry_compiler_static_css', array( $this, 'add_style_to_compiler' ) );
 
@@ -351,9 +355,9 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-		private function save_options() {
-			if ( empty( $_POST['action'] ) || 'Save' != $_POST['action'] ) {
-				return;
+		public function save_options() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( __( 'Access denied.' ) );
 			}
 
 			foreach ( $this->options as $option_key => $option_value ) {
@@ -362,6 +366,22 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			}
 
 			$this->get_options();
+
+			if ( ! empty( $this->check_apikey() ) ) {
+				$connect_status = 'success';
+				$connect_message = __( 'CONNECT', 'cherry-mailchimp' );
+			} else {
+				$connect_status = 'danger';
+				$connect_message = __( 'DISCONNECT', 'cherry-mailchimp' );
+			}
+
+			$answer = array (
+				'type'                  => 'success',
+				'message'               => __( 'Options have been saved', 'cherry-mailchimp' ),
+				'connect_status'        => $connect_status,
+				'connect_message'       => $connect_message,
+			);
+			wp_send_json( $answer );
 		}
 
 		/**
@@ -414,7 +434,16 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			wp_localize_script( 'mailchimp-script-api', 'wp_load_script', null );
 			wp_enqueue_script( 'mailchimp-script-api' );
 
-			$this->save_options();
+			wp_register_script( 'mailchimp-script-custom', plugins_url( 'assets/js/admin.js', __FILE__ ) );
+			wp_localize_script( 'mailchimp-script-custom', 'cherryMailchimpParam', array(
+																				'ajaxurl'                       => admin_url( 'admin-ajax.php' ),
+																				'default_error_message'         => __( 'Error', 'cherry-mailchimp' ),
+																				'default_disconnect_message'    => __( 'DISCONNECT', 'cherry-mailchimp' )
+																			)
+																		);
+			wp_enqueue_script( 'mailchimp-script-custom' );
+
+			//$this->save_options();
 			$this->get_options();
 
 			// Shortcode generator
@@ -426,7 +455,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			new Cherry_Shortcode_Generator( $base_dir, $base_url, 'cherry-mailchimp' );
 
-			wp_enqueue_style( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
+			wp_enqueue_style( 'bootstrap', plugins_url( 'assets/css/bootstrap.min.css', __FILE__ ) );
 
 			// Include ui-elements
 			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-text/ui-text.php';
