@@ -77,13 +77,13 @@ if ( $this->check_apikey() ) {
 </div>
 <!-- END Page Title -->
 <!-- Documentation link -->
-<div class="cherry-info-box">
+<!--div class="cherry-info-box">
 	<div class="documentation-link">Feel free to view detailed
 		<a href="http://cherryframework.com/documentation/cf4/index.php?project=wordpress&lang=en_US" title="Documentation" target="_blank">
 			Cherry Framework 4 documentation
 		</a>
 	</div>
-</div>
+</div-->
 <!-- End Documentation link -->
 <!-- Options -->
 <div class="wrap cherry-option">
