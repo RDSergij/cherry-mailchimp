@@ -7,6 +7,7 @@
 /*
 * @section Options fields
 */
+.cherry-option { font-family: "Open Sans", sans-serif; }
 .cherry-option .row { padding-bottom: 5px; background-color: #FBFBFB; -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 .cherry-option .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
 .cherry-option .row:first-child { border-top: 1px solid #D4D5D6; }
