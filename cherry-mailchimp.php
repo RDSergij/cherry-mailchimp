@@ -109,6 +109,10 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			add_action( 'wp_ajax_cherry_mailchimp_save_options', array( &$this, 'save_options' ) );
 			add_action( 'wp_ajax_nopriv_cherry_mailchimp_save_options', array( &$this, 'save_options' ) );
 
+			// Need for generate shortcode view
+			add_action( 'wp_ajax_cherry_mailchimp_generator_view', array( &$this, 'generator_view' ) );
+			add_action( 'wp_ajax_nopriv_cherry_mailchimp_generator_view', array( &$this, 'generator_view' ) );
+
 			// Style to filter for Cherry Framework
 			add_filter( 'cherry_compiler_static_css', array( $this, 'add_style_to_compiler' ) );
 
@@ -367,7 +371,8 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			$this->get_options();
 
-			if ( ! empty( $this->check_apikey() ) ) {
+			$check_apikey = $this->check_apikey();
+			if ( ! empty( $check_apikey ) ) {
 				$connect_status = 'success';
 				$connect_message = __( 'CONNECT', 'cherry-mailchimp' );
 			} else {
@@ -382,6 +387,32 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 				'connect_message'       => $connect_message,
 			);
 			wp_send_json( $answer );
+		}
+
+		/**
+		 * Generate shortcode view
+		 *
+		 * @since 1.0.0
+		 * @return string
+		 */
+		public function generator_view() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( __( 'Access denied.' ) );
+			}
+
+			$this->get_options();
+
+			// Shortcode generator
+			$base_url = trailingslashit( CHERRY_MAILCHIMP_URI ) . 'admin/includes/class-cherry-shortcode-generator/';
+			$base_dir = trailingslashit( CHERRY_MAILCHIMP_DIR ) . 'admin/includes/class-cherry-shortcode-generator/';
+			require_once( $base_dir . 'class-cherry-shortcode-generator.php' );
+
+			add_filter( 'cherry_shortcode_generator_register', array( &$this, 'add_shortcode_to_generator' ), 10, 2 );
+
+			new Cherry_Shortcode_Generator( $base_dir, $base_url, 'cherry-mailchimp' );
+
+			echo do_action( 'cherry_shortcode_generator_buttons' );
+			die('');
 		}
 
 		/**

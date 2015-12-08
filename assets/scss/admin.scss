@@ -23,7 +23,6 @@ $secondary-color: #8bc735;
 
 .cherry-option {
 
-
     .row {
       padding-bottom: 5px;
       background-color: $odd;
@@ -43,16 +42,21 @@ $secondary-color: #8bc735;
         color: #444;
         @include fields_fonts();
       }
-    }
 
-    .row:nth-child(4n) {
-      border-top: 1px solid $border-row;
-      background-color: $even;
-    }
+      &:first-child {
+        border-top: 1px solid $border-row;
+      }
 
-    .row:nth-child(4n+1) {
-      border-bottom: 1px solid $border-row;
-      background-color: $even;
+      &:nth-child(4n+1) {
+        border-top: 1px solid $border-row;
+        background-color: $even;
+      }
+
+      &:nth-child(4n+2) {
+        border-bottom: 1px solid $border-row;
+        background-color: $even;
+      }
+
     }
 
     .description {
@@ -63,6 +67,12 @@ $secondary-color: #8bc735;
 
     .cherry-switcher-wrap label {
       margin: 0;
+    }
+
+    .row.cherry-mailchimp-submit-wrapper {
+      background: none repeat scroll 0 0 #2a445d;
+      padding-top: 4px;
+      padding-bottom: 4px;
     }
 
     ////////////////////Buttons//////////////////////

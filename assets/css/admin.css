@@ -9,10 +9,12 @@
 */
 .cherry-option .row { padding-bottom: 5px; background-color: #FBFBFB; -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 .cherry-option .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
-.cherry-option .row:nth-child(4n) { border-top: 1px solid #D4D5D6; background-color: #F0F1F2; }
-.cherry-option .row:nth-child(4n+1) { border-bottom: 1px solid #D4D5D6; background-color: #F0F1F2; }
+.cherry-option .row:first-child { border-top: 1px solid #D4D5D6; }
+.cherry-option .row:nth-child(4n+1) { border-top: 1px solid #D4D5D6; background-color: #F0F1F2; }
+.cherry-option .row:nth-child(4n+2) { border-bottom: 1px solid #D4D5D6; background-color: #F0F1F2; }
 .cherry-option .description { color: #999; font-size: 11px; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
 .cherry-option .cherry-switcher-wrap label { margin: 0; }
+.cherry-option .row.cherry-mailchimp-submit-wrapper { background: none repeat scroll 0 0 #2a445d; padding-top: 4px; padding-bottom: 4px; }
 .cherry-option .cherry-mail-chimp-action .cherry-mail-chimp-action-button { float: right; margin: 5px 15px; }
 .cherry-option .button_, .cherry-option .button-primary_, .cherry-option .button-default_, .cherry-option .button-secondary_ { display: inline-block; cursor: pointer; white-space: nowrap; text-decoration: none; box-sizing: border-box; backface-visibility: hidden; box-shadow: 0 0 1px transparent; position: relative; transform: translateZ(0px); transition-duration: 0.5s; transition-property: color; vertical-align: middle; }
 .cherry-option .button_:hover, .cherry-option .button-primary_:hover, .cherry-option .button-primary_:active, .cherry-option .button-primary_:focus, .cherry-option .button-default_:hover, .cherry-option .button-secondary_:hover, .cherry-option .button_:active, .cherry-option .button-primary_:active, .cherry-option .button-default_:active, .cherry-option .button-secondary_:active, .cherry-option .button_:focus, .cherry-option .button-primary_:focus, .cherry-option .button-default_:focus, .cherry-option .button-secondary_:focus { outline: none; }

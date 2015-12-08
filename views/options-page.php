@@ -75,7 +75,6 @@ if ( $this->check_apikey() ) {
 <!-- Options -->
 <div class="wrap cherry-option">
 	<form id="cherry-mailchimp-option" method="POST">
-		<input type="hidden" name="action" value="cherry_mailchimp_save_options">
 			<?php foreach ( $fields as $field => $strings ) : ?>
 			<?php
 				// Render ui-element
@@ -133,8 +132,9 @@ if ( $this->check_apikey() ) {
 			<div class="inner"></div>
 		</div>
 		End Message -->
+		<input type="hidden" name="action" value="cherry_mailchimp_save_options">
 	</form>
-	<div class="row">
+	<div class="row cherry-mailchimp-submit-wrapper">
 		<div class="col-md-6"></div>
 		<div class="col-md-6 cherry-mail-chimp-action">
 			<div class="cherry-mail-chimp-action-button">
@@ -143,7 +143,7 @@ if ( $this->check_apikey() ) {
 					<div class="cherry-spinner-wordpress spinner-wordpress-type-2"><span class="cherry-inner-circle"></span></div>
 				</a>
 			</div>
-			<div class="cherry-mail-chimp-action-button">
+			<div id="cherry-mailchimp-generate-view" class="cherry-mail-chimp-action-button">
 				<!-- Shortcode -->
 				<?php
 				do_action( 'cherry_shortcode_generator_buttons' );

@@ -182,7 +182,8 @@ if ( ! class_exists( 'Cherry_Shortcode_Generator' ) ) {
 				$this->print_shortcode_button( $shortcode );
 			}
 
-			do_action( 'admin_enqueue_scripts' );
+			//do_action( 'admin_enqueue_scripts' );
+			$this->assets();
 			wp_enqueue_script( 'cherry-shortcode-generator' );
 		}
 
