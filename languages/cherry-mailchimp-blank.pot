@@ -116,7 +116,7 @@ msgstr ""
 msgid "Set your Api Key"
 msgstr ""
 
-msgid "You can read more information on the mailchimp knowledge base"
+msgid "Press this box for read more information on the mailchimp knowledge base"
 msgstr ""
 
 #: views/options_page.php:23

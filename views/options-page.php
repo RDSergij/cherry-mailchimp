@@ -143,7 +143,7 @@ if ( $this->check_apikey() ) {
 					if ( 'apikey' == $field || 'list' == $field ) :
 						$tooltips_content = array(
 							'apikey'    => array(
-								'content'   => __( 'You can read more information on the mailchimp knowledge base', 'cherry-mailchimp' ),
+								'content'   => __( 'Press this box for read more information on the mailchimp knowledge base', 'cherry-mailchimp' ),
 								'url'       => 'http://kb.mailchimp.com/accounts/management/about-api-keys',
 							),
 							'list'      => array(
