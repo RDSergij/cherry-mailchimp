@@ -50,15 +50,15 @@ jQuery( document ).ready( function() {
                 jQuery( '#cherry-mailchimp-options-save' ).find( 'div' ).removeClass( 'active' );
                 jQuery( '#cherry-mailchimp-options-save' ).removeClass( 'right-spiner' );
 
-                cherry_mailchimp_generator_view();
+                cherryMailchimpGeneratorView();
             }
         );
 
     });
 });
 
-function cherry_mailchimp_generator_view() {
-    jQuery.post( window.cherryMailchimpParam.ajaxurl, {action: 'cherry_mailchimp_generator_view'},
+function cherryMailchimpGeneratorView() {
+    jQuery.post( window.cherryMailchimpParam.ajaxurl, { action: 'cherry_mailchimp_generator_view' },
         function( response ) {
             jQuery( '#cherry-mailchimp-generate-view' ).html( response );
 

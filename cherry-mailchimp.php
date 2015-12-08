@@ -393,7 +393,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * Generate shortcode view
 		 *
 		 * @since 1.0.0
-		 * @return string
+		 * @return void
 		 */
 		public function generator_view() {
 			if ( ! current_user_can( 'manage_options' ) ) {
@@ -411,8 +411,8 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 			new Cherry_Shortcode_Generator( $base_dir, $base_url, 'cherry-mailchimp' );
 
-			echo do_action( 'cherry_shortcode_generator_buttons' );
-			die('');
+			do_action( 'cherry_shortcode_generator_buttons' );
+			die();
 		}
 
 		/**
