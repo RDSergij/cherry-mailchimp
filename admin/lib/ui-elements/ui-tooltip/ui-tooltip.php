@@ -11,17 +11,32 @@
  */
 
 // If this file is called directly, abort.
-if ( !defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 if ( ! class_exists( 'UI_Tooltip' ) ) {
+
+	/**
+	 * Class UI_Tooltip generic ui-element tooltip
+	 */
 	class UI_Tooltip {
 
+		/**
+		 * Textarea settings
+		 *
+		 * @var array
+		 */
 		private $settings = array();
+
+		/**
+		 * Default settings
+		 *
+		 * @var array
+		 */
 		private $defaults_settings = array(
 			'id'			=> 'cherry-ui-tooltip-id',
-			'hint'			=>  array(
+			'hint'			=> array(
 				'type'		=> 'text',
 				'content'	=> 'Lorem ipsum',
 			),
@@ -50,12 +65,12 @@ if ( ! class_exists( 'UI_Tooltip' ) ) {
 			$html = '';
 
 			$type_hint = $this->settings['hint']['type'];
-			switch ($type_hint) {
+			switch ( $type_hint ) {
 				case 'image':
 					$html = '<div id="' . $this->settings['id'] . '" class="hint-image" data-hint-image="' . $this->settings['hint']['content'] .'"></div>';
 					break;
 				case 'video':
-					$embed_code = wp_oembed_get($this->settings['hint']['content'], array('width' => 400));
+					$embed_code = wp_oembed_get( $this->settings['hint']['content'], array( 'width' => 400 ) );
 					$html = '<div id="' . $this->settings['id'] . '" class="hint-video"  data-hint-video="">'. $embed_code .'</div>';
 					break;
 				default:
@@ -85,7 +100,7 @@ if ( ! class_exists( 'UI_Tooltip' ) ) {
 		 *
 		 * @since  4.0.0
 		 */
-		public static function enqueue_assets(){
+		public static function enqueue_assets() {
 			wp_enqueue_script(
 				'ui-tooltip-min',
 				self::get_current_file_url() . '/assets/min/ui-tooltip.min.js',
@@ -102,6 +117,5 @@ if ( ! class_exists( 'UI_Tooltip' ) ) {
 				'all'
 			);
 		}
-
 	}
 }

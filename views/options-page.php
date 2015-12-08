@@ -154,7 +154,7 @@ if ( $this->check_apikey() ) {
 						$ui_tooltip = new UI_Tooltip(
 							array(
 								'id'			=> 'cherry-mailchimp-options-tooltip-' . $field,
-								'hint'			=>  array(
+								'hint'			=> array(
 									'type'		=> 'text',
 									'content'	=> $tooltips_content[ $field ]['content'],
 								),
