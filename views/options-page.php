@@ -16,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 $fields = array(
 	'apikey'            => array(
 									'title'         => __( 'Api Key', 'cherry-mailchimp' ),
-									'description'   => __( 'Set your Api Key (find in MailChimp account)', 'cherry-mailchimp' ),
+									'description'   => __( 'Set your Api Key', 'cherry-mailchimp' ),
 									'value'         => __( '', 'cherry-mailchimp' ),
 								),
 	'list'              => array(
@@ -68,10 +68,23 @@ if ( $this->check_apikey() ) {
 ?>
 
 <!-- Page Title -->
-<div class="wrap">
-	<h1><?php echo __( 'Plugin options', 'cherry-mailchimp' ) ?></h1>
+<div class="cherry-page-wrapper">
+	<div class="cherry-page-title">
+		<span>
+			<?php echo __( 'Plugin options', 'cherry-mailchimp' ) ?>
+		</span>
+	</div>
 </div>
 <!-- END Page Title -->
+<!-- Documentation link -->
+<div class="cherry-info-box">
+	<div class="documentation-link">Feel free to view detailed
+		<a href="http://cherryframework.com/documentation/cf4/index.php?project=wordpress&lang=en_US" title="Documentation" target="_blank">
+			Cherry Framework 4 documentation
+		</a>
+	</div>
+</div>
+<!-- End Documentation link -->
 <!-- Options -->
 <div class="wrap cherry-option">
 	<form id="cherry-mailchimp-option" method="POST">
@@ -122,16 +135,43 @@ if ( $this->check_apikey() ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4 description"><?php echo $strings['description'] ?></div>
-				<div class="col-md-8"><?php echo $html ?></div>
+				<div class="col-md-3">
+					<div class="description">
+						<?php echo $strings['description'] ?>
+					</div>
+					<?php
+					if ( 'apikey' == $field || 'list' == $field ) :
+						$tooltips_content = array(
+							'apikey'    => array(
+								'content'   => __( 'You can read more information on the mailchimp knowledge base', 'cherry-mailchimp' ),
+								'url'       => 'http://kb.mailchimp.com/accounts/management/about-api-keys',
+							),
+							'list'      => array(
+								'content'   => __( 'You can read more information on the mailchimp knowledge base', 'cherry-mailchimp' ),
+								'url'       => 'http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id',
+							),
+						);
+						$ui_tooltip = new UI_Tooltip(
+							array(
+								'id'			=> 'cherry-mailchimp-options-tooltip-' . $field,
+								'hint'			=>  array(
+									'type'		=> 'text',
+									'content'	=> $tooltips_content[ $field ]['content'],
+								),
+								'class'			=> '',
+							)
+						);
+						?>
+						<a class="cherry-mailchimp-tooltip-url" href="<?php echo $tooltips_content[ $field ]['url'] ?>">
+							<?php echo $ui_tooltip->render(); ?>
+						</a>
+					<?php endif; ?>
+				</div>
+				<div class="col-md-9">
+					<?php echo $html ?>
+				</div>
 			</div>
 			<?php endforeach; ?>
-		<!-- Message
-		<div id="cherry-mail-chimp-message" class="notice-box success-notice show-state">
-			<span class="dashicons"></span>
-			<div class="inner"></div>
-		</div>
-		End Message -->
 		<input type="hidden" name="action" value="cherry_mailchimp_save_options">
 	</form>
 	<div class="row cherry-mailchimp-submit-wrapper">

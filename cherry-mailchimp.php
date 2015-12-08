@@ -491,6 +491,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-text/ui-text.php';
 			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-switcher/ui-switcher.php';
 			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-textarea/ui-textarea.php';
+			include trailingslashit( CHERRY_MAILCHIMP_DIR ) . '/admin/lib/ui-elements/ui-tooltip/ui-tooltip.php';
 
 			// Return html of options page
 			return include_once 'views/options-page.php';

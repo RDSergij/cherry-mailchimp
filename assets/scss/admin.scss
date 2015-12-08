@@ -2,8 +2,8 @@
 * @section Color list
 */
 
-$even: #F0F1F2;
-$odd: #FBFBFB;
+$even: #F2F3F4;
+$odd: #FCFCFC;
 $border-row: #D4D5D6;
 $descriptopn-color: #999;
 $primary-color: #f62e46;
@@ -18,6 +18,57 @@ $secondary-color: #8bc735;
 }
 
 /*
+* @section Wrap
+*/
+
+.cherry-page-wrapper {
+  margin: 20px 20px 0 0;
+  position: relative;
+  @include fields_fonts();
+}
+
+/*
+* @section Title
+*/
+
+.cherry-page-title {
+  position: relative;
+  border-left: 5px solid #2a445d;
+  margin-bottom: 10px;
+  padding: 20px;
+  background: #FFF;
+  -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  @include fields_fonts();
+
+  span {
+    font-size: 30px;
+    line-height: 35px;
+  }
+}
+
+/*
+* @section Documentation
+*/
+
+.cherry-info-box {
+  background: #FFF;
+  position: relative;
+  border-left: 5px solid #2a445d;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 5px 20px;
+  margin-bottom: 10px;
+  font-size: 13px;
+
+  @include fields_fonts();
+}
+
+/*
 * @section Options fields
 */
 
@@ -25,9 +76,11 @@ $secondary-color: #8bc735;
     font-family: "Open Sans", sans-serif ;
 
     .row {
-      padding-bottom: 5px;
+      padding-bottom: 10px;
       background-color: $odd;
-
+      margin: 0;
+      border-left: 1px solid $border-row;
+      border-right: 1px solid $border-row;
 
       -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
       box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
@@ -63,7 +116,12 @@ $secondary-color: #8bc735;
     .description {
       color: $descriptopn-color;
       font-size: 11px;
+      display: inline;
       @include fields_fonts();
+    }
+
+    .cherry-mailchimp-tooltip-url {
+      float: right;
     }
 
     .cherry-switcher-wrap label {
@@ -80,7 +138,7 @@ $secondary-color: #8bc735;
     .cherry-mail-chimp-action {
       .cherry-mail-chimp-action-button {
         float: right;
-        margin: 5px 15px;
+        margin: 5px;
       }
     }
 

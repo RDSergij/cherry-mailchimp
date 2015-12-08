@@ -113,7 +113,10 @@ msgid "Api Key"
 msgstr ""
 
 #: views/options_page.php:19
-msgid "Set your Api Key (find in MailChimp account)"
+msgid "Set your Api Key"
+msgstr ""
+
+msgid "You can read more information on the mailchimp knowledge base"
 msgstr ""
 
 #: views/options_page.php:23
