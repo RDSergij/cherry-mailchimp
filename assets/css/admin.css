@@ -26,9 +26,11 @@
 * @section Options fields
 */
 .cherry-option { font-family: "Open Sans", sans-serif; }
-.cherry-option .row { padding-top: 30px; padding-bottom: 20px; padding-left: 0px; background-color: #FCFCFC; margin: 0; border-left: 1px solid #D4D5D6; border-right: 1px solid #D4D5D6; }
+.cherry-option .row { padding-left: 0px; background-color: #FCFCFC; margin: 0; border-left: 1px solid #D4D5D6; border-right: 1px solid #D4D5D6; }
 .cherry-option .row h4 { margin-bottom: 4px; margin-top: 4px; font-size: 1em; font-weight: 600; color: #444; font-family: "Open Sans",sans-serif; line-height: 1.4em; }
 .cherry-option .row:first-child { border-top: 1px solid #D4D5D6; }
+.cherry-option .row:nth-child(2n+1) { padding-top: 30px; }
+.cherry-option .row:nth-child(2n+2) { padding-bottom: 20px; }
 .cherry-option .row:nth-child(4n+1) { border-top: 1px solid #D4D5D6; background-color: #F2F3F4; }
 .cherry-option .row:nth-child(4n+2) { border-bottom: 1px solid #D4D5D6; background-color: #F2F3F4; }
 .cherry-option .row .col-md-12:first-child, .cherry-option .row .col-md-3:first-child { padding-left: 12px; }

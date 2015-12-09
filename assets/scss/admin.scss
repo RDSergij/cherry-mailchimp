@@ -80,8 +80,6 @@ $secondary-color: #8bc735;
     font-family: "Open Sans", sans-serif ;
 
     .row {
-      padding-top: 30px;
-      padding-bottom: 20px;
       padding-left: 0px;
       background-color: $odd;
       margin: 0;
@@ -105,6 +103,14 @@ $secondary-color: #8bc735;
 
       &:first-child {
         border-top: 1px solid $border-row;
+      }
+
+      &:nth-child(2n+1) {
+        padding-top: 30px;
+      }
+
+      &:nth-child(2n+2) {
+        padding-bottom: 20px;
       }
 
       &:nth-child(4n+1) {
