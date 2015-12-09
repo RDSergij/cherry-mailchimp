@@ -80,8 +80,9 @@ $secondary-color: #8bc735;
     font-family: "Open Sans", sans-serif ;
 
     .row {
-      padding-top: 10px;
-      padding-bottom: 15px;
+      padding-top: 30px;
+      padding-bottom: 20px;
+      padding-left: 0px;
       background-color: $odd;
       margin: 0;
       border-left: 1px solid $border-row;
@@ -114,6 +115,10 @@ $secondary-color: #8bc735;
       &:nth-child(4n+2) {
         border-bottom: 1px solid $border-row;
         background-color: $even;
+      }
+
+      .col-md-12:first-child, .col-md-3:first-child {
+        padding-left: 12px;
       }
 
     }
@@ -353,6 +358,7 @@ $secondary-color: #8bc735;
 }
 
 .ui-tooltip {
+  font-family: "Open Sans",sans-serif;
   padding: 8px;
   position: absolute;
   z-index: 9999;
@@ -361,5 +367,6 @@ $secondary-color: #8bc735;
   box-shadow: 0 0 5px #aaa;
 }
 body .ui-tooltip {
+  font-family: "Open Sans",sans-serif;
   border-width: 2px;
 }
