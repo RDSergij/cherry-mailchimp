@@ -251,7 +251,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			wp_enqueue_style( 'magnific-popup' );
 
 			// Magnific popup scripts
-			wp_register_script( 'magnific-popup', plugins_url( 'assets/js/jquery.magnific-popup.min.js', __FILE__), array( 'jquery' ), '1.0.0', true );
+			wp_register_script( 'magnific-popup', plugins_url( 'assets/js/jquery.magnific-popup.min.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
 			wp_enqueue_script( 'magnific-popup' );
 
 			// Custom scripts
