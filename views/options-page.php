@@ -32,7 +32,7 @@ $fields = array(
 	'placeholder'       => array(
 									'title'        => __( 'Placeholder' ),
 									'description'  => __( 'Default placeholder for email input', 'cherry-mailchimp' ),
-									'value'        => __( 'enter your email', 'cherry-mailchimp' ),
+									'value'        => __( 'Enter your email', 'cherry-mailchimp' ),
 								),
 	'button_text'       => array(
 									'title'        => __( 'Button' ),
@@ -153,7 +153,7 @@ if ( $this->check_apikey() ) {
 								'url'       => 'http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id',
 							),
 						);
-						$ui_tooltip = new UI_Tooltip(
+						$ui_tooltip = new UI_Tooltip2(
 							array(
 								'id'			=> 'cherry-mailchimp-options-tooltip-' . $field,
 								'hint'			=> array(

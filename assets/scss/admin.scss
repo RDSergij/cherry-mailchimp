@@ -27,6 +27,10 @@ $secondary-color: #8bc735;
   @include fields_fonts();
 }
 
+#wpcontent {
+  background-color: #F1F1F1;
+}
+
 /*
 * @section Title
 */
@@ -76,17 +80,18 @@ $secondary-color: #8bc735;
     font-family: "Open Sans", sans-serif ;
 
     .row {
-      padding-bottom: 10px;
+      padding-top: 10px;
+      padding-bottom: 15px;
       background-color: $odd;
       margin: 0;
       border-left: 1px solid $border-row;
       border-right: 1px solid $border-row;
 
-      -webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
-      box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
+      //-webkit-box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+      //box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+      //-webkit-box-sizing: border-box;
+      //-moz-box-sizing: border-box;
+      //box-sizing: border-box;
 
       h4 {
         margin-bottom: 4px;
@@ -345,4 +350,16 @@ $secondary-color: #8bc735;
   width: 100%;
   height: 10px;
   display: block;
+}
+
+.ui-tooltip {
+  padding: 8px;
+  position: absolute;
+  z-index: 9999;
+  max-width: 300px;
+  -webkit-box-shadow: 0 0 5px #aaa;
+  box-shadow: 0 0 5px #aaa;
+}
+body .ui-tooltip {
+  border-width: 2px;
 }

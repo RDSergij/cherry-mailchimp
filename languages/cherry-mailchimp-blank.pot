@@ -100,7 +100,7 @@ msgstr ""
 #: cherry-mailchimp.php:257
 #: cherry-mailchimp.php:458
 #: includes/cherry-mailchimp-data.php:60
-msgid "enter your email"
+msgid "Enter your email"
 msgstr ""
 
 #: cherry-mailchimp.php:474

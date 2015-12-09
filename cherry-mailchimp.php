@@ -262,7 +262,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			// Set up the default arguments.
 			$defaults = array(
 					'button_text'       => __( 'Subscribe', 'cherry-mailchimp' ),
-					'placeholder'    	=> __( 'enter your email', 'cherry-mailchimp' ),
+					'placeholder'    	=> __( 'Enter your email', 'cherry-mailchimp' ),
 					'success_message'   => __( 'Subscribed successfully', 'cherry-mailchimp' ),
 					'fail_message'     	=> __( 'Subscribed failed', 'cherry-mailchimp' ),
 					'warning_message'   => __( 'Email is incorect', 'cherry-mailchimp' ),
@@ -505,7 +505,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 */
 		public function add_shortcode_to_generator() {
 
-			$placeholder        = empty( $this->options['placeholder'] )        ? __( 'enter your email', 'cherry-mailchimp' )          : $this->options['placeholder'];
+			$placeholder        = empty( $this->options['placeholder'] )        ? __( 'Enter your email', 'cherry-mailchimp' )          : $this->options['placeholder'];
 			$button_text        = empty( $this->options['button_text'] )        ? __( 'Subscribe', 'cherry-mailchimp' )                 : $this->options['button_text'];
 			$success_message    = empty( $this->options['success_message'] )    ? __( 'Subscribed successfully', 'cherry-mailchimp' )   : $this->options['success_message'];
 			$fail_message       = empty( $this->options['fail_message'] )       ? __( 'Subscribed failed', 'cherry-mailchimp' )         : $this->options['fail_message'];

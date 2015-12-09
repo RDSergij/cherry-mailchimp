@@ -15,12 +15,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'UI_Tooltip' ) ) {
+if ( ! class_exists( 'UI_Tooltip2' ) ) {
 
 	/**
 	 * Class UI_Tooltip generic ui-element tooltip
 	 */
-	class UI_Tooltip {
+	class UI_Tooltip2 {
 
 		/**
 		 * Textarea settings
@@ -103,9 +103,9 @@ if ( ! class_exists( 'UI_Tooltip' ) ) {
 		public static function enqueue_assets() {
 			wp_enqueue_script(
 				'ui-tooltip-min',
-				self::get_current_file_url() . '/assets/min/ui-tooltip.min.js',
+				self::get_current_file_url() . '/assets/ui-tooltip.js',
 				array( 'jquery', 'jquery-ui-tooltip' ),
-				CHERRY_VERSION,
+				'1.0.0',
 				true
 			);
 

@@ -1,4 +1,4 @@
-(function($){
+(function(jQuery){
 	"use strict";
 
 	CHERRY_API.utilites.namespace('ui_elements.tooltip');
@@ -51,4 +51,5 @@
 			});
 		}
 	}
+    CHERRY_API.ui_elements.tooltip.init( jQuery('body') );
 }(jQuery));
