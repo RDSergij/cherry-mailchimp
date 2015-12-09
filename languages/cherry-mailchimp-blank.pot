@@ -116,7 +116,13 @@ msgstr ""
 msgid "Set your Api Key"
 msgstr ""
 
-msgid "Press this box for read more information on the mailchimp knowledge base"
+msgid "Press this box for read more information on the mailchimp knowledge base."
+msgstr ""
+
+msgid "API stands for application programming interface. It can be helpful to think of the API as a way for different apps to talk to one another."
+msgstr ""
+
+msgid "Each MailChimp list has a unique List ID that integrations, plugins, and widgets may require to connect and transfer subscriber data."
 msgstr ""
 
 #: views/options_page.php:23
