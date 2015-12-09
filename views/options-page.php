@@ -143,7 +143,7 @@ if ( $this->check_apikey() ) {
 					if ( 'apikey' == $field || 'list' == $field ) :
 						$tooltips_content = array(
 							'apikey'    => array(
-								'content'   => __( 'API stands for application programming interface. It can be helpful to think of the API as a way for different apps to talk to one another.', 'cherry-mailchimp')
+								'content'   => __( 'API stands for application programming interface. It can be helpful to think of the API as a way for different apps to talk to one another.', 'cherry-mailchimp' )
 									. ' ' . __( 'Press this box for read more information on the mailchimp knowledge base.', 'cherry-mailchimp' ),
 								'url'       => 'http://kb.mailchimp.com/accounts/management/about-api-keys',
 							),
