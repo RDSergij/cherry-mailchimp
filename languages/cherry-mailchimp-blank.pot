@@ -23,6 +23,9 @@ msgstr ""
 msgid "MailChimp"
 msgstr ""
 
+msgid "Cherry MailChimp"
+msgstr ""
+
 #: cherry-mailchimp.php:166
 msgid "MailChimp shortcode"
 msgstr ""

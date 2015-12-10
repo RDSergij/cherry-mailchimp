@@ -20,22 +20,22 @@ $fields = array(
 									'value'         => __( '', 'cherry-mailchimp' ),
 								),
 	'list'              => array(
-									'title'        => __( 'List' ),
+									'title'        => __( 'List', 'cherry-mailchimp' ),
 									'description'  => __( 'Subscribe list id', 'cherry-mailchimp' ),
 									'value'        => __( '', 'cherry-mailchimp' ),
 								),
 	'confirm'           => array(
-									'title'        => __( 'Confirmation' ),
+									'title'        => __( 'Confirmation', 'cherry-mailchimp' ),
 									'description'  => __( 'Email confirmation', 'cherry-mailchimp' ),
 									'value'        => __( '', 'cherry-mailchimp' ),
 								),
 	'placeholder'       => array(
-									'title'        => __( 'Placeholder' ),
+									'title'        => __( 'Placeholder', 'cherry-mailchimp' ),
 									'description'  => __( 'Default placeholder for email input', 'cherry-mailchimp' ),
 									'value'        => __( 'Enter your email', 'cherry-mailchimp' ),
 								),
 	'button_text'       => array(
-									'title'        => __( 'Button' ),
+									'title'        => __( 'Button', 'cherry-mailchimp' ),
 									'description'  => __( 'Default submit button text', 'cherry-mailchimp' ),
 									'value'        => __( 'Subscribe', 'cherry-mailchimp' ),
 								),

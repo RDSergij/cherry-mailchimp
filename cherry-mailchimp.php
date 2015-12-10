@@ -3,15 +3,15 @@
  * Plugin Name:  Cherry MailChimp
  * Plugin URI:
  * Description: ShortCode for MailChimp
- * Version: 0.2
+ * Version: 1.0.0
  * Author: Cherry
- * Author URI:
+ * Author URI: http://www.cherryframework.com/
+ * Text Domain: cherry-portfolio
  *
  * @package Cherry_Mailchimp
  *
  * @since 1.0.0
  */
-
 
 if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	// simple api class for MailChimp from https://github.com/drewm/mailchimp-api/blob/master/src/Drewm/MailChimp.php
@@ -19,6 +19,9 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 
 	// shortcode frontend generation
 	require_once( 'includes/cherry-mailchimp-data.php' );
+
+	// cherry options page
+	require_once( 'admin/includes/class-cherry-mailchimp-options/class-cherry-mailchimp-options.php' );
 
 	/**
 	 * Set constant path to the plugin directory.
@@ -33,6 +36,20 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	 * @since 1.0.0
 	 */
 	define( 'CHERRY_MAILCHIMP_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+
+	/**
+	 * Set constant version.
+	 *
+	 * @since 1.0.0
+	 */
+	define( 'CHERRY_MAILCHIMP_VERSION', '1.0.0');
+
+	/**
+	 * Set constant slug.
+	 *
+	 * @since 1.0.0
+	 */
+	define( 'CHERRY_MAILCHIMP_SLUG', 'cherry-mailchimp');
 
 	/**
 	 * Define plugin
@@ -109,6 +126,13 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			add_action( 'wp_ajax_cherry_mailchimp_save_options', array( &$this, 'save_options' ) );
 			add_action( 'wp_ajax_nopriv_cherry_mailchimp_save_options', array( &$this, 'save_options' ) );
 
+			// Get options
+			$this->get_options();
+
+			$this->options_list = Mailchimp_Options::get_instance();
+			// Add menu item in Cherry Framework
+			//add_filter( 'cherry_defaults_settings', array( $this->options_list, 'cherry_mailchimp_settings' ) );
+
 			// Need for generate shortcode view
 			add_action( 'wp_ajax_cherry_mailchimp_generator_view', array( &$this, 'generator_view' ) );
 			add_action( 'wp_ajax_nopriv_cherry_mailchimp_generator_view', array( &$this, 'generator_view' ) );
@@ -119,8 +143,23 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			// Language include
 			add_action( 'plugins_loaded', array( $this, 'include_languages' ) );
 
-			// Get options
-			$this->get_options();
+			// Plugin update
+			add_action( 'plugins_loaded', array( $this, 'plugin_update' ) );
+
+		}
+
+		/**
+		 * Return true if CherryFramework active.
+		 *
+		 * @return boolean
+		 */
+		public function is_cherry_framework() {
+
+			if ( class_exists( 'Cherry_Framework' ) ) {
+				return true;
+			}
+
+			return false;
 		}
 
 		/**
@@ -130,6 +169,33 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 */
 		public function include_languages() {
 			load_plugin_textdomain( 'cherry-mailchimp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		}
+
+		/**
+		 * Plugin update
+		 *
+		 * @since 1.0.0
+		 */
+		public function plugin_update() {
+			if ( is_admin() ) {
+				require_once( CHERRY_MAILCHIMP_DIR . 'admin/includes/class-cherry-update/class-cherry-plugin-update.php' );
+				$Cherry_Plugin_Update = new Cherry_Plugin_Update();
+				$Cherry_Plugin_Update -> init( array(
+					'version'			=> CHERRY_MAILCHIMP_VERSION,
+					'slug'				=> CHERRY_MAILCHIMP_SLUG,
+					'repository_name'	=> CHERRY_MAILCHIMP_SLUG
+				));
+			}
+		}
+
+		/**
+		 * Get option value by key
+		 *
+		 * @since 1.0.0
+		 * @return string
+		 */
+		public function get_mailchimp_option( $key ) {
+			return get_option( $key );
 		}
 
 		/**
@@ -365,11 +431,10 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			}
 
 			foreach ( $this->options as $option_key => $option_value ) {
-				$option_value = ! empty( $_POST[ $option_key ] ) ? $_POST[ $option_key ] : '';
-				update_option( self::$name . $option_key, $option_value );
+				$this->options[ $option_key ] = ! empty( $_POST[ $option_key ] ) ? $_POST[ $option_key ] : '';
 			}
 
-			$this->get_options();
+			update_option( self::$name . '_options', $this->options );
 
 			$check_apikey = $this->check_apikey();
 			if ( ! empty( $check_apikey ) ) {
@@ -422,11 +487,18 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 * @return void
 		 */
 		private function get_options() {
-			if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
-				foreach ( $this->options as $option_key => $option_value ) {
-					$this->options[ $option_key ] = get_option( self::$name . $option_key );
+			if ( $this->is_cherry_framework() ) {
+				foreach( $this->options as $key => $value ) {
+					$options[ $key ] = cherry_get_option( self::$name . '_' . $key );
 				}
+			} else {
+				$options = get_option( self::$name . '_options' );
 			}
+
+			if ( ! empty( $options ) ) {
+				$this->options = $options;
+			}
+
 		}
 
 		/**
