@@ -15,6 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 if ( ! class_exists( 'Cherry_Plugin_Update' ) ) {
 	require( 'class-cherry-base-update.php' );
+
 	/**
 	 * Define plugin updater class
 	 */

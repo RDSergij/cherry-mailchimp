@@ -21,6 +21,7 @@ if ( ! class_exists( 'Cherry_Base_Update' ) ) {
 	 * Enable auto updates - define('CHERRY_ALPHA_UPDATE', true);
 	 * Enable beta updates - define('CHERRY_BETA_UPDATE', true);
 	 */
+
 	/**
 	 * Base updater class
 	 */

@@ -17,13 +17,15 @@
  */
 
 // If this file is called directly, abort.
-if ( !defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 // If class 'MailChimp_Options' not exists.
-if ( !class_exists('Mailchimp_Options') ) {
-
+if ( ! class_exists( 'Mailchimp_Options' ) ) {
+	/**
+	 * Define Options class for Cherry FrameWork
+	 */
 	class Mailchimp_Options {
 
 		/**
@@ -42,6 +44,9 @@ if ( !class_exists('Mailchimp_Options') ) {
 		 */
 		public static $name = 'mailchimp';
 
+		/**
+		 * Mailchimp_Options constructor.
+		 */
 		private function __construct() {
 			// Cherry option filter.
 			add_filter( 'cherry_defaults_settings', array( $this, 'cherry_mailchimp_settings' ) );
@@ -114,10 +119,10 @@ if ( !class_exists('Mailchimp_Options') ) {
 
 			$mailchimp_options = apply_filters( 'cherry_mailchimp_default_settings', $mailchimp_options );
 			$result_array['mailchimp-options-section'] = array(
-				'name'			=> __('Cherry MailChimp', 'cherry-mailchimp'),
+				'name'			=> __( 'Cherry MailChimp', 'cherry-mailchimp' ),
 				'icon' 			=> 'dashicons dashicons-format-gallery',
 				'priority'		=> 120,
-				'options-list'	=> $mailchimp_options
+				'options-list'	=> $mailchimp_options,
 			);
 			return $result_array;
 		}
@@ -137,7 +142,6 @@ if ( !class_exists('Mailchimp_Options') ) {
 
 			return self::$instance;
 		}
-
 	}//end class
 
 	Mailchimp_Options::get_instance();
