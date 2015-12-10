@@ -42,14 +42,14 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	define( 'CHERRY_MAILCHIMP_VERSION', '1.0.0');
+	define( 'CHERRY_MAILCHIMP_VERSION', '1.0.0' );
 
 	/**
 	 * Set constant slug.
 	 *
 	 * @since 1.0.0
 	 */
-	define( 'CHERRY_MAILCHIMP_SLUG', 'cherry-mailchimp');
+	define( 'CHERRY_MAILCHIMP_SLUG', 'cherry-mailchimp' );
 
 	/**
 	 * Define plugin
@@ -130,8 +130,6 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 			$this->get_options();
 
 			$this->options_list = Mailchimp_Options::get_instance();
-			// Add menu item in Cherry Framework
-			//add_filter( 'cherry_defaults_settings', array( $this->options_list, 'cherry_mailchimp_settings' ) );
 
 			// Need for generate shortcode view
 			add_action( 'wp_ajax_cherry_mailchimp_generator_view', array( &$this, 'generator_view' ) );
@@ -183,7 +181,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 				$Cherry_Plugin_Update -> init( array(
 					'version'			=> CHERRY_MAILCHIMP_VERSION,
 					'slug'				=> CHERRY_MAILCHIMP_SLUG,
-					'repository_name'	=> CHERRY_MAILCHIMP_SLUG
+					'repository_name'	=> CHERRY_MAILCHIMP_SLUG,
 				));
 			}
 		}
@@ -488,7 +486,7 @@ if ( ! class_exists( 'Cherry_Mailchimp_Shortcode' ) ) {
 		 */
 		private function get_options() {
 			if ( $this->is_cherry_framework() ) {
-				foreach( $this->options as $key => $value ) {
+				foreach ( $this->options as $key => $value ) {
 					$options[ $key ] = cherry_get_option( self::$name . '_' . $key );
 				}
 			} else {

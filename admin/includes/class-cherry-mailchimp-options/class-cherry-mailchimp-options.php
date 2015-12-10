@@ -1,7 +1,19 @@
 <?php
 /**
- * MailChimp Configuration class.
+ * Cherry MailChimp Data class.
+ * main public class. Grab team data form database and output it
  *
+ * @package   Cherry_MailChimp
+ * @author    Cherry Team
+ * @license   GPL-2.0+
+ * @link      http://www.cherryframework.com/
+ * @copyright 2015 Cherry Team
+ */
+
+/**
+ * Class for MailChimp options.
+ *
+ * @since 1.0.0
  */
 
 // If this file is called directly, abort.
@@ -30,12 +42,9 @@ if ( !class_exists('Mailchimp_Options') ) {
 		 */
 		public static $name = 'mailchimp';
 
-		static $options = array();
-
 		private function __construct() {
 			// Cherry option filter.
-			add_filter( 'cherry_defaults_settings',      array( $this, 'cherry_mailchimp_settings' ) );
-			//add_filter( 'cherry_get_single_post_layout', array( $this, 'get_single_option' ),  11, 2 );
+			add_filter( 'cherry_defaults_settings', array( $this, 'cherry_mailchimp_settings' ) );
 		}
 
 		/**
@@ -122,8 +131,9 @@ if ( !class_exists('Mailchimp_Options') ) {
 		 */
 		public static function get_instance() {
 			// If the single instance hasn't been set, set it now.
-			if ( null == self::$instance )
+			if ( null == self::$instance ) {
 				self::$instance = new self;
+			}
 
 			return self::$instance;
 		}
